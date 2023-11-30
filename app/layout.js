@@ -1,7 +1,5 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import '@radix-ui/themes/styles.css';
-import { Theme } from '@radix-ui/themes';
 
 // components
 import { ThemeProvider } from './_components/Theme-provider';
@@ -26,11 +24,9 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            <Theme>
               <main className='max-w-screen-2xl mx-auto'>
                 {children}
               </main>
-            </Theme>
         </ThemeProvider>
       </body>
     </html>
