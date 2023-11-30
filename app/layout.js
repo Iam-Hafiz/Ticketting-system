@@ -3,6 +3,12 @@ import './globals.css'
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
+// components
+import { ThemeProvider } from './_components/Theme-provider';
+
+// configs
+export const dynamic = 'force-dynamic'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -14,11 +20,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Theme>
-          <main>
-            {children}
-          </main>
-        </Theme>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Theme>
+              <main className='max-w-screen-2xl mx-auto'>
+                {children}
+              </main>
+            </Theme>
+        </ThemeProvider>
       </body>
     </html>
   )
