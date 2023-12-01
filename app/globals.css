@@ -71,7 +71,7 @@
   ;
 }
 
-form {
+.form {
   @apply 
     p-4
     rounded-md  
@@ -81,7 +81,7 @@ form {
     bg-gray-200;
 }
 
-form label {
+.form label {
   @apply 
     block 
     pt-2
@@ -89,6 +89,12 @@ form label {
     ;
 }
 
+.submit-btn {
+  @apply
+  block mx-auto 
+  hover:bg-violet-700
+  ;
+}
 
 /* feedback styles */
 .error {

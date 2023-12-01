@@ -38,7 +38,7 @@ export default function Form() {
     }
   return (
     <div className="centre-a-form">
-      <form onSubmit={handleSubmit} className="w-1/2">
+      <form onSubmit={handleSubmit} className="w-1/2 form">
         <h2 className="font-bold text-lg">Add a new Ticket:</h2>
         <label htmlFor="cTicketTitle">Title:</label>
         <Input
@@ -68,8 +68,7 @@ export default function Form() {
 
         <Button
           disabled={isLoading}
-          className="block mx-auto "
-          
+          className="submit-btn"
         >
           {!isLoading && ("Create Ticket")}
           {isLoading && ("Creating")}

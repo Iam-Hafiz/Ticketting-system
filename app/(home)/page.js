@@ -3,6 +3,7 @@ import Navbar from '../_components/Main-nav';
 import React, { Suspense } from 'react'
 import GetTickets from './GetTickets'
 import Loading from './Loading'
+import MainFooter from '../_components/MainFooter';
 
 export default function Tickets() {
   return (
@@ -12,6 +13,7 @@ export default function Tickets() {
       <Suspense fallback={<Loading />}>
         <GetTickets />
       </Suspense>
+      <MainFooter/>
     </div>
   )
 }
