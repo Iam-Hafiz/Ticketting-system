@@ -9,6 +9,7 @@ import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Textarea } from "@/app/_components/ui/textarea";
 import { SelectPriority } from "./SelectPriority";
+import createTicket from "../actions";
 
 
 export default function Form() {
@@ -20,7 +21,7 @@ export default function Form() {
     const [isLoading, setIsLoading] = useState(false)
   
     const handleSubmit = async (e)  => {
-      //console.log("supa:", supabase);
+/*       //console.log("supa:", supabase);
       e.preventDefault()
       setIsLoading(true);
   
@@ -28,22 +29,18 @@ export default function Form() {
       const {error} = await supabase
         .from('tickets')
         .insert(newTicket)
-        console.log('supa: ', supabase)
-  
-/*       if (error) {
-        router.refresh();
-        router.push('/tickets')
-      } */
-      
+        console.log('supa: ', supabase) */
     }
+
   return (
     <div className="centre-a-form">
-      <form onSubmit={handleSubmit} className="w-1/2 form">
+      <form action={createTicket} className="w-1/2 form">
         <h2 className="font-bold text-lg">Add a new Ticket:</h2>
         <label htmlFor="cTicketTitle">Title:</label>
         <Input
           type="text"
           id="cTicketTitle"
+          name="title"
           value={title}
           onChange={(e) => { setTitle(e.target.value)}}
         />
@@ -53,6 +50,7 @@ export default function Form() {
           placeholder="Describe your Ticket here."
           type="text" 
           id="cTicketBody"
+          name="description"
           value={body}
           onChange={(e) => { setBody(e.target.value)}}
         />
@@ -62,7 +60,6 @@ export default function Form() {
           type="select" 
           name="priority" 
           id="cTicketPriority"
-          value={priority}
           onChange={(e) => { setPriority(e.target.value)}}  
         />
 

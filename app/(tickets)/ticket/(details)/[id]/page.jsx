@@ -1,4 +1,4 @@
-import supabase from "@/app/_config/supabase";
+import supabase from "@/app/_lib/subapase";
 import { notFound } from "next/navigation"
 
 async function getTicket(id){
@@ -25,18 +25,18 @@ export async function generateMetadata({params}){
 export default async function page({params}) {
     const ticket = await getTicket(params.id)
   return (
-    <main>
+    <div>
         <nav>
             <h2>Ticket details</h2>
         </nav>
-        <div className="card">
+        <div className="my-2 shadow-sm rounded-md py-2 px-4 relative overflow-hidden bg-sky-100">
             <h3>{ticket.title}</h3>
             <p><small>Created by {ticket.user_email}</small></p>
-            <p>{ticket.body}</p>
+            <p>{ticket.description}</p>
             <div className={`pill ${ticket.priority}`}>
             {ticket.priority} priority
             </div>
         </div>
-    </main>
+    </div>
   )
 }

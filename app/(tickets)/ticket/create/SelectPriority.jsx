@@ -11,15 +11,15 @@ import {
 
 export function SelectPriority() {
   return (
-    <Select>
+    <Select name="priority">
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select Ticket priority" />
+        <SelectValue placeholder="Select Ticket priority"/>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="apple">High</SelectItem>
-          <SelectItem value="banana">Medium</SelectItem>
-          <SelectItem value="blueberry">Low</SelectItem>
+          <SelectItem value="high">High</SelectItem>
+          <SelectItem value="medium">Medium</SelectItem>
+          <SelectItem value="low">Low</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
