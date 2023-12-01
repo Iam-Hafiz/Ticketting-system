@@ -9,7 +9,7 @@ import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Textarea } from "@/app/_components/ui/textarea";
 import { SelectPriority } from "./SelectPriority";
-import createTicket from "../actions";
+import { createTicket } from "../actions";
 
 
 export default function Form() {
@@ -34,7 +34,7 @@ export default function Form() {
 
   return (
     <div className="centre-a-form">
-      <form action={createTicket} className="w-1/2 form">
+      <form action={createTicket} className="form">
         <h2 className="font-bold text-lg">Add a new Ticket:</h2>
         <label htmlFor="cTicketTitle">Title:</label>
         <Input

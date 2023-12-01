@@ -12,8 +12,10 @@ const FormSchema = z.object({
     priority: z.enum(['high', 'medium', 'low']),
 });
 
+// form data reusable function
+
 // Action
-export default async function createTicket(formData) {
+async function createTicket(formData) {
 
     //Extract the data from formData
     const rawFormData = {
@@ -21,13 +23,37 @@ export default async function createTicket(formData) {
         description: formData.get('description'),
         priority: formData.get('priority'),
     };
-      console.log(rawFormData);
+      //console.log(rawFormData);
     const {title, description, priority} = FormSchema.parse(rawFormData);
-    const {data, error } = await supabase.from("tickets")
+    const {data, error } = await supabase
+        .from("tickets")
         .insert({title, description, priority, user_email: "add@d.com"})
-        .select()
-    if (error) {
-        console.log('supa insert error:', error)
-        redirect('/');
-    } 
+    (error)? console.log('supa insert error:', error): redirect('/');
+         
+}
+
+async function updateTicket(id, formData) {
+
+    //Extract the data from formData
+    const rawFormData = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        priority: formData.get('priority'),
+    };
+      //console.log(rawFormData);
+    const {title, description, priority} = FormSchema.parse(rawFormData);
+    const {data, error } = await supabase
+        .from("tickets")
+        .update({title, description, priority, user_email: "add@d.com"})
+        .eq('id', id)
+    (error)? console.log('supa insert error:', error): redirect('/ticket/' + id);
+}
+async function deleteTicket({ id }) {
+
+}
+
+export {
+    createTicket,
+    updateTicket,
+    deleteTicket,
 }

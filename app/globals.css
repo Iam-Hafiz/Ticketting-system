@@ -68,6 +68,7 @@
   flex-col
   items-center
   justify-center
+  min-h-screen
   ;
 }
 
@@ -75,9 +76,7 @@
   @apply 
     p-4
     rounded-md  
-    mx-auto
-    my-4 
-    min-w-fit w-1/4
+    w-3/5
     bg-gray-200;
 }
 
@@ -91,7 +90,9 @@
 
 .submit-btn {
   @apply
-  block mx-auto 
+  block 
+  mx-auto
+  my-2 
   hover:bg-violet-700
   ;
 }
