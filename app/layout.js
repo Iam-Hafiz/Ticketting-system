@@ -3,6 +3,8 @@ import './globals.css'
 
 // components
 import { ThemeProvider } from './_components/Theme-provider';
+import Footer from './_components/Footer';
+import Header from './_components/Header';
 
 // configs
 export const dynamic = 'force-dynamic'
@@ -24,9 +26,12 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-              <main className='max-w-screen-2xl mx-auto'>
+              <Header/>
+              <main className='max-w-screen-xl mx-auto'>
                 {children}
               </main>
+              <Footer/>
+
         </ThemeProvider>
       </body>
     </html>
