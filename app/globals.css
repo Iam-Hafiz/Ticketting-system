@@ -113,27 +113,16 @@
 
 
 /* pill styles */
-.pill {
-  @apply 
-    py-1 px-2 mt-3
-    inline-block 
-    text-xs font-semibold;
-}
 
-.pill.high {
+.high {
   @apply bg-red-300 text-red-600;
 }
 
-.pill.medium {
+.medium {
   @apply bg-blue-300 text-blue-600;
 }
 
-.pill.low {
+.low {
   @apply bg-emerald-300 text-emerald-600;
 }
 
-.card .pill {
-  @apply 
-    absolute bottom-0 right-0 
-    rounded-tl-md;
-}

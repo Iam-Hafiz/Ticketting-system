@@ -1,11 +1,12 @@
 "use client"
 
+// components
 import { Button } from "@/app/_components/ui/button";
-import { SelectPriority } from "../../create/SelectPriority";
 import { Textarea } from "@/app/_components/ui/textarea";
 import { Input } from "@/app/_components/ui/input";
 import { updateTicket } from "../../actions";
 import supabase from "@/app/_lib/subapase";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/_components/ui/select";
 
 async function getTicket(id){
     const { data: ticket, error } = await supabase
@@ -32,6 +33,7 @@ export default async function Update({ params }) {
            id="uTicketTitle"
            name="title"
            value={ticket.title}
+           autofocus
          />
     
          <label htmlFor="uTicketBody">Description:</label>
@@ -44,11 +46,16 @@ export default async function Update({ params }) {
          />
          
          <label htmlFor="uTicketPriority">Priority:</label>
-         <SelectPriority
-           type="select" 
-           name="priority" 
-           id="uTicketPriority"
-         />
+         <Select>
+            <SelectTrigger className="w-[8rem]" name="priority" id="uTicketPriority">
+              <SelectValue placeholder="Priority" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="low">Low</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+            </SelectContent>
+         </Select>
 
          <Button
          /*   disabled={isLoading} */

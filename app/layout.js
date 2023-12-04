@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
               <Header/>
-              <main className='max-w-screen-xl mx-auto min-h-screen'>
+              <main className='max-w-screen-2xl mx-auto min-h-screen px-1'>
                 {children}
               </main>
               <Footer/>

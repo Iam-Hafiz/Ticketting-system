@@ -3,14 +3,22 @@
 import supabase from "@/app/_lib/subapase";
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import * as React from "react"
+
 
 // components
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Textarea } from "@/app/_components/ui/textarea";
-import { SelectPriority } from "./SelectPriority";
 import { createTicket } from "../actions";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../_components/ui/select"
 
 export default function Form() {
     const router = useRouter();
@@ -43,6 +51,7 @@ export default function Form() {
           name="title"
           value={title}
           onChange={(e) => { setTitle(e.target.value)}}
+          autofocus
         />
   
         <label htmlFor="cTicketBody">Description:</label>
@@ -56,12 +65,23 @@ export default function Form() {
         />
         
         <label htmlFor="cTicketPriority">Priority:</label>
-        <SelectPriority
+        <Select
           type="select" 
           name="priority" 
           id="cTicketPriority"
           onChange={(e) => { setPriority(e.target.value)}}  
-        />
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select Ticket priority"/>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="high">High</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
 
         <Button
           disabled={isLoading}

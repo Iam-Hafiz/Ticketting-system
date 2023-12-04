@@ -28,7 +28,7 @@ async function createTicket(formData) {
     const {data, error } = await supabase
         .from("tickets")
         .insert({title, description, priority, user_email: "add@d.com"})
-    (error)? console.log('supa insert error:', error): redirect('/');
+    //(error)? console.log('supa insert error:', error): redirect('/');
          
 }
 
@@ -46,7 +46,7 @@ async function updateTicket(id, formData) {
         .from("tickets")
         .update({title, description, priority, user_email: "add@d.com"})
         .eq('id', id)
-    (error)? console.log('supa insert error:', error): redirect('/ticket/' + id);
+    //(error)? console.log('supa insert error:', error): redirect('/ticket/' + id);
 }
 async function deleteTicket({ id }) {
 
