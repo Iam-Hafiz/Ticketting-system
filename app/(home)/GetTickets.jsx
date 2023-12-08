@@ -11,18 +11,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 export default async function TicketList() {
 
     // imitate delay to see the loading page
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  //await new Promise(resolve => setTimeout(resolve, 1000));
   const { data: tickets, error }  = await supabase
     .from('tickets')
     .select()
 
   return (
-    <div>
-      <TicketHeader />
-      {tickets && tickets.map((ticket) => (
-          <div key={ticket.id}>
+      <div className="bg-lime-300">
+        <TicketHeader />
+        {tickets && tickets.map((ticket) => (
+            <div key={ticket.id}>
               <div className="my-1 shadow-sm rounded-md p-1 bg-sky-100 lg:grid lg:grid-cols-8 lg:gap-2">
-                <div className="lg:flex lg:items-start">
+                <div className="lg:flex lg:items-start overflow-hidden">
                   <Avatar>
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -32,8 +32,7 @@ export default async function TicketList() {
                       <p><small>{ticket.user_email}</small></p>
                   </div>
                 </div>
-
-                <Link href={`/ticket/${ticket.id}`} className="col-span-2">
+                <Link href={`/ticket/${ticket.id}`} className="col-span-2 overflow-hidden">
                   <HoverCard>
                     <HoverCardTrigger>
                       <h3 className="font-bold overflow-hidden">{`${ticket.title.slice(0, 50)}...`}</h3>
@@ -45,10 +44,9 @@ export default async function TicketList() {
                     </HoverCardContent>
                   </HoverCard>
                 </Link>
-
                 <div>
                   <Select>
-                     <SelectTrigger className="w-[8rem]" name="priority">
+                     <SelectTrigger className="w-[8em] overflow-hidden" name="priority">
                        <SelectValue placeholder="Priority" />
                      </SelectTrigger>
                      <SelectContent>
@@ -59,9 +57,8 @@ export default async function TicketList() {
                   </Select>
                   <p><small className={`pill ${ticket.priority} px-2 rounded-sm`}>{ticket.priority}</small></p>
                 </div>
-
                 <Select>
-                   <SelectTrigger className="w-[8rem]" name="assign">
+                   <SelectTrigger className="w-[8em] overflow-hidden" name="assign">
                      <SelectValue placeholder="Assign" />
                    </SelectTrigger>
                    <SelectContent>
@@ -70,9 +67,8 @@ export default async function TicketList() {
                      <SelectItem value="Network administrator">Network administrator</SelectItem>
                    </SelectContent>
                 </Select>
-
                 <Select>
-                   <SelectTrigger className="w-[8rem]" name="status">
+                   <SelectTrigger className="w-[8em] overflow-hidden" name="status">
                      <SelectValue placeholder="Status" />
                    </SelectTrigger>
                    <SelectContent>
@@ -81,14 +77,14 @@ export default async function TicketList() {
                      <SelectItem value="Closed">Closed</SelectItem>
                    </SelectContent>
                 </Select>
-                <div>create</div>
-                <div>update</div>
+                <div className="w-[8rem] overflow-hidden">create</div>
+                <div className="w-[8rem] overflow-hidden">update</div>
               </div>
-          </div>
-      ))}
-      {tickets.length === 0 && (
-        <p className="text-center">There are no open tickets, yay!</p>
-      )}
-    </div>
+            </div>
+        ))}
+        {tickets.length === 0 && (
+          <p className="text-center">There are no open tickets, yay!</p>
+        )}
+      </div>
   )
 }

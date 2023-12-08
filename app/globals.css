@@ -68,7 +68,7 @@
   flex-col
   items-center
   justify-center
-  min-h-screen
+  min-h-[70vh]
   ;
 }
 
@@ -126,3 +126,63 @@
   @apply bg-emerald-300 text-emerald-600;
 }
 
+/* sideBar styles ***************************************/
+.open {
+  @apply
+   /* default */
+  bg-slate-700 
+  text-slate-200
+  min-h-screen
+  p-1
+  col-span-4
+  hidden
+   /* small */
+  sm:block
+  sm:col-span-3
+   /* medium */
+  md:block
+  md:col-span-2
+  ;
+}
+
+/* on toggle add both open & cardStretch classes  */
+.close {
+  @apply
+  /* default */
+  block
+  /* small */
+  sm:hidden
+  /* medium */
+  md:hidden
+  ;
+}
+
+/* Tickets wrapper styles ***************************************/
+.cardShrink {
+  @apply
+  /* default */
+  col-span-12
+  col-start-1
+   /* small */
+  sm:col-span-9 
+  sm:col-start-4
+   /* medium */
+  md:col-span-10 
+  md:col-start-3
+  ;
+}
+
+/* on toggle add both open & cardStretch classes  */
+.cardStretch{
+  @apply
+   /* default */
+  col-span-8
+  col-start-5
+   /* small */
+  sm:col-span-12
+  sm:col-start-1
+   /* medium */
+  md:col-span-12 
+  md:col-start-1
+  ;
+}

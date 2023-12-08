@@ -3,8 +3,8 @@ import './globals.css'
 
 // components
 import { ThemeProvider } from './_components/Theme-provider';
-import Footer from './_components/Footer';
 import Header from './_components/Header';
+import MainFooter from './_components/Footer';
 
 // configs
 export const dynamic = 'force-dynamic'
@@ -26,12 +26,13 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-              <Header/>
-              <main className='max-w-screen-2xl mx-auto min-h-screen px-1'>
-                {children}
-              </main>
-              <Footer/>
-
+              <div className='max-w-screen-2xl mx-auto px-1'>
+                <Header/>
+                <main className='min-h-[80vh]'>
+                  {children}
+                </main>
+                <MainFooter />
+              </div>
         </ThemeProvider>
       </body>
     </html>
