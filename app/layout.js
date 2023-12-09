@@ -27,7 +27,8 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Header/>
-            <main className='min-h-[80vh] max-w-[2000px] mx-auto'>
+            <main className='min-h-[80vh] max-w-[2000px] mx-auto 
+              bg-gradient-to-r from-gray-200 to-slate-100  dark:from-slate-900 dark:from-10% dark:via-indigo-950 dark:via-80% dark:to-slate-800 dark:to-100% dark:text-slate-300'>
               {children}
             </main>
             <MainFooter />
