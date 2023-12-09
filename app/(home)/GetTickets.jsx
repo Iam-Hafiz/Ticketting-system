@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 import supabase from "../_lib/subapase";
 import * as React from "react"
@@ -17,22 +18,22 @@ export default async function TicketList() {
     .select()
 
   return (
-      <div className="bg-lime-300">
+      <>
         <TicketHeader />
         {tickets && tickets.map((ticket) => (
-            <div key={ticket.id}>
-              <div className="my-1 shadow-sm rounded-md p-1 bg-sky-100 lg:grid lg:grid-cols-8 lg:gap-2">
-                <div className="lg:flex lg:items-start overflow-hidden">
-                  <Avatar>
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <div className="pl-2">
-                      <span>Username</span>
-                      <p><small>{ticket.user_email}</small></p>
-                  </div>
+          <div key={ticket.id} className="my-1 shadow-sm rounded-md p-1 bg-sky-100 lg:grid lg:grid-cols-8 lg:gap-2">
+              <div className="lg:flex lg:items-start overflow-hidden">
+                <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <div className="pl-2">
+                    <span>Username</span>
+                    <p><small>{ticket.user_email}</small></p>
                 </div>
-                <Link href={`/ticket/${ticket.id}`} className="col-span-2 overflow-hidden">
+              </div>
+              <div className="col-span-2 col-start-2 overflow-hidden">
+                <Link href={`/ticket/${ticket.id}`}>
                   <HoverCard>
                     <HoverCardTrigger>
                       <h3 className="font-bold overflow-hidden">{`${ticket.title.slice(0, 50)}...`}</h3>
@@ -44,21 +45,23 @@ export default async function TicketList() {
                     </HoverCardContent>
                   </HoverCard>
                 </Link>
-                <div>
-                  <Select>
-                     <SelectTrigger className="w-[8em] overflow-hidden" name="priority">
-                       <SelectValue placeholder="Priority" />
-                     </SelectTrigger>
-                     <SelectContent>
-                       <SelectItem value="Low">Low</SelectItem>
-                       <SelectItem value="Medium">Medium</SelectItem>
-                       <SelectItem value="High">High</SelectItem>
-                     </SelectContent>
-                  </Select>
-                  <p><small className={`pill ${ticket.priority} px-2 rounded-sm`}>{ticket.priority}</small></p>
-                </div>
+              </div>
+              <div className="overflow-hidden">
                 <Select>
-                   <SelectTrigger className="w-[8em] overflow-hidden" name="assign">
+                   <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="priority">
+                     <SelectValue placeholder="Priority" />
+                   </SelectTrigger>
+                   <SelectContent>
+                     <SelectItem value="Low">Low</SelectItem>
+                     <SelectItem value="Medium">Medium</SelectItem>
+                     <SelectItem value="High">High</SelectItem>
+                   </SelectContent>
+                </Select>
+                <p><small className={`pill ${ticket.priority} px-2 rounded-sm`}>{ticket.priority}</small></p>
+              </div>
+              <div className="overflow-hidden">
+                <Select>
+                   <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="assign">
                      <SelectValue placeholder="Assign" />
                    </SelectTrigger>
                    <SelectContent>
@@ -67,8 +70,10 @@ export default async function TicketList() {
                      <SelectItem value="Network administrator">Network administrator</SelectItem>
                    </SelectContent>
                 </Select>
+              </div>
+              <div className="overflow-hidden">
                 <Select>
-                   <SelectTrigger className="w-[8em] overflow-hidden" name="status">
+                   <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="status">
                      <SelectValue placeholder="Status" />
                    </SelectTrigger>
                    <SelectContent>
@@ -77,14 +82,14 @@ export default async function TicketList() {
                      <SelectItem value="Closed">Closed</SelectItem>
                    </SelectContent>
                 </Select>
-                <div className="w-[8rem] overflow-hidden">create</div>
-                <div className="w-[8rem] overflow-hidden">update</div>
               </div>
-            </div>
+              <div>create hhggygfytfyfty</div>
+              <div>update hgfuyftyfytftf--ff-</div>
+          </div>
         ))}
         {tickets.length === 0 && (
           <p className="text-center">There are no open tickets, yay!</p>
         )}
-      </div>
+      </>
   )
 }

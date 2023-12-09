@@ -130,18 +130,21 @@
 .open {
   @apply
    /* default */
-  bg-slate-700 
-  text-slate-200
+ text-slate-300 
+ bg-slate-900
   min-h-screen
   p-1
   col-span-4
+  col-start-1
   hidden
    /* small */
   sm:block
   sm:col-span-3
+  sm:col-start-1
    /* medium */
   md:block
   md:col-span-2
+  md:col-start-1
   ;
 }
 

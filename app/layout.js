@@ -26,13 +26,11 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-              <div className='max-w-screen-2xl mx-auto px-1'>
-                <Header/>
-                <main className='min-h-[80vh]'>
-                  {children}
-                </main>
-                <MainFooter />
-              </div>
+            <Header/>
+            <main className='min-h-[80vh] max-w-[2000px] mx-auto'>
+              {children}
+            </main>
+            <MainFooter />
         </ThemeProvider>
       </body>
     </html>

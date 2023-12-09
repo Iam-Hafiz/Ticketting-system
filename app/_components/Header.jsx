@@ -25,8 +25,8 @@ export default function Header() {
   }
 
   return (
-    <header className='mx-auto bg-red-400'>
-      <div className='flex items-center m-0 p-0'>
+    <header className='bg-red-400 max-w-[2000px] mx-auto'>
+      <div className='flex items-center'>
         <div className='hidden sm:inline-block'>
           { !showBar && (<button className="p-1" onClick={handleClick}><XSquare /></button>)}
           { showBar && (<button className="p-1" onClick={handleClick}><AlignJustify /></button>)}
@@ -35,7 +35,7 @@ export default function Header() {
           { showBar && (<button className="p-1" onClick={handleClick}><XSquare /></button>)}
           { !showBar && (<button className="p-1" onClick={handleClick}><AlignJustify /></button>)}
         </div>
-        <Link href="/" className='mr-auto p-1'>HelpDesk</Link>
+        <Link href="/" className='mr-auto p-1 font-bold uppercase'>HelpDesk</Link>
         <Link href="/login" className='p-1'>login</Link>
         <Link href="/signup" className='p-1'>signup</Link>
         <Link href="/ticket/create" className='p-1'>New ticket</Link>

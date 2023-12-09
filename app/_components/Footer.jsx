@@ -4,7 +4,7 @@ import { Input } from './ui/input'
 
 export default function MainFooter() {
   return (
-    <footer className='mx-auto grid grid-cols-3 gap-3 my-4 px-4'>
+    <footer className='grid grid-cols-3 gap-3 my-4 px-4 max-w-[2000px] mx-auto'>
         <div className='max-w-sm'> 
             <h4 className='font-bold'>Abonnez-vous à notre newsletter:</h4>
             <form action="/newsletter">
