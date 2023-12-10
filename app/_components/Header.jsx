@@ -5,8 +5,11 @@ import { ModeToggle } from './Mode-toggle-btn'
 import { UserDropDown } from './UserDropDown'
 import { AlignJustify, XSquare } from 'lucide-react'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
-export default function Header() { 
+export default function Header() {
+  const pathname = usePathname();
+  //console.log("pathn:", pathname)
   const [showBar, setShowBar] = useState(false)
   function handleClick(e){
     const sidebar = document.getElementById('sidebar');
@@ -29,12 +32,12 @@ export default function Header() {
      bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 dark:from-slate-900 dark:via-indigo-900 dark:to-slate-900 dark:text-slate-300'>
       <div className='flex items-center'>
         <div className='hidden sm:inline-block'>
-          { !showBar && (<button className="p-1" onClick={handleClick}><XSquare /></button>)}
-          { showBar && (<button className="p-1" onClick={handleClick}><AlignJustify /></button>)}
+          { (pathname === "/") && !showBar && (<button className="p-1" onClick={handleClick}><XSquare /></button>)}
+          { (pathname === "/") && showBar && (<button className="p-1" onClick={handleClick}><AlignJustify /></button>)}
         </div>
         <div className='sm:hidden'>
-          { showBar && (<button className="p-1" onClick={handleClick}><XSquare /></button>)}
-          { !showBar && (<button className="p-1" onClick={handleClick}><AlignJustify /></button>)}
+          { (pathname === "/") && showBar && (<button className="p-1" onClick={handleClick}><XSquare /></button>)}
+          { (pathname === "/") && !showBar && (<button className="p-1" onClick={handleClick}><AlignJustify /></button>)}
         </div>
         <Link href="/" className='mr-auto p-1 font-bold uppercase'>HelpDesk</Link>
         <Link href="/login" className='p-1'>login</Link>
