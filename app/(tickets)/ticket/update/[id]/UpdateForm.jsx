@@ -1,15 +1,16 @@
 "use client"
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import { useState } from 'react';
 
 // components
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/_components/ui/select";
 import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";
 import { Input } from "@/app/_components/ui/input";
 
 // actions
 import { updateTicket } from "../../actions";
+
+//icons
 import { Frown } from 'lucide-react';
 
 export default function UpdateForm({ticket}) {
@@ -19,7 +20,7 @@ export default function UpdateForm({ticket}) {
 
     const [title, setTitle] = useState(ticket.title)
     const [description, setDescription] = useState(ticket.description)
-    const [priority, setPriority] = useState('low')
+    const { pending } = useFormStatus();
 
   return (
     <div className="centre-a-form">
@@ -63,27 +64,14 @@ export default function UpdateForm({ticket}) {
             ))}
       </div>
       
-      <label htmlFor="uTicketPriority">Priority:</label>
-      <Select>
-         <SelectTrigger className="w-[8rem]" name="priority" id="uTicketPriority">
-           <SelectValue placeholder="Priority" />
-         </SelectTrigger>
-         <SelectContent>
-           <SelectItem value="low">Low</SelectItem>
-           <SelectItem value="medium">Medium</SelectItem>
-           <SelectItem value="high">High</SelectItem>
-         </SelectContent>
-      </Select>
-
       {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       
       <Button
-      /*   disabled={isLoading} */
         className="submit-btn"
+        aria-disabled={pending}
       >
-         Update
-{/*            {!isLoading && ("Update Ticket")}
-        {isLoading && ("Updatting")} */}
+        {!pending && ("Update")}
+        {pending && ("Updatting")}
       </Button>
     </form>
   </div>

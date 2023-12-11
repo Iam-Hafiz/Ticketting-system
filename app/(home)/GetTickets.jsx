@@ -58,6 +58,25 @@ export default async function TicketList() {
                      <SelectItem value="High">High</SelectItem>
                    </SelectContent>
                 </Select>
+
+                <label htmlFor="cTicketPriority">Priority:</label>
+{/*         <Select
+          type="select" 
+          name="priority" 
+          id="cTicketPriority"
+          onChange={(e) => { setPriority(e.target.value)}}  
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select Ticket priority"/>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="high">High</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select> */}
                 <p><small className={`pill ${ticket.priority} px-2 rounded-sm`}>{ticket.priority}</small></p>
               </div>
               <div className="overflow-hidden">
