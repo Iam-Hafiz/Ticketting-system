@@ -4,7 +4,7 @@ import supabase from "@/app/_lib/subapase";
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import * as React from "react"
-
+import { useFormState } from 'react-dom';
 
 // components
 import { Button } from "@/app/_components/ui/button";
@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../_components/ui/select"
+import { Frown } from "lucide-react";
 
 export default function Form() {
     const router = useRouter();
@@ -27,8 +28,11 @@ export default function Form() {
     const [body, setBody] = useState('')
     const [priority, setPriority] = useState('low')
     const [isLoading, setIsLoading] = useState(false)
-  
+
+    const initialState = { message: null, errors: {} };
+    const [state, dispatch] = useFormState(createTicket, initialState);
     const handleSubmit = async (e)  => {
+
 /*       //console.log("supa:", supabase);
       e.preventDefault()
       setIsLoading(true);
@@ -42,7 +46,7 @@ export default function Form() {
 
   return (
     <div className="centre-a-form">
-      <form action={createTicket} className="form">
+      <form action={dispatch} className="form">
         <h2 className="font-bold text-lg">Add a new Ticket:</h2>
         <label htmlFor="cTicketTitle">Title:</label>
         <Input
@@ -51,8 +55,17 @@ export default function Form() {
           name="title"
           value={title}
           onChange={(e) => { setTitle(e.target.value)}}
-          autofocus
+          autoFocus
+          aria-describedby="cTicketTitleErr"
         />
+        <div id="cTicketTitleErr" aria-live="polite" aria-atomic="true">
+          {state.errors?.title &&
+            state.errors.title.map(error => (
+              <p className="formErrors" key={error}>
+                {error}
+              </p>
+            ))}
+        </div>
   
         <label htmlFor="cTicketBody">Description:</label>
         <Textarea
@@ -62,7 +75,16 @@ export default function Form() {
           name="description"
           value={body}
           onChange={(e) => { setBody(e.target.value)}}
+          aria-describedby="cTicketBodyErr"
         />
+        <div id="cTicketBodyErr" aria-live="polite" aria-atomic="true">
+          {state.errors?.description &&
+            state.errors.description.map(error => (
+              <p className="formErrors" key={error}>
+                {error}
+              </p>
+            ))}
+        </div>
         
         <label htmlFor="cTicketPriority">Priority:</label>
         <Select
@@ -82,6 +104,8 @@ export default function Form() {
             </SelectGroup>
           </SelectContent>
         </Select>
+
+        {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
 
         <Button
           disabled={isLoading}

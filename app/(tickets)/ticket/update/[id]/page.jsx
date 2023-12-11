@@ -1,5 +1,3 @@
-"use client"
-
 // components
 import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";

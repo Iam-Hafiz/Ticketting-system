@@ -1,4 +1,3 @@
-"use client"
 import Link from "next/link"
 import supabase from "../_lib/subapase";
 import * as React from "react"

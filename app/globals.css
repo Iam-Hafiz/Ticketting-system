@@ -104,6 +104,12 @@
 }
 
 /* feedback styles */
+.formErrors {
+  @apply 
+    text-red-700 
+    ;
+}
+
 .error {
   @apply 
     border-2 
