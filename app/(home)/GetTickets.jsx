@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 
 export default async function TicketList() {
 
-    // imitate delay to see the loading page
+  // imitate delay to see the loading page
   //await new Promise(resolve => setTimeout(resolve, 1000));
   const { data: tickets, error }  = await supabase
     .from('tickets')
@@ -33,19 +33,32 @@ export default async function TicketList() {
                     <p><small>{ticket.user_email}</small></p>
                 </div>
               </div>
-              <div className="col-span-2 col-start-2 overflow-hidden hover:bg-blue-200 dark:hover:bg-indigo-900">
-                <Link href={`/ticket/${ticket.id}`}>
-                  <HoverCard>
-                    <HoverCardTrigger>
-                      <h3 className="font-bold overflow-hidden">{`${ticket.title.slice(0, 50)}...`}</h3>
-                      <p className="overflow-hidden">{ticket.description?.slice(0, 30)}...</p>
-                    </HoverCardTrigger>
-                    <HoverCardContent>
-                      <h3 className="font-bold">{ticket.title}:</h3>
-                      <p>{ticket.description}</p>
-                    </HoverCardContent>
-                  </HoverCard>
-                </Link>
+              <div className="col-span-2 col-start-2 overflow-hidden ">
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <p className="font-bold overflow-hidden">
+                      <Link href={`/ticket/${ticket.id}`} className="hover:text-blue-800 dark:hover:text-green-500">
+                        {`${ticket.title.slice(0, 50)}...`}</Link>
+                    </p>
+                    <p className="overflow-hidden">
+                      <Link href={`/ticket/${ticket.id}`} className="hover:text-blue-800 dark:hover:text-green-500">
+                        {ticket.description?.slice(0, 30)}...
+                      </Link>
+                    </p>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    <p className="font-bold">
+                      <Link href={`/ticket/${ticket.id}`} className="hover:text-blue-800 dark:hover:text-green-500">
+                        {ticket.title}:
+                      </Link>
+                    </p>
+                    <p>
+                      <Link href={`/ticket/${ticket.id}`} className="hover:text-blue-800 dark:hover:text-green-500">
+                        {ticket.description}
+                      </Link>
+                    </p>
+                  </HoverCardContent>
+                </HoverCard>
               </div>
               <div className="overflow-hidden">
                 <Select>
@@ -109,7 +122,7 @@ export default async function TicketList() {
         ))}
         {error && (
          <div>
-            <p className="text-center">Check your Internet connection please!</p>
+            <p className="text-center">Please Check your Internet connection!</p>
             <p>Or maybe there are currently no available tickets, yay!</p>
          </div>
         )}
