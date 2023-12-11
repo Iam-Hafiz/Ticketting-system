@@ -21,6 +21,7 @@ async function createTicket(prevState, formData) {
     /*const rawFormData = { title: formData.get('title'), description: formData.get('description'), priority: formData.get('priority'),}; */
     const rawFormData = Object.fromEntries(formData.entries())
     const validatedFields = FormSchema.safeParse(rawFormData);
+
     //console.log('Zod cus err:', validatedFields.error);
     if (!validatedFields.success) {
         return {
@@ -33,26 +34,41 @@ async function createTicket(prevState, formData) {
     const {data, error } = await supabase
         .from("tickets")
         .insert({ title, description, priority, user_email: "add@d.com"})
+
     if(!error){
         // Revalidate the cache for the Tickets page and redirect the user.
         revalidatePath('/')
         redirect('/')
     }
     if(error){
-        console.log('supa insert error:', error)
+        console.log('Supabase insert error:', error)
+        return {message: 'Could not create Ticket please try again!'}
     }         
 }
 
-async function updateTicket(id, formData) {
-
-    //Extract the data from formData
+async function updateTicket(id, prevState, formData) {
     const rawFormData = Object.fromEntries(formData.entries())
-    const {title, description, priority} = FormSchema.parse(rawFormData);
+    const validatedFields = FormSchema.safeParse(rawFormData);
+
+    if (!validatedFields.success) {
+        return {
+          errors: validatedFields.error.flatten().fieldErrors,
+          message: 'Failed to update Ticket!.',
+        };
+    }
+
+    const { title, description, priority } = validatedFields.data;
     const {data, error } = await supabase
         .from("tickets")
         .update({title, description, priority, user_email: "add@d.com"})
         .eq('id', id)
-    //(error)? console.log('supa insert error:', error): redirect('/ticket/' + id);
+
+    if(!error){
+        redirect('/ticket/' + id)
+    } else {
+        console.log('Supabase update error:', error)
+        return {message: 'Could not update Ticket please try again!'}
+    }   
 }
 
 async function deleteTicket({ id }) {

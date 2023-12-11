@@ -15,6 +15,7 @@ export default async function TicketList() {
   const { data: tickets, error }  = await supabase
     .from('tickets')
     .select()
+  error? console.log('Fetch failed:', error): null;
 
   return (
       <div>
@@ -87,8 +88,11 @@ export default async function TicketList() {
               <div >update hgfuyftyfytftf--ff-</div>
           </div>
         ))}
-        {tickets.length === 0 && (
-          <p className="text-center">There are no open tickets, yay!</p>
+        {error && (
+         <div>
+            <p className="text-center">Check your Internet connection please!</p>
+            <p>Or maybe there are currently no available tickets, yay!</p>
+         </div>
         )}
       </div>
   )
