@@ -4,7 +4,7 @@ import * as React from "react"
 import { useFormState, useFormStatus } from 'react-dom';
 
 // icons
-import { Frown } from "lucide-react";
+import { Frown, Smile } from "lucide-react";
 
 // components
 import { Button } from "@/app/_components/ui/button";
@@ -26,6 +26,7 @@ export default function SignUp() {
   <div className="centre-a-form">
     <form action={dispatch} className="form">
       <h2 className="font-bold text-lg">Sign up:</h2>
+      <p><small>Fields marked with <span className=" text-red-500">*</span> are required</small></p>
 
       <label htmlFor="signUpFname">First name:</label>
       <Input
@@ -121,7 +122,8 @@ export default function SignUp() {
           ))}
       </div>
 
-      {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
+      {!state.message?.includes("successfully") &&(<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
+      {state.message?.includes("successfully")  && (<p className=" flex justify-center items-center text-green-500"> <Smile /> {state.message}</p>)}
 
       <Button
         aria-disabled={pending}
