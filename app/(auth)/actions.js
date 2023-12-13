@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 import { z } from 'zod';
 import supabase from '../_lib/subapase';
-
+// password /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$^&*()_-]).{8,18}$/
 const SignUpSchema = z.object({
     fname: z.string().trim().toLowerCase()
         .regex(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/, {message: "Please enter a valid name!" })
@@ -42,14 +42,15 @@ async function SignUpAction(prevState, formData) {
     const { email, password, fname, lname, age } = validatedFields.data;
     const { data, error } = await supabase.auth.signUp({ 
           email, password,
-          options: { data: { fname, lname, age } }
+          options: { data: { fname, lname, age } },
+          emailRedirectTo: `${location.origin}/api/auth/callback`,
         })
     
     if(!error){
         return {message: 'Account created successfully!'}
     } else {
         console.log('Supabase sign up error:', error)
-        return {message: 'Could not create account please try again!'}
+        return {message: error.message} /* {message: 'Could not create account please try again!'} */
     }   
 }
 
