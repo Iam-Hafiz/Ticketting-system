@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx';
 
-export default function Header() {
+export default function Header({user}) {
   const pathname = usePathname();
   //console.log("pathn:", pathname)
   const [showBar, setShowBar] = useState(false)
@@ -41,8 +41,10 @@ export default function Header() {
           { (pathname == "/") && !showBar && (<button className="p-1" onClick={handleClick}><AlignJustify /></button>)}
         </div>
         <Link href="/" className='mr-auto p-1 font-bold uppercase'>HelpDesk</Link>
-        <Link href="/login" className='p-1'>login</Link>
-        <Link href="/signup" className='p-1'>signup</Link>
+        {!user && (<Link href="/login" className='p-1'>login</Link>)}
+        {!user && (<Link href="/signup" className='p-1'>signup</Link>)}
+        {user && (<Link href="/signup" className='p-1'>{user.email}</Link>)}
+
         <Link href="/ticket/create" className='p-1'>New ticket</Link>
         <ModeToggle />
         <UserDropDown />
