@@ -82,7 +82,20 @@ async function loginAction(prevState, formData) {
     }   
 }
 
+async function logOut() {
+    console.log('sign out!')
+    const supabase = createServerActionClient({ cookies })
+    const { error } = await supabase.auth.signOut() 
+    if(!error){
+        redirect('/login')
+    } else {
+        console.log('Supabase update error:', error)
+       // return {message: 'Could not sign out!'}
+    }   
+}
+
 export {
     loginAction,
     SignUpAction,
+    logOut,
 }

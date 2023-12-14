@@ -6,9 +6,10 @@ import { UserDropDown } from './UserDropDown'
 import { AlignJustify, XSquare } from 'lucide-react'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import clsx from 'clsx';
+import LogOut from './LogOut'
 
 export default function Header({user}) {
+
   const pathname = usePathname();
   //console.log("pathn:", pathname)
   const [showBar, setShowBar] = useState(false)
@@ -44,7 +45,7 @@ export default function Header({user}) {
         {!user && (<Link href="/login" className='p-1'>login</Link>)}
         {!user && (<Link href="/signup" className='p-1'>signup</Link>)}
         {user && (<Link href="/signup" className='p-1'>{user.email}</Link>)}
-
+        {user && (<LogOut />)}
         <Link href="/ticket/create" className='p-1'>New ticket</Link>
         <ModeToggle />
         <UserDropDown />
