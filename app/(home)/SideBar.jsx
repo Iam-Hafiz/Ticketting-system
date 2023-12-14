@@ -1,7 +1,7 @@
 
 export default function SideBar() {
   return (
-    <div id="sidebar" className="open">
+    <div id="sidebar" className="open close">
       <div className="flex flex-col items-start">
         <button>New Ticket</button>
         <button>Open</button>

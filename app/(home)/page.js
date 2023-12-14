@@ -19,7 +19,7 @@ export default async function Tickets() {
   return (
     <div className='grid grid-cols-12'>
         <SideBar/>
-      <div className="cardShrink" id="ticketWrapper"> 
+      <div className="cardShrink cardStretch" id="ticketWrapper"> 
         <Suspense fallback={<Loading />}>
           <GetTickets tickets={tickets} error={error}/>
         </Suspense>

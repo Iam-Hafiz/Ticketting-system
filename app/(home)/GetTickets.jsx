@@ -33,7 +33,7 @@ export default function TicketList({tickets, error}) {
         <TicketHeader />
         {tickets && tickets.map((ticket) => (
           <div key={ticket.id} className="m-0.5 shadow-md rounded-md p-0.5 lg:grid lg:grid-cols-8 lg:gap-2 
-              bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800">
+              bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
               <div className="flex items-start overflow-hidden">
                 <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" />

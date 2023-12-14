@@ -127,6 +127,10 @@
 
 
 /* pill styles */
+.pill{
+  @apply
+  w-max
+}
 
 .high {
   @apply bg-red-300 text-red-600;
@@ -151,7 +155,6 @@
   p-1
   col-span-4
   col-start-1
-  hidden
    /* small */
   sm:block
   sm:col-span-3
@@ -167,7 +170,7 @@
 .close {
   @apply
   /* default */
-  block
+  hidden
   /* small */
   sm:hidden
   /* medium */
@@ -179,8 +182,8 @@
 .cardShrink {
   @apply
   /* default */
-  col-span-12
-  col-start-1
+  col-span-8
+  col-start-5
    /* small */
   sm:col-span-9 
   sm:col-start-4
@@ -194,8 +197,8 @@
 .cardStretch{
   @apply
    /* default */
-  col-span-8
-  col-start-5
+   col-span-12
+   col-start-1
    /* small */
   sm:col-span-12
   sm:col-start-1
