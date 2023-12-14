@@ -10,8 +10,11 @@ import { Frown, Smile } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { SignUpAction } from "../actions";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
+    const router = useRouter()
+
     const [fname, setFname] = useState('')
     const [lname, setLname] = useState('')
     const [age, setAge] = useState('')
@@ -22,6 +25,12 @@ export default function SignUp() {
     const [state, dispatch] = useFormState(SignUpAction, initialState);
     const { pending } = useFormStatus();
 
+    if(state.message == 'Account created successfully!'){
+      setTimeout(() => {
+        router.push('/verify')
+      }, 2000);
+    }
+    
   return (
   <div className="centre-a-form">
     <form action={dispatch} className="form">

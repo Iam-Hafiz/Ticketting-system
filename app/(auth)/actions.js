@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 
 import { z } from 'zod';
-import supabase from '../_lib/subapase';
+import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 // password /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$^&*()_-]).{8,18}$/
 const SignUpSchema = z.object({
     fname: z.string().trim().toLowerCase()
@@ -28,10 +28,9 @@ const SignUpSchema = z.object({
 async function SignUpAction(prevState, formData) {
     const rawFormData = Object.fromEntries(formData.entries())
     rawFormData.age = parseInt(rawFormData.age)
-    console.log(rawFormData)
 
+    //console.log(rawFormData)
     const validatedFields = SignUpSchema.safeParse(rawFormData);
-
     if (!validatedFields.success) {
         return {
           errors: validatedFields.error.flatten().fieldErrors,
@@ -40,17 +39,18 @@ async function SignUpAction(prevState, formData) {
     }
 
     const { email, password, fname, lname, age } = validatedFields.data;
+    const supabase = createServerActionClient()
     const { data, error } = await supabase.auth.signUp({ 
           email, password,
           options: { data: { fname, lname, age } },
           emailRedirectTo: `${location.origin}/api/auth/callback`,
         })
-    
+        
     if(!error){
         return {message: 'Account created successfully!'}
     } else {
         console.log('Supabase sign up error:', error)
-        return {message: error.message} /* {message: 'Could not create account please try again!'} */
+        return ({message: error.message} ?? {message: 'Could not create account please try again!'});
     }   
 }
 
