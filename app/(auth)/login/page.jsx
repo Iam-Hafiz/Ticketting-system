@@ -29,7 +29,7 @@ export default function page() {
         id="loginEmail"
         name="email"
         value={email}
-        onChange={(e) => { setTitle(e.target.value)}}
+        onChange={(e) => { setEmail(e.target.value)}}
         autoFocus
         aria-describedby="loginEmailErr"
       />
@@ -48,7 +48,7 @@ export default function page() {
         id="loginPassword"
         name="password"
         value={password}
-        onChange={(e) => { setTitle(e.target.value)}}
+        onChange={(e) => { setPassword(e.target.value)}}
         autoFocus
         aria-describedby="loginPasswordErr"
         autocomplete="current-password" 

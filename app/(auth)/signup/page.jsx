@@ -28,7 +28,7 @@ export default function SignUp() {
     if(state.message == 'Account created successfully!'){
       setTimeout(() => {
         router.push('/verify')
-      }, 2000);
+      }, 1500);
     }
     
   return (

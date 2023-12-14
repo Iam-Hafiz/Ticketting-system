@@ -57,6 +57,7 @@ async function SignUpAction(prevState, formData) {
 
 async function loginAction(prevState, formData) {
     const rawFormData = Object.fromEntries(formData.entries())
+    const LoginSchema = SignUpSchema.pick({ email: true,  password: true});
     const validatedFields = LoginSchema.safeParse(rawFormData);
 
     if (!validatedFields.success) {
@@ -67,16 +68,17 @@ async function loginAction(prevState, formData) {
     }
 
     const { email, password } = validatedFields.data;
+    const supabase = createServerActionClient({ cookies })
     const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       })
           
     if(!error){
-        redirect('/ticket/' + id)
+        redirect('/profil')
     } else {
         console.log('Supabase update error:', error)
-        return {message: 'Could not update Ticket please try again!'}
+        return ({message: error.message} ?? {message: 'Invalid credentials!'});
     }   
 }
 
