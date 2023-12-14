@@ -1,6 +1,7 @@
 'use server'
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers'
 
 import { z } from 'zod';
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
@@ -39,11 +40,11 @@ async function SignUpAction(prevState, formData) {
     }
 
     const { email, password, fname, lname, age } = validatedFields.data;
-    const supabase = createServerActionClient()
-    const { data, error } = await supabase.auth.signUp({ 
+    const supabase = createServerActionClient({ cookies })
+    const { error } = await supabase.auth.signUp({ 
           email, password,
           options: { data: { fname, lname, age } },
-          emailRedirectTo: `${location.origin}/api/auth/callback`,
+          emailRedirectTo: `${process.env.APP_URL}api/auth/callback`,
         })
         
     if(!error){
