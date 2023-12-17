@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
-import * as React from "react"
+import { useEffect, useState } from "react";
+import supabase from "../_lib/subapase";
 
 // components
 import { Avatar, AvatarFallback, AvatarImage } from "../_components/ui/avatar";
@@ -8,25 +9,47 @@ import TicketHeader from "../_components/TicketHeader";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../_components/ui/hover-card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../_components/ui/select";
 
-export default function TicketList({tickets, error}) {
-        /*  <label htmlFor="cTicketPriority">Priority:</label> */
-/*         <Select
-          type="select" 
-          name="priority" 
-          id="cTicketPriority"
-          onChange={(e) => { setPriority(e.target.value)}}  
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Ticket priority"/>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="high">High</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="low">Low</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select> */
+// configs
+export const dynamic = 'force-dynamic'
+
+export default function TicketList({initTickets, error}) {
+  const [tickets, setTickets] = useState(initTickets)
+  const [rerender, setRerender] = useState(false)
+  
+  useEffect(() => {
+    const ticketsChannel = supabase
+    .channel('tickets')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'tickets' }, payload => {
+      if(payload.eventType === 'INSERT'){
+        setTickets([...tickets, payload.new])
+      } 
+      if(payload.eventType === 'UPDATE'){
+        const length = tickets.length
+        for (let i = 0; i < length; i++) {
+          if(tickets[i].id === payload.new?.id){
+            tickets[i] = payload.new
+            rerender ? setRerender(false): setRerender(true);
+            break;
+          }
+        }
+      } 
+      if (payload.eventType === 'DELETE'){
+        const len = tickets.length
+        let restTickets = [];
+        for (let i = 0; i < len; i++) {
+          if(tickets[i].id !== payload.old?.id){
+            restTickets.push(tickets[i])
+            setTickets(restTickets)
+          }
+        }
+      }
+    })
+    .subscribe()
+    return () => {
+      supabase.removeChannel(ticketsChannel)
+    }
+  }, [supabase, rerender, setRerender, tickets, setTickets])
+  
 
   return (
       <div>
@@ -107,9 +130,32 @@ export default function TicketList({tickets, error}) {
         {error && (
          <div>
             <p className="text-center">Please Check your Internet connection!</p>
-            <p>Or maybe there are currently no available tickets, yay!</p>
+            <p className="text-center">Or maybe there are currently no available tickets, yay!</p>
          </div>
         )}
+        {!tickets.length && (
+         <div>
+            <p className="text-center font-bold text-green-500 text-[1.5em] mt-8">There are currently no available tickets, yay!</p>
+         </div>
+        )}
+
       </div>
   )
 }
+
+/*     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'tickets' }, payload => {
+      //.log('Change received!', payload)
+      console.log('up fired!')
+      const length = tickets.length
+      for (let i = 0; i < length; i++) {
+        if(tickets[i].id === payload.new?.id){
+          tickets[i] = payload.new
+          setTickets(tickets)
+        }
+      }
+    })
+    .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'tickets' }, payload => {
+      //.log('Change received!', payload)
+      console.log("delete event:", payload)
+      //setTickets([...tickets, ticketsPayload.new])
+    }) */

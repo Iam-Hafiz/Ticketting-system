@@ -13,7 +13,7 @@ const FormSchema = z.object({
     description: z.string().trim().toLowerCase()
         .min(20, {message: "Description must contain at most 20 character(s)" })
         .max(200, { message: "Description must contain at most 200 character(s)" }),
-    priority: z.enum(['high', 'medium', 'low']),
+    //priority: z.enum(['high', 'medium', 'low']),
 })
 
 async function createTicket(prevState, formData) {
@@ -30,10 +30,10 @@ async function createTicket(prevState, formData) {
         };
     }
 
-    const { title, description, priority } = validatedFields.data;
+    const { title, description } = validatedFields.data;
     const {data, error } = await supabase
         .from("tickets")
-        .insert({ title, description, priority, user_email: "add@d.com"})
+        .insert({ title, description, user_email: "add@d.com"})
 
     if(!error){
         // Revalidate the cache for the Tickets page and redirect the user.
@@ -57,10 +57,10 @@ async function updateTicket(id, prevState, formData) {
         };
     }
 
-    const { title, description, priority } = validatedFields.data;
+    const { title, description } = validatedFields.data;
     const {data, error } = await supabase
         .from("tickets")
-        .update({title, description, priority, user_email: "add@d.com"})
+        .update({title, description})
         .eq('id', id)
 
     if(!error){
