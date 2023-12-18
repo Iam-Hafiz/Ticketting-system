@@ -1,5 +1,4 @@
 'use server'
-import supabase from '@/app/_lib/subapase';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers'
@@ -23,26 +22,25 @@ async function createTicket(prevState, formData) {
     /*const rawFormData = { title: formData.get('title'), description: formData.get('description'), priority: formData.get('priority'),}; */
     const rawFormData = Object.fromEntries(formData.entries())
     const validatedFields = FormSchema.safeParse(rawFormData);
-
     if (!validatedFields.success) {
         return {
           errors: validatedFields.error.flatten().fieldErrors,
           message: 'Failed to Create Ticket!.',
         };
     }
-
     const { title, description } = validatedFields.data;
-
     const supabaseAuth = createServerActionClient({ cookies })
     const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
+    if(sessionError){
+        retrun ({message: "Please sign in first!"});
+    }
     const user_id = sessionData.session.user.id;
     const user_email = sessionData.session.user.email;
-
     const { data, error } = await supabaseAuth
         .from("tickets")
         .insert({ title, description, user_id, user_email })
-
     if(!error){
+
         // Revalidate the cache for the Tickets page and redirect the user.
         revalidatePath('/')
         redirect('/')
@@ -56,30 +54,47 @@ async function createTicket(prevState, formData) {
 async function updateTicket(id, prevState, formData) {
     const rawFormData = Object.fromEntries(formData.entries())
     const validatedFields = FormSchema.safeParse(rawFormData);
-
     if (!validatedFields.success) {
         return {
           errors: validatedFields.error.flatten().fieldErrors,
           message: 'Failed to update Ticket!.',
         };
     }
-
     const { title, description } = validatedFields.data;
-    const {data, error } = await supabase
+    const supabaseAuth = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
+    if(sessionError){
+        retrun ({errors: "Please sign in first!"});
+    }
+    const {data, error } = await supabaseAuth
         .from("tickets")
         .update({title, description})
         .eq('id', id)
-
     if(!error){
         redirect('/ticket/' + id)
     } else {
         console.log('Supabase update error:', error)
-        return {message: 'Could not update Ticket please try again!'}
+        return {errors: 'Could not update Ticket please try again!'}
     }   
 }
 
-async function deleteTicket({ id }) {
-
+async function deleteTicket(id, prevState, formData) {
+  const supabase = createServerActionClient({ cookies })
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+  if(sessionError){
+    retrun ({errors: "Please sign in first!"});
+  }
+  const user_id = sessionData.session.user.id;
+  const {error} = await supabase
+    .from("tickets")
+    .delete()
+    .eq('id', id)
+  if(!error){
+    revalidatePath('/');
+    redirect('/')
+  } else {
+    return ({errors: "Could not delete the Ticket!"});
+  }
 }
 
 export {

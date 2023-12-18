@@ -71,7 +71,7 @@ export default function UpdateForm({ticket}) {
         aria-disabled={pending}
       >
         {!pending && ("Update")}
-        {pending && ("Updatting")}
+        {pending && ("Updatting...")}
       </Button>
     </form>
   </div>

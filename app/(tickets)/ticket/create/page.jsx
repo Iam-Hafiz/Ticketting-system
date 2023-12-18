@@ -68,7 +68,7 @@ export default function Form() {
           className="submit-btn"
         >
           {!pending && ("Create Ticket")}
-          {pending && ("Creating")}
+          {pending && ("Creating...")}
         </Button>
       </form>
     </div>
