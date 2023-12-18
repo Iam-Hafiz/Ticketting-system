@@ -2,9 +2,11 @@
 import supabase from '@/app/_lib/subapase';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers'
 
 // Server Component
 import { z } from 'zod';
+import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 
 const FormSchema = z.object({
     title: z.string().trim().toLowerCase()
@@ -22,7 +24,6 @@ async function createTicket(prevState, formData) {
     const rawFormData = Object.fromEntries(formData.entries())
     const validatedFields = FormSchema.safeParse(rawFormData);
 
-    //console.log('Zod cus err:', validatedFields.error);
     if (!validatedFields.success) {
         return {
           errors: validatedFields.error.flatten().fieldErrors,
@@ -31,9 +32,15 @@ async function createTicket(prevState, formData) {
     }
 
     const { title, description } = validatedFields.data;
-    const {data, error } = await supabase
+
+    const supabaseAuth = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
+    const user_id = sessionData.session.user.id;
+    const user_email = sessionData.session.user.email;
+
+    const { data, error } = await supabaseAuth
         .from("tickets")
-        .insert({ title, description, user_email: "add@d.com"})
+        .insert({ title, description, user_id, user_email })
 
     if(!error){
         // Revalidate the cache for the Tickets page and redirect the user.
@@ -42,7 +49,7 @@ async function createTicket(prevState, formData) {
     }
     if(error){
         console.log('Supabase insert error:', error)
-        return {message: 'Could not create Ticket please try again!'}
+        return {message: 'Could not create Ticket, please log in then try again!'}
     }         
 }
 

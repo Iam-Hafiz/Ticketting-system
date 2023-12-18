@@ -138,8 +138,8 @@ export default function SignUp() {
         aria-disabled={pending}
         className="submit-btn"
       >
-        {!pending && ("Sign in")}
-        {pending && ("Logging")}
+        {!pending && ("Sign up")}
+        {pending && ("Loading")}
       </Button>
     </form>
   </div>

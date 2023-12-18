@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react"
-import * as React from "react"
 import { useFormState, useFormStatus } from 'react-dom';
 
 // components
@@ -36,7 +35,7 @@ export default function Form() {
         />
         <div id="cTicketTitleErr" aria-live="polite" aria-atomic="true">
           {state.errors?.title &&
-            state.errors.title.map(error => (
+            state.errors?.title.map(error => (
               <p className="formErrors" key={error}>
                 {error}
               </p>
@@ -55,7 +54,7 @@ export default function Form() {
         />
         <div id="cTicketBodyErr" aria-live="polite" aria-atomic="true">
           {state.errors?.description &&
-            state.errors.description.map(error => (
+            state.errors?.description.map(error => (
               <p className="formErrors" key={error}>
                 {error}
               </p>
