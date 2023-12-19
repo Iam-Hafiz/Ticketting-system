@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { useEffect, useState } from "react";
 import supabase from "../_lib/subapase";
+import clsx from "clsx";
 
 // components
 import { Avatar, AvatarFallback, AvatarImage } from "../_components/ui/avatar";
@@ -9,10 +10,11 @@ import TicketHeader from "../_components/TicketHeader";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../_components/ui/hover-card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../_components/ui/select";
 
+
 // configs
 export const dynamic = 'force-dynamic'
 
-export default function TicketList({initTickets, error}) {
+export default function TicketList({initTickets, error, user_metadata}) {
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
   
@@ -49,7 +51,6 @@ export default function TicketList({initTickets, error}) {
       supabase.removeChannel(ticketsChannel)
     }
   }, [supabase, rerender, setRerender, tickets, setTickets])
-  
 
   return (
       <div>
@@ -63,8 +64,10 @@ export default function TicketList({initTickets, error}) {
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div className="pl-2">
-                    <p>Username</p>
-                    <p>{ticket.user_email}</p>
+                    <p>{user_metadata.fname.charAt(0).toUpperCase() + user_metadata.fname.slice(1).toLowerCase() + ' ' }
+                     {user_metadata.lname.charAt(0).toUpperCase() + user_metadata.lname.slice(1).toLowerCase() }
+                    </p>
+                    <p><small>{ticket.user_email}</small></p>
                 </div>
               </div>
               <div className="col-span-2 col-start-2 overflow-hidden ">
@@ -89,7 +92,7 @@ export default function TicketList({initTickets, error}) {
               <div className="overflow-hidden">
                 <Select>
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="priority">
-                     <SelectValue placeholder="Priority" />
+                     <SelectValue placeholder={ticket.priority} />
                    </SelectTrigger>
                    <SelectContent>
                      <SelectItem value="Low">Low</SelectItem>
@@ -97,12 +100,17 @@ export default function TicketList({initTickets, error}) {
                      <SelectItem value="High">High</SelectItem>
                    </SelectContent>
                 </Select>
-                <p className={`pill ${ticket.priority} px-2 rounded-sm`}>{ticket.priority}</p>
+                <p className={clsx('rounded-md px-1 inline-block bg-gray-200 dark:bg-transparent',
+                    { ' text-blue-600  ': ticket.priority === 'Low',
+                      ' text-orange-500 ': ticket.priority === "Medium",
+                      ' text-red-600 ': ticket.priority === "High",
+                    }
+                  )}>{ticket.priority}</p>
               </div>
               <div className="overflow-hidden">
                 <Select>
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="assign">
-                     <SelectValue placeholder="Assign" />
+                     <SelectValue placeholder={ticket.assign} />
                    </SelectTrigger>
                    <SelectContent>
                      <SelectItem value="AI Engineer">AI Engineer</SelectItem>
@@ -110,11 +118,12 @@ export default function TicketList({initTickets, error}) {
                      <SelectItem value="Network administrator">Network administrator</SelectItem>
                    </SelectContent>
                 </Select>
+                <p>{ticket.assign}</p>
               </div>
               <div className="overflow-hidden">
                 <Select>
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="status">
-                     <SelectValue placeholder="Status" />
+                     <SelectValue placeholder={ticket.status} />
                    </SelectTrigger>
                    <SelectContent>
                      <SelectItem value="Open">Open</SelectItem>
@@ -122,9 +131,17 @@ export default function TicketList({initTickets, error}) {
                      <SelectItem value="Closed">Closed</SelectItem>
                    </SelectContent>
                 </Select>
+                <p className={clsx('rounded-md px-1 inline-block bg-gray-200 dark:bg-transparent',
+                    { ' text-blue-600  ': ticket.status === 'Open',
+                      ' text-green-600 ': ticket.status === "Solved",
+                      ' text-slate-600': ticket.status === "Closed",
+                    }
+                  )}>
+                  {ticket.status}
+                </p>
               </div>
-              <div >create hhggygfytfyfty</div>
-              <div >update hgfuyftyfytftf--ff-</div>
+              <div >{ticket.created_at}</div>
+              <div >{ticket.updated_at}</div>
           </div>
         ))}
         {error && (

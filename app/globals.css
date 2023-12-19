@@ -125,24 +125,6 @@
     my-4 mx-auto;
 }
 
-/* pill styles */
-.pill{
-  @apply
-  w-max
-}
-
-.high {
-  @apply bg-red-300 text-red-600;
-}
-
-.medium {
-  @apply bg-blue-300 text-blue-600;
-}
-
-.low {
-  @apply bg-emerald-300 text-emerald-600;
-}
-
 /* sideBar styles ***************************************/
 .open {
   @apply

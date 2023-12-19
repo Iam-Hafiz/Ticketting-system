@@ -38,7 +38,7 @@ async function createTicket(prevState, formData) {
     const user_email = sessionData.session.user.email;
     const { data, error } = await supabaseAuth
         .from("tickets")
-        .insert({ title, description, user_id, user_email })
+        .insert({ title, description, assign: "IT Technician", status: "Open", priority: "Low", user_id, user_email })
     if(!error){
 
         // Revalidate the cache for the Tickets page and redirect the user.
