@@ -9,12 +9,29 @@ import { Avatar, AvatarFallback, AvatarImage } from "../_components/ui/avatar";
 import TicketHeader from "../_components/TicketHeader";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../_components/ui/hover-card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../_components/ui/select";
+import { updateSelectValues } from "../(tickets)/ticket/actions";
 
 
 // configs
 export const dynamic = 'force-dynamic'
 
 export default function TicketList({initTickets, error, user_metadata}) {
+
+  // Update DB select values
+  const [priority, setPriority] = useState('')
+  const [assign, setAssign] = useState('')
+  const [status, setStatus] = useState('')
+
+/*   useEffect(() => {
+    first
+  
+    return () => {
+      second
+    }
+  }, [third]) */
+  
+
+  // Display tickets & apply realtime listeners 
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
   
@@ -61,11 +78,14 @@ export default function TicketList({initTickets, error, user_metadata}) {
               <div className="flex items-start overflow-hidden">
                 <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>
+                      {user_metadata && (user_metadata.fname.charAt(0).toUpperCase())}
+                      {user_metadata && (user_metadata.lname.charAt(0).toUpperCase())}
+                    </AvatarFallback>
                 </Avatar>
                 <div className="pl-2">
-                    <p>{user_metadata.fname.charAt(0).toUpperCase() + user_metadata.fname.slice(1).toLowerCase() + ' ' }
-                     {user_metadata.lname.charAt(0).toUpperCase() + user_metadata.lname.slice(1).toLowerCase() }
+                    <p>{user_metadata && (user_metadata.fname.charAt(0).toUpperCase() + user_metadata.fname.slice(1) + ' ' )}
+                     {user_metadata && (user_metadata.lname.charAt(0).toUpperCase() + user_metadata.lname.slice(1) )}
                     </p>
                     <p><small>{ticket.user_email}</small></p>
                 </div>
@@ -90,7 +110,12 @@ export default function TicketList({initTickets, error, user_metadata}) {
                 </HoverCard>
               </div>
               <div className="overflow-hidden">
-                <Select>
+                <Select onValueChange={
+                  async (value) => {
+                    const res = await updateSelectValues({priority: value, id: ticket.id})
+                  //(Value) => setPriority(Value)
+                }
+                }>
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="priority">
                      <SelectValue placeholder={ticket.priority} />
                    </SelectTrigger>
@@ -108,7 +133,7 @@ export default function TicketList({initTickets, error, user_metadata}) {
                   )}>{ticket.priority}</p>
               </div>
               <div className="overflow-hidden">
-                <Select>
+                <Select onValueChange={(Value) => setAssign(Value)}>
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="assign">
                      <SelectValue placeholder={ticket.assign} />
                    </SelectTrigger>
@@ -121,7 +146,7 @@ export default function TicketList({initTickets, error, user_metadata}) {
                 <p>{ticket.assign}</p>
               </div>
               <div className="overflow-hidden">
-                <Select>
+                <Select onValueChange={(Value) => setStatus(Value)}>
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="status">
                      <SelectValue placeholder={ticket.status} />
                    </SelectTrigger>

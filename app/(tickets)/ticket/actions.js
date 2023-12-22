@@ -14,7 +14,6 @@ const FormSchema = z.object({
     description: z.string().trim().toLowerCase()
         .min(20, {message: "Description must contain at most 20 character(s)" })
         .max(200, { message: "Description must contain at most 200 character(s)" }),
-    //priority: z.enum(['high', 'medium', 'low']),
 })
 
 async function createTicket(prevState, formData) {
@@ -28,7 +27,7 @@ async function createTicket(prevState, formData) {
           message: 'Failed to Create Ticket!.',
         };
     }
-    const { title, description } = validatedFields.data;
+    const { title, description } = validatedFields.data; 
     const supabaseAuth = createServerActionClient({ cookies })
     const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
     if(sessionError){
@@ -78,6 +77,41 @@ async function updateTicket(id, prevState, formData) {
     }   
 }
 
+async function updateSelectValues(data) {
+    let dataSchema
+    if(data.priority){
+        dataSchema = z.object({ priority: z.enum(['High', 'Medium', 'Low']) })
+    } else if(data.assign){
+        dataSchema = z.object({ assign: z.enum(['AI Engineer', 'IT Technician', 'Network administrator']) })
+    } else if(data.status){
+        dataSchema = z.object({ status: z.enum(['Open', 'Solved', 'Closed']) })
+    } else {
+        return {message: 'Invalid field!'};
+    }
+    const validatedData = dataSchema.safeParse(data);
+    if (!validatedData.success) {
+        return {message: 'Invalid value!'};
+    }
+    const supabaseAuth = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
+    if(sessionError){
+        retrun ({message: "Please sign in first!"});
+    }
+    const {data: updateData, error } = await supabaseAuth
+        .from("tickets")
+        .update(validatedData.data)
+        .eq('id', data.id)
+    if(!error){
+
+        // Revalidate the cache for the Tickets home page.
+        revalidatePath('/')
+        //redirect('/')
+    } else {
+        console.log('Supabase update error:', error)
+        return {message: 'Failed! please try again!'}
+    }   
+}
+
 async function deleteTicket(id, prevState, formData) {
   const supabase = createServerActionClient({ cookies })
   const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
@@ -100,5 +134,6 @@ async function deleteTicket(id, prevState, formData) {
 export {
     createTicket,
     updateTicket,
+    updateSelectValues,
     deleteTicket,
 }
