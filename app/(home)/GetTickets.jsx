@@ -17,20 +17,6 @@ export const dynamic = 'force-dynamic'
 
 export default function TicketList({initTickets, error, user_metadata}) {
 
-  // Update DB select values
-  const [priority, setPriority] = useState('')
-  const [assign, setAssign] = useState('')
-  const [status, setStatus] = useState('')
-
-/*   useEffect(() => {
-    first
-  
-    return () => {
-      second
-    }
-  }, [third]) */
-  
-
   // Display tickets & apply realtime listeners 
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
@@ -95,7 +81,7 @@ export default function TicketList({initTickets, error, user_metadata}) {
                   <HoverCardTrigger>
                       <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
                         {`${ticket.title.slice(0, 50)}...`}</Link>
-                      <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
+                      <Link href={`/ticket/${ticket.id}`} className="font-bold block overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
                         {ticket.description?.slice(0, 30)}...
                       </Link>
                   </HoverCardTrigger>
@@ -110,14 +96,11 @@ export default function TicketList({initTickets, error, user_metadata}) {
                 </HoverCard>
               </div>
               <div className="overflow-hidden">
-                <Select onValueChange={
-                  async (value) => {
-                    const res = await updateSelectValues({priority: value, id: ticket.id})
-                  //(Value) => setPriority(Value)
-                }
-                }>
+                <Select onValueChange={ async (value) => {
+                    await updateSelectValues({priority: value, id: ticket.id})}}
+                >
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="priority">
-                     <SelectValue placeholder={ticket.priority} />
+                     <SelectValue placeholder="Select..." />
                    </SelectTrigger>
                    <SelectContent>
                      <SelectItem value="Low">Low</SelectItem>
@@ -133,9 +116,11 @@ export default function TicketList({initTickets, error, user_metadata}) {
                   )}>{ticket.priority}</p>
               </div>
               <div className="overflow-hidden">
-                <Select onValueChange={(Value) => setAssign(Value)}>
+                <Select onValueChange={ async (value) => {
+                  await updateSelectValues({assign: value, id: ticket.id})}}
+                >
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="assign">
-                     <SelectValue placeholder={ticket.assign} />
+                     <SelectValue placeholder="Select..." />
                    </SelectTrigger>
                    <SelectContent>
                      <SelectItem value="AI Engineer">AI Engineer</SelectItem>
@@ -146,9 +131,11 @@ export default function TicketList({initTickets, error, user_metadata}) {
                 <p>{ticket.assign}</p>
               </div>
               <div className="overflow-hidden">
-                <Select onValueChange={(Value) => setStatus(Value)}>
+                <Select onValueChange={ async (value) => {
+                  await updateSelectValues({status: value, id: ticket.id})}}
+                >
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="status">
-                     <SelectValue placeholder={ticket.status} />
+                     <SelectValue placeholder="Select..." />
                    </SelectTrigger>
                    <SelectContent>
                      <SelectItem value="Open">Open</SelectItem>
@@ -185,19 +172,3 @@ export default function TicketList({initTickets, error, user_metadata}) {
   )
 }
 
-/*     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'tickets' }, payload => {
-      //.log('Change received!', payload)
-      console.log('up fired!')
-      const length = tickets.length
-      for (let i = 0; i < length; i++) {
-        if(tickets[i].id === payload.new?.id){
-          tickets[i] = payload.new
-          setTickets(tickets)
-        }
-      }
-    })
-    .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'tickets' }, payload => {
-      //.log('Change received!', payload)
-      console.log("delete event:", payload)
-      //setTickets([...tickets, ticketsPayload.new])
-    }) */
