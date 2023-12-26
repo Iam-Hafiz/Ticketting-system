@@ -1,9 +1,8 @@
 "use client"
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 import { useState } from 'react';
 
 // components
-import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";
 import { Input } from "@/app/_components/ui/input";
 
@@ -12,6 +11,7 @@ import { updateTicket } from "../../actions";
 
 //icons
 import { Frown } from 'lucide-react';
+import SubmitBtn from '@/app/_components/SubmitBtn';
 
 export default function UpdateForm({ticket}) {
     const initialState = { message: null, errors: {} };
@@ -20,7 +20,6 @@ export default function UpdateForm({ticket}) {
 
     const [title, setTitle] = useState(ticket.title)
     const [description, setDescription] = useState(ticket.description)
-    const { pending } = useFormStatus();
 
   return (
     <div className="centre-a-form">
@@ -66,13 +65,7 @@ export default function UpdateForm({ticket}) {
       
       {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       
-      <Button
-        className="submit-btn"
-        aria-disabled={pending}
-      >
-        {!pending && ("Update")}
-        {pending && ("Updatting...")}
-      </Button>
+      <SubmitBtn initValue={"Update"} loadingValue={"Updatting..."}/>
     </form>
   </div>
   )

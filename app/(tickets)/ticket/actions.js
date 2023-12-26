@@ -51,6 +51,7 @@ async function createTicket(prevState, formData) {
 }
 
 async function updateTicket(id, prevState, formData) {
+
     const rawFormData = Object.fromEntries(formData.entries())
     const validatedFields = FormSchema.safeParse(rawFormData);
     if (!validatedFields.success) {
@@ -105,7 +106,6 @@ async function updateSelectValues(data) {
 
         // Revalidate the cache for the Tickets home page.
         revalidatePath('/')
-        //redirect('/')
     } else {
         console.log('Supabase update error:', error)
         return {message: 'Failed! please try again!'}
@@ -115,10 +115,9 @@ async function updateSelectValues(data) {
 async function deleteTicket(id, prevState, formData) {
   const supabase = createServerActionClient({ cookies })
   const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-  if(sessionError){
-    retrun ({errors: "Please sign in first!"});
+  if(!sessionData?.session || sessionError){
+    return {errors: " Please sign in first!"};
   }
-  const user_id = sessionData.session.user.id;
   const {error} = await supabase
     .from("tickets")
     .delete()
@@ -127,7 +126,7 @@ async function deleteTicket(id, prevState, formData) {
     revalidatePath('/');
     redirect('/')
   } else {
-    return ({errors: "Could not delete the Ticket!"});
+    return ({errors: " Could not delete the Ticket!"});
   }
 }
 

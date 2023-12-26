@@ -1,15 +1,14 @@
 'use client';
 import { useState } from "react"
-import * as React from "react"
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 
 // icons
 import { Frown } from "lucide-react";
 
 // components
-import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { loginAction } from "../actions";
+import SubmitBtn from "@/app/_components/SubmitBtn";
 
 export default function page() {
     const [email, setEmail] = useState('')
@@ -17,7 +16,6 @@ export default function page() {
 
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(loginAction, initialState);
-    const { pending } = useFormStatus();
 
   return (
   <div className="centre-a-form">
@@ -49,7 +47,6 @@ export default function page() {
         name="password"
         value={password}
         onChange={(e) => { setPassword(e.target.value)}}
-        autoFocus
         aria-describedby="loginPasswordErr"
         autocomplete="current-password" 
       />
@@ -64,13 +61,7 @@ export default function page() {
 
       {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
 
-      <Button
-        aria-disabled={pending}
-        className="submit-btn"
-      >
-        {!pending && ("Sign in")}
-        {pending && ("Logging")}
-      </Button>
+      <SubmitBtn initValue={"Sign in"} loadingValue={"Logging"}/>
     </form>
   </div>
   )

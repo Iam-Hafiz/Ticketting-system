@@ -1,12 +1,12 @@
 "use client"
 import { useState } from "react"
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 
 // components
-import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Textarea } from "@/app/_components/ui/textarea";
 import { createTicket } from "../actions";
+import SubmitBtn from "../../../_components/SubmitBtn";
 
 // icons
 import { Frown } from "lucide-react";
@@ -17,7 +17,6 @@ export default function Form() {
 
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(createTicket, initialState);
-    const { pending } = useFormStatus();
 
   return (
     <div className="centre-a-form">
@@ -63,13 +62,7 @@ export default function Form() {
 
         {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
 
-        <Button
-          aria-disabled={pending}
-          className="submit-btn"
-        >
-          {!pending && ("Create Ticket")}
-          {pending && ("Creating...")}
-        </Button>
+        <SubmitBtn initValue={"Create Ticket"} loadingValue={"Creating..."}/>
       </form>
     </div>
   )

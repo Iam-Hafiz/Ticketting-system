@@ -1,16 +1,15 @@
 "use client"
 import { useState } from "react"
-import * as React from "react"
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 
 // icons
 import { Frown, Smile } from "lucide-react";
 
 // components
-import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { SignUpAction } from "../actions";
 import { useRouter } from "next/navigation";
+import SubmitBtn from "@/app/_components/SubmitBtn";
 
 export default function SignUp() {
     const router = useRouter()
@@ -23,7 +22,6 @@ export default function SignUp() {
 
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(SignUpAction, initialState);
-    const { pending } = useFormStatus();
 
     if(state.message == 'Account created successfully!'){
       setTimeout(() => {
@@ -134,13 +132,7 @@ export default function SignUp() {
       {!state.message?.includes("successfully") && state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       {state.message?.includes("successfully")  && (<p className=" flex justify-center items-center text-green-500"> <Smile /> {state.message}</p>)}
 
-      <Button
-        aria-disabled={pending}
-        className="submit-btn"
-      >
-        {!pending && ("Sign up")}
-        {pending && ("Loading")}
-      </Button>
+      <SubmitBtn initValue={"Sign up"} loadingValue={"Loading"}/>
     </form>
   </div>
   )
