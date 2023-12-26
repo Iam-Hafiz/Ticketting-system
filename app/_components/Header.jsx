@@ -15,11 +15,9 @@ export default function Header({user}) {
         <Link href="/" className='mr-auto p-1 font-bold uppercase'>HelpDesk</Link>
         {!user && (<Link href="/login" className='p-1'>login</Link>)}
         {!user && (<Link href="/signup" className='p-1'>signup</Link>)}
-        {user && (<Link href="/signup" className='p-1'>{user.email}</Link>)}
-        {user && (<LogOut />)}
         <Link href="/ticket/create" className='p-1'>New ticket</Link>
         <ModeToggle />
-        <UserDropDown />
+        <UserDropDown user={user}/>
       </div>
     </header>
   )

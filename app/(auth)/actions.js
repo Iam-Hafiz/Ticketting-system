@@ -27,10 +27,16 @@ const SignUpSchema = z.object({
 })
 
 async function SignUpAction(prevState, formData) {
+
+    // make sure the user is not logged in first
+    const supabase = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if(sessionData?.session){
+        redirect('/profil');
+    }
     const rawFormData = Object.fromEntries(formData.entries())
     rawFormData.age = parseInt(rawFormData.age)
 
-    //console.log(rawFormData)
     const validatedFields = SignUpSchema.safeParse(rawFormData);
     if (!validatedFields.success) {
         return {
@@ -40,7 +46,6 @@ async function SignUpAction(prevState, formData) {
     }
 
     const { email, password, fname, lname, age } = validatedFields.data;
-    const supabase = createServerActionClient({ cookies })
     const { error } = await supabase.auth.signUp({ 
           email, password,
           options: { data: { fname, lname, age } },
@@ -56,6 +61,14 @@ async function SignUpAction(prevState, formData) {
 }
 
 async function loginAction(prevState, formData) {
+
+    // make sure the user is not logged in first
+    const supabase = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if(sessionData?.session){
+        redirect('/profil');
+    }
+
     const rawFormData = Object.fromEntries(formData.entries())
     const LoginSchema = SignUpSchema.pick({ email: true,  password: true});
     const validatedFields = LoginSchema.safeParse(rawFormData);
@@ -68,7 +81,6 @@ async function loginAction(prevState, formData) {
     }
 
     const { email, password } = validatedFields.data;
-    const supabase = createServerActionClient({ cookies })
     const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password

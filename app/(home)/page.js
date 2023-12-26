@@ -14,6 +14,7 @@ const GetTickets = dynamic(() => import('./GetTickets'), { ssr: false })
 export default async function Tickets() {
   const sessionSupabase = createServerComponentClient({ cookies })
   const { data, error: sessionError  } = await sessionSupabase.auth.getSession()
+  
   // imitate delay to see the loading page
   //await new Promise(resolve => setTimeout(resolve, 1000));
   const { data: initTickets, error }  = await supabase
