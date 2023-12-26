@@ -66,9 +66,10 @@ async function updateTicket(id, prevState, formData) {
     if(sessionError){
         retrun ({errors: "Please sign in first!"});
     }
+    const updated_at = new Date();
     const {data, error } = await supabaseAuth
         .from("tickets")
-        .update({title, description})
+        .update({title, description, updated_at})
         .eq('id', id)
     if(!error){
         redirect('/ticket/' + id)
@@ -98,9 +99,10 @@ async function updateSelectValues(data) {
     if(sessionError){
         retrun ({message: "Please sign in first!"});
     }
+    const updated_at = new Date();
     const {data: updateData, error } = await supabaseAuth
         .from("tickets")
-        .update(validatedData.data)
+        .update({...validatedData.data, updated_at})
         .eq('id', data.id)
     if(!error){
 

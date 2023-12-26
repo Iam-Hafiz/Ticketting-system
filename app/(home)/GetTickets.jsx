@@ -3,6 +3,8 @@ import Link from "next/link"
 import { useEffect, useState } from "react";
 import supabase from "../_lib/subapase";
 import clsx from "clsx";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 // components
 import { Avatar, AvatarFallback, AvatarImage } from "../_components/ui/avatar";
@@ -55,6 +57,10 @@ export default function TicketList({initTickets, error, user_metadata}) {
     }
   }, [supabase, rerender, setRerender, tickets, setTickets])
 
+  // Display time as ex: "31 years ago" 
+  dayjs.extend(relativeTime)
+  let c = dayjs().to(dayjs('1990-01-01')) 
+
   return (
       <div>
         <TicketHeader />
@@ -63,17 +69,17 @@ export default function TicketList({initTickets, error, user_metadata}) {
               bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
               <div className="flex items-start overflow-hidden">
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <Link href="/profil"><AvatarImage src="https://github.com/shadcn.png" /> </Link>
                     <AvatarFallback>
                       {user_metadata && (user_metadata.fname.charAt(0).toUpperCase())}
                       {user_metadata && (user_metadata.lname.charAt(0).toUpperCase())}
                     </AvatarFallback>
                 </Avatar>
                 <div className="pl-2">
-                    <p>{user_metadata && (user_metadata.fname.charAt(0).toUpperCase() + user_metadata.fname.slice(1) + ' ' )}
+                    <Link href="/profil">{user_metadata && (user_metadata.fname.charAt(0).toUpperCase() + user_metadata.fname.slice(1) + ' ' )}
                      {user_metadata && (user_metadata.lname.charAt(0).toUpperCase() + user_metadata.lname.slice(1) )}
-                    </p>
-                    <p><small>{ticket.user_email}</small></p>
+                    </Link>
+                    <Link href="/profil" className=" block">{ticket.user_email}</Link>
                 </div>
               </div>
               <div className="col-span-2 col-start-2 overflow-hidden ">
@@ -152,8 +158,8 @@ export default function TicketList({initTickets, error, user_metadata}) {
                   {ticket.status}
                 </p>
               </div>
-              <div >{ticket.created_at}</div>
-              <div >{ticket.updated_at}</div>
+              <div >{ dayjs().to(dayjs(ticket.created_at)) }</div>
+              <div >{ dayjs().to(dayjs(ticket.updated_at)) }</div>
           </div>
         ))}
         {error && (
