@@ -59,7 +59,6 @@ export default function TicketList({initTickets, error, user_metadata}) {
 
   // Display time as ex: "31 years ago" 
   dayjs.extend(relativeTime)
-  let c = dayjs().to(dayjs('1990-01-01')) 
 
   return (
       <div>
@@ -87,7 +86,7 @@ export default function TicketList({initTickets, error, user_metadata}) {
                   <HoverCardTrigger>
                       <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
                         {`${ticket.title.slice(0, 50)}...`}</Link>
-                      <Link href={`/ticket/${ticket.id}`} className="font-bold block overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
+                      <Link href={`/ticket/${ticket.id}`} className="block overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
                         {ticket.description?.slice(0, 30)}...
                       </Link>
                   </HoverCardTrigger>
@@ -95,7 +94,7 @@ export default function TicketList({initTickets, error, user_metadata}) {
                       <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
                         {ticket.title}:
                       </Link>
-                      <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
+                      <Link href={`/ticket/${ticket.id}`} className="overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
                         {ticket.description}
                       </Link>
                   </HoverCardContent>

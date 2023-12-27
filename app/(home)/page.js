@@ -5,7 +5,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import supabase from '../_lib/subapase'
 
 // components
-import Loading from './Loading'
+import Loading from './loading'
 import SideBar from './SideBar'
 
 //disable prerendering on GetTickets client component
@@ -14,9 +14,9 @@ const GetTickets = dynamic(() => import('./GetTickets'), { ssr: false })
 export default async function Tickets() {
   const sessionSupabase = createServerComponentClient({ cookies })
   const { data, error: sessionError  } = await sessionSupabase.auth.getSession()
-  
+
   // imitate delay to see the loading page
-  //await new Promise(resolve => setTimeout(resolve, 1000));
+  //await new Promise(resolve => setTimeout(resolve, 3000));
   const { data: initTickets, error }  = await supabase
   .from('tickets')
   .select();
