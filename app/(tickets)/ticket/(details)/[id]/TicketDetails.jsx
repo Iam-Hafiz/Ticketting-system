@@ -6,12 +6,13 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { cookies } from 'next/headers'
 
 // components
-import DeleteTicket from "../../../../_components/DeleteTicket";
+//import DeleteTicket from "../../../../_components/DeleteTicket";
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/_components/ui/avatar";
 import { FolderEdit } from "lucide-react";
 import supabase from "@/app/_lib/subapase";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import clsx from "clsx";
+import ConfirmDialog from "@/app/_components/ConfirmDialog";
 
 
 // configs
@@ -30,7 +31,7 @@ async function getTicket(id){
  }
 
 export default async function TicketDetails({params}) {
-    
+
     // Make a delay for Scaleton
     //await new Promise(resolve => setTimeout(resolve, 4000));
     const ticket = await getTicket(params.id)
@@ -99,12 +100,12 @@ export default async function TicketDetails({params}) {
             </div>
             <div >{ dayjs().to(dayjs(ticket.created_at)) }</div>
             <div >{ dayjs().to(dayjs(ticket.updated_at)) }</div>
-            <p>
-              <Link href={`/ticket/update/${ticket.id}`} className="flex items-end">
-                  <FolderEdit /> <span className="ml-1">Edit</span>
+            <p className="flex items-center">
+              <Link href={`/ticket/update/${ticket.id}`} className=" hover:text-red-400">
+                  <FolderEdit /> 
               </Link>
             </p>
-            <DeleteTicket ticketId={ticketId}/>
+            <ConfirmDialog ticketId={ticketId}/>
         </div>
     </div>
   )

@@ -65,7 +65,7 @@ export default function UpdateForm({ticket}) {
       
       {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       
-      <SubmitBtn initValue={"Update"} loadingValue={"Updatting..."}/>
+      <SubmitBtn initValue={"Update"} loadingValue={"Updating..."}/>
     </form>
   </div>
   )
