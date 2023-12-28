@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import dynamic from 'next/dynamic'
 
 // components
-import ProfileForm from "./ProfileForm"
 import {
   Dialog,
   DialogContent,
@@ -12,26 +12,50 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog"
 import { Button } from "@/app/_components/ui/button"
+import LogOutBtn from '@/app/_components/LogOut';
+import { LogOut } from 'lucide-react';
+
+//import ProfileForm from "./ProfileForm"
+//disable prerendering on GetTickets client component
+const ProfileForm = dynamic(() => import("./ProfileForm"), { ssr: false })
 
 export default async function Profil() {
   const supabase = createServerComponentClient({cookies})
-  const { data, error } = await supabase.auth.getSession();
-  let user_metadata = data?.session?.user?.user_metadata
+  const { data: { user } } = await supabase.auth.getUser()
+  const user_metadata = user?.user_metadata
+  const user_email = user?.email
+
   return (
-    <Dialog>
-      <DialogTrigger>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
-        </DialogHeader>
-            <ProfileForm user_metadata={user_metadata}/>
-      </DialogContent>
-    </Dialog>
+    <div className=' flex justify-center'>
+      <div className='bg-gray-200 dark:bg-slate-800 p-2 lg:w-1/2'>
+        <h2 className=' font-bold text-xl mb-2'>My profil</h2>
+        <h3 className=' font-bold text-lg'>Personal Info</h3>
+        <ul className='ml-2'>
+          <li>First name: {user_metadata?.fname}</li>
+          <li>Last name: {user_metadata?.lname}</li>
+          <li>Age: {user_metadata?.age}</li>
+        </ul>
+        <Dialog>
+          <DialogTrigger>
+            <Button variant="outline">Edit</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>
+                Make changes to your profile here. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
+                <ProfileForm user_metadata={user_metadata}/>
+          </DialogContent>
+        </Dialog>
+        <h3 className=' font-bold text-lg mt-4'>Address</h3>
+        <p>Email: {user_email}</p>
+        <div className='flex hover:text-red-500 mt-4'>
+          <LogOut /><span className=' ml-1'><LogOutBtn /></span>
+        </div>
+      </div>
+    </div>
   )
 }
 

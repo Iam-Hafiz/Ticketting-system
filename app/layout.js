@@ -20,8 +20,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 const supabase = createServerComponentClient({ cookies })
-const { data, error } = await supabase.auth.getSession()
-
+const { data: { user } } = await supabase.auth.getUser()
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -31,7 +30,7 @@ const { data, error } = await supabase.auth.getSession()
             enableSystem
             disableTransitionOnChange
           >
-            <Header user={data.session?.user}/>
+            <Header user={user}/>
             <main className='min-h-[80vh] max-w-[2000px] mx-auto 
               bg-gradient-to-r from-gray-200 to-slate-100  dark:from-slate-900 dark:from-10% dark:via-indigo-950 dark:via-80% dark:to-slate-800 dark:to-100% dark:text-slate-300'>
               {children}
