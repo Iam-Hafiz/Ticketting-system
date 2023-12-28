@@ -12,8 +12,7 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog"
 import { Button } from "@/app/_components/ui/button"
-import LogOutBtn from '@/app/_components/LogOut';
-import { LogOut } from 'lucide-react';
+import UpdateEmail from './UpdateEmail';
 
 //import ProfileForm from "./ProfileForm"
 //disable prerendering on GetTickets client component
@@ -51,9 +50,20 @@ export default async function Profil() {
         </Dialog>
         <h3 className=' font-bold text-lg mt-4'>Address</h3>
         <p>Email: {user_email}</p>
-        <div className='flex hover:text-red-500 mt-4'>
-          <LogOut /><span className=' ml-1'><LogOutBtn /></span>
-        </div>
+        <Dialog>
+          <DialogTrigger>
+            <Button variant="outline">Edit</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>
+                Make changes to your profile here. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
+                <UpdateEmail user_email={user_email}/>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   )

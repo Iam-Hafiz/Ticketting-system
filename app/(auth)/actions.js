@@ -124,8 +124,37 @@ async function loginAction(prevState, formData) {
     }   
 }
 
+async function updateEmailAction(prevState, formData) {
+    
+    // make sure the user is logged in first
+    const supabase = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if(!sessionData?.session?.user){
+        redirect('/login');
+    }
+    const rawFormData = Object.fromEntries(formData.entries())
+    const UpdateEmailSchema = SignUpSchema.pick({ email: true});
+    const validatedFields = UpdateEmailSchema.safeParse(rawFormData);
+
+    if (!validatedFields.success) {
+        return {
+          errors: validatedFields.error.flatten().fieldErrors,
+          message: 'Failed to update!',
+        };
+    }
+    const { email } = validatedFields.data;
+
+    // Update logged in user email
+    const { data, error } = await supabase.auth.updateUser({email}) 
+    if(!error){
+        return {message: "Email updated successfully!"}
+    } else {
+        console.log('Supabase update error:', error)
+        return ({message: error.message} ?? {message: 'Invalid credentials!'});
+    }    
+}
+
 async function logOut() {
-    console.log('sign out!')
     const supabase = createServerActionClient({ cookies })
     const { error } = await supabase.auth.signOut() 
     if(!error){
@@ -141,4 +170,5 @@ export {
     SignUpAction,
     updateProfileAction,
     logOut,
+    updateEmailAction,
 }

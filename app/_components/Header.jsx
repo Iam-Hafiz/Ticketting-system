@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { ModeToggle } from './Mode-toggle-btn'
 import { UserDropDown } from './UserDropDown'
-import LogOut from './LogOut'
 import DropDownBtn from './DropDownBtn'
 
 export default function Header({user}) {
@@ -13,8 +12,6 @@ export default function Header({user}) {
       <div className='flex items-center'>
         <DropDownBtn />
         <Link href="/" className='mr-auto p-1 font-bold uppercase'>HelpDesk</Link>
-        {!user && (<Link href="/login" className='p-1'>login</Link>)}
-        {!user && (<Link href="/signup" className='p-1'>signup</Link>)}
         <Link href="/ticket/create" className='p-1'>New ticket</Link>
         <ModeToggle />
         <UserDropDown user={user}/>

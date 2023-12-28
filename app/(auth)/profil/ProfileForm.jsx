@@ -10,7 +10,6 @@ import { Input } from "@/app/_components/ui/input";
 import { updateProfileAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
 import { DialogClose, DialogFooter } from "@/app/_components/ui/dialog";
-import { Button } from "@/app/_components/ui/button";
 
 export default function ProfileForm({user_metadata}) {
     const [fname, setFname] = useState(user_metadata?.fname)

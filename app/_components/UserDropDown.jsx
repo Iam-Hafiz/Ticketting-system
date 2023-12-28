@@ -85,11 +85,21 @@ import LogOutComp from "./LogOut"
             <Link href="/contact" className="w-full">Support</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          {!user && (          
           <DropdownMenuItem>
-            <LogOut className="mr-2 h-4 w-4" />
-            <LogOutComp />
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-          </DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <Link href="/login" className='px-1'>Sign in</Link>
+          </DropdownMenuItem>)}
+          {!user && (          
+          <DropdownMenuItem>
+            <UserPlus className="mr-2 h-4 w-4" />
+            <Link href="/signup" className='px-1'>Sign up</Link>
+          </DropdownMenuItem>)}
+          { user && (<DropdownMenuItem>
+              <LogOut className="mr-2 h-4 w-4" />
+              <LogOutComp />
+              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            </DropdownMenuItem>)}
         </DropdownMenuContent>
       </DropdownMenu>
     )
