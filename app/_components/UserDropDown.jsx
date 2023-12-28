@@ -1,20 +1,14 @@
 import Link from "next/link"
 
 import {
-    Cloud,
-    CreditCard,
-    Github,
-    Keyboard,
     LifeBuoy,
     LogOut,
     Mail,
     MessageSquare,
-    Plus,
     PlusCircle,
     Settings,
     User,
     UserPlus,
-    Users,
   } from "lucide-react"
 
   import {

@@ -72,18 +72,18 @@ export default function SignUp() {
           ))}
       </div>
 
-      <label htmlFor="loginAge">Age:</label>
+      <label htmlFor="signUpAge">Age:</label>
       <Input
         type="number"
-        id="loginAge"
+        id="signUpAge"
         name="age"
         value={age}
         onChange={(e) => { setAge(e.target.value)}}
-        aria-describedby="loginAgeErr"
+        aria-describedby="signUpAgeErr"
         autocomplete="on"
         inputmode="numeric" 
       />
-      <div id="loginAgeErr" aria-live="polite" aria-atomic="true">
+      <div id="signUpAgeErr" aria-live="polite" aria-atomic="true">
         {state.errors?.age &&
           state.errors.age.map(error => (
             <p className="formErrors" key={error}>
@@ -92,16 +92,16 @@ export default function SignUp() {
           ))}
       </div>
 
-      <label htmlFor="loginEmail">Email:</label>
+      <label htmlFor="signUpEmail">Email:</label>
       <Input
         type="text"
-        id="loginEmail"
+        id="signUpEmail"
         name="email"
         value={email}
         onChange={(e) => { setEmail(e.target.value)}}
-        aria-describedby="loginEmailErr"
+        aria-describedby="signUpEmailErr"
       />
-      <div id="loginEmailErr" aria-live="polite" aria-atomic="true">
+      <div id="signUpEmailErr" aria-live="polite" aria-atomic="true">
         {state.errors?.email &&
           state.errors.email.map(error => (
             <p className="formErrors" key={error}>
@@ -110,17 +110,17 @@ export default function SignUp() {
           ))}
       </div>
 
-      <label htmlFor="loginPassword">Password:</label>
+      <label htmlFor="signUpPassword">Password:</label>
       <Input
         type="password"
-        id="loginPassword"
+        id="signUpPassword"
         name="password"
         value={password}
         onChange={(e) => { setPassword(e.target.value)}}
-        aria-describedby="loginPasswordErr"
+        aria-describedby="signUpPasswordErr"
         autocomplete="new-password" 
       />
-      <div id="loginPasswordErr" aria-live="polite" aria-atomic="true">
+      <div id="signUpPasswordErr" aria-live="polite" aria-atomic="true">
         {state.errors?.password &&
           state.errors.password.map(error => (
             <p className="formErrors" key={error}>

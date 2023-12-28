@@ -6,7 +6,7 @@ export default function SubmitBtn({initValue, loadingValue}) {
     const { pending } = useFormStatus();
 
   return (
-    <Button aria-disabled={pending} className="submit-btn">
+    <Button type="submit" aria-disabled={pending} className="submit-btn">
         {pending ? loadingValue: initValue}
     </Button>
   )

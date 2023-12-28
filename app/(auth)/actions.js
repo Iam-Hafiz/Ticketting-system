@@ -60,6 +60,36 @@ async function SignUpAction(prevState, formData) {
     }   
 }
 
+async function updateProfileAction(prevState, formData) {
+
+    // make sure the user is logged in first
+    const supabase = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if(!sessionData?.session){
+        redirect('/login');
+    }
+    const rawFormData = Object.fromEntries(formData.entries())
+    rawFormData.age = parseInt(rawFormData.age)
+
+    const updateProfileSchema = SignUpSchema.pick({fname: true, lname: true, age: true});
+    const validatedFields = updateProfileSchema.safeParse(rawFormData);
+    if (!validatedFields.success) {
+        return {
+          errors: validatedFields.error.flatten().fieldErrors,
+          message: 'Failed to update!',
+        };
+    }    
+    const { data, error } = await supabase.auth.updateUser({
+        data: validatedFields.data
+    }) 
+    if(!error){
+        return {message: 'Updated successfully!'}
+    } else {
+        console.log('Supabase sign up error:', error)
+        return ({message: error.message} ?? {message: 'Could not update profil please try again!'});
+    }   
+}
+
 async function loginAction(prevState, formData) {
 
     // make sure the user is not logged in first
@@ -109,5 +139,6 @@ async function logOut() {
 export {
     loginAction,
     SignUpAction,
+    updateProfileAction,
     logOut,
 }

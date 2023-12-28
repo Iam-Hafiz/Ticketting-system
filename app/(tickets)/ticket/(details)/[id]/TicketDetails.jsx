@@ -101,7 +101,7 @@ export default async function TicketDetails({params}) {
             <div >{ dayjs().to(dayjs(ticket.created_at)) }</div>
             <div >{ dayjs().to(dayjs(ticket.updated_at)) }</div>
             <p className="flex items-center">
-              <Link href={`/ticket/update/${ticket.id}`} className=" hover:text-red-400">
+              <Link href={`/ticket/update/${ticket.id}`} className="py-1 px-3 hover:text-red-400">
                   <FolderEdit /> 
               </Link>
             </p>

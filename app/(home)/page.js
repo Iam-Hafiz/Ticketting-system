@@ -13,7 +13,7 @@ const GetTickets = dynamic(() => import('./GetTickets'), { ssr: false })
 
 export default async function Tickets() {
   const sessionSupabase = createServerComponentClient({ cookies })
-  const { data, error: sessionError  } = await sessionSupabase.auth.getSession()
+  const { data: { user } } = await sessionSupabase.auth.getUser()
 
   // imitate delay to see the loading page
   //await new Promise(resolve => setTimeout(resolve, 3000));
@@ -26,7 +26,7 @@ export default async function Tickets() {
         <SideBar/>
       <div className="cardShrink cardStretch" id="ticketWrapper"> 
         <Suspense fallback={<Loading />}>
-          <GetTickets initTickets={initTickets} error={error} user_metadata={data.session?.user?.user_metadata}/>
+          <GetTickets initTickets={initTickets} error={error} user_metadata={user?.user_metadata}/>
         </Suspense>
       </div>
     </div>
