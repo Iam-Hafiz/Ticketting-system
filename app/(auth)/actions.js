@@ -154,6 +154,53 @@ async function updateEmailAction(prevState, formData) {
     }    
 }
 
+// Send a password reset link to the user's email.
+async function sendPasswordResetLinkAction(prevState, formData) {
+    const supabase = createServerActionClient({ cookies })
+    const rawFormData = Object.fromEntries(formData.entries())
+    const EmailSchema = SignUpSchema.pick({ email: true});
+    const validatedFields = EmailSchema.safeParse(rawFormData);
+
+    if (!validatedFields.success) {
+        return {
+          errors: validatedFields.error.flatten().fieldErrors,
+        };
+    }
+    const { email } = validatedFields.data;
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${process.env.APP_URL}api/auth/callback/update-password`,
+    }) 
+    if(!error){
+        return {message: `A link has been send to ${email}! Please verify your email address!`}
+    } else {
+        console.log('Supabase update error:', error)
+        return ({message: error.message} ?? {message: 'Invalid credentials!'});
+    }    
+}
+
+async function restPasswordAction(prevState, formData) {
+    const supabase = createServerActionClient({ cookies })
+    const rawFormData = Object.fromEntries(formData.entries())
+    const restPasswordSchema = SignUpSchema.pick({ password: true});
+    const validatedFields = restPasswordSchema.safeParse(rawFormData);
+
+    if (!validatedFields.success) {
+        return {
+          errors: validatedFields.error.flatten().fieldErrors,
+        };
+    }
+    const { password } = validatedFields.data;
+
+    // Update logged in user email
+    const { data, error } = await supabase.auth.updateUser({password}) 
+    if(!error){
+        return {message: "Email updated successfully!"}
+    } else {
+        console.log('Supabase update error:', error)
+        return ({message: error.message} ?? {message: 'Invalid credentials!'});
+    }    
+}
+
 async function logOut() {
     const supabase = createServerActionClient({ cookies })
     const { error } = await supabase.auth.signOut() 
@@ -171,4 +218,6 @@ export {
     updateProfileAction,
     logOut,
     updateEmailAction,
+    restPasswordAction,
+    sendPasswordResetLinkAction,
 }

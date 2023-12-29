@@ -9,6 +9,7 @@ import { Frown } from "lucide-react";
 import { Input } from "@/app/_components/ui/input";
 import { loginAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
+import Link from "next/link";
 
 export default function page() {
     const [email, setEmail] = useState('')
@@ -58,7 +59,7 @@ export default function page() {
             </p>
           ))}
       </div>
-
+      <Link href="/reset_password" className=" text-blue-600 p-1 block mt-2">I forgot my password!</Link>
       {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
 
       <SubmitBtn initValue={"Sign in"} loadingValue={"Logging"}/>
