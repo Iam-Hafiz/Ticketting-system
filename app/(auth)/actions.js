@@ -1,11 +1,12 @@
 'use server'
 import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers'
 
 import { z } from 'zod';
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
-// password /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$^&*()_-]).{8,18}$/
+
+// password regex /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$^&*()_-]).{8,18}$/
+// Forms validation with Zod
 const SignUpSchema = z.object({
     fname: z.string().trim().toLowerCase()
         .regex(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/, {message: "Please enter a valid name!" })
@@ -44,14 +45,12 @@ async function SignUpAction(prevState, formData) {
           message: 'Failed to register!',
         };
     }
-
     const { email, password, fname, lname, age } = validatedFields.data;
     const { error } = await supabase.auth.signUp({ 
           email, password,
           options: { data: { fname, lname, age } },
           emailRedirectTo: `${process.env.APP_URL}api/auth/callback`,
         })
-        
     if(!error){
         return {message: 'Account created successfully!'}
     } else {
@@ -60,6 +59,7 @@ async function SignUpAction(prevState, formData) {
     }   
 }
 
+// update user meta data
 async function updateProfileAction(prevState, formData) {
 
     // make sure the user is logged in first
@@ -98,7 +98,6 @@ async function loginAction(prevState, formData) {
     if(sessionData?.session){
         redirect('/profil');
     }
-
     const rawFormData = Object.fromEntries(formData.entries())
     const LoginSchema = SignUpSchema.pick({ email: true,  password: true});
     const validatedFields = LoginSchema.safeParse(rawFormData);
@@ -109,13 +108,11 @@ async function loginAction(prevState, formData) {
           message: 'Failed to login!',
         };
     }
-
     const { email, password } = validatedFields.data;
     const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       })
-          
     if(!error){
         redirect('/profil')
     } else {
@@ -168,7 +165,7 @@ async function sendPasswordResetLinkAction(prevState, formData) {
     }
     const { email } = validatedFields.data;
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.APP_URL}api/auth/callback/update-password`,
+        redirectTo: `${process.env.APP_URL}api/auth/callback/update_password`,
     }) 
     if(!error){
         return {message: `A link has been send to ${email}! Please verify your email address!`}
@@ -190,11 +187,10 @@ async function restPasswordAction(prevState, formData) {
         };
     }
     const { password } = validatedFields.data;
-
-    // Update logged in user email
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
     const { data, error } = await supabase.auth.updateUser({password}) 
     if(!error){
-        return {message: "Email updated successfully!"}
+        return {message: "password updated successfully!"}
     } else {
         console.log('Supabase update error:', error)
         return ({message: error.message} ?? {message: 'Invalid credentials!'});
@@ -208,7 +204,7 @@ async function logOut() {
         redirect('/login')
     } else {
         console.log('Supabase update error:', error)
-       // return {message: 'Could not sign out!'}
+       return {message: 'Could not sign out!'}
     }   
 }
 
