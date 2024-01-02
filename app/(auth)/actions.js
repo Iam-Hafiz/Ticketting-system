@@ -49,7 +49,7 @@ async function SignUpAction(prevState, formData) {
     const { error } = await supabase.auth.signUp({ 
           email, password,
           options: { data: { fname, lname, age } },
-          emailRedirectTo: `${process.env.APP_URL}api/auth/callback`,
+          emailRedirectTo: process.env.EMAIL_REDIRECT_TO_AFTER_SIGN_UP,
         })
     if(!error){
         return {message: 'Account created successfully!'}
@@ -165,7 +165,7 @@ async function sendPasswordResetLinkAction(prevState, formData) {
     }
     const { email } = validatedFields.data;
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.APP_URL}api/auth/callback/update_password`,
+        redirectTo: process.env.RESET_PASSWORD_LINK_CALLBACK_URL,
     }) 
     if(!error){
         return {message: `A link has been send to ${email}! Please verify your email address!`}
