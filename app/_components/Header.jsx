@@ -4,7 +4,7 @@ import { ModeToggle } from './Mode-toggle-btn'
 import { UserDropDown } from './UserDropDown'
 import DropDownBtn from './DropDownBtn'
 
-export default function Header({user}) {
+export default function Header({localUser}) {
 
   return (
     <header className='max-w-[2000px] mx-auto font-bold
@@ -14,7 +14,7 @@ export default function Header({user}) {
         <Link href="/" className='mr-auto p-1 font-bold uppercase'>HelpDesk</Link>
         <Link href="/ticket/create" className='p-1'>New ticket</Link>
         <ModeToggle />
-        <UserDropDown user={user}/>
+        <UserDropDown localUser={localUser}/>
       </div>
     </header>
   )

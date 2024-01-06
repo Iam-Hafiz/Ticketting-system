@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 // components
 import { ThemeProvider } from './_components/Theme-provider';
@@ -20,24 +21,26 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 const supabase = createServerComponentClient({ cookies })
-const { data: { user } } = await supabase.auth.getUser()
+const { data: { user: localUser } } = await supabase.auth.getUser()
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Header user={user}/>
-            <main className='min-h-[80vh] max-w-[2000px] mx-auto 
-              bg-gradient-to-r from-gray-200 to-slate-100  dark:from-slate-900 dark:from-10% dark:via-indigo-950 dark:via-80% dark:to-slate-800 dark:to-100% dark:text-slate-300'>
-              {children}
-            </main>
-            <MainFooter />
-        </ThemeProvider>
-      </body>
+      <UserProvider>
+        <body className={inter.className}>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Header localUser={localUser}/>
+              <main className='min-h-[80vh] max-w-[2000px] mx-auto 
+                bg-gradient-to-r from-gray-200 to-slate-100  dark:from-slate-900 dark:from-10% dark:via-indigo-950 dark:via-80% dark:to-slate-800 dark:to-100% dark:text-slate-300'>
+                {children}
+              </main>
+              <MainFooter />
+          </ThemeProvider>
+        </body>
+      </UserProvider>
     </html>
   )
 }
