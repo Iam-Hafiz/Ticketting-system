@@ -17,12 +17,12 @@ import { updateSelectValues } from "../(tickets)/ticket/actions";
 // configs
 export const dynamic = 'force-dynamic'
 
-export default function TicketList({initTickets, error, user_metadata}) {
+export default function TicketList({initTickets, error}) {
 
-  // Display tickets & apply realtime listeners 
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
-  
+  const [isOnline, setIsOnline] = useState(false)
+
   useEffect(() => {
     const ticketsChannel = supabase
     .channel('tickets')
@@ -52,10 +52,53 @@ export default function TicketList({initTickets, error, user_metadata}) {
       }
     })
     .subscribe()
+
+/*     // Listen to user presence
+    let userPresenceState = { online_at: new Date().toISOString() } 
+    const roomOne = supabase.channel('room1', {
+      config: {
+        presence: { key: userid }
+      }
+    })
+    roomOne
+      .on('presence', { event: 'sync' }, () => {
+        const presenceState = roomOne.presenceState()
+        if(Object.keys(presenceState).length !== 0){
+          userPresenceState.key = Object.keys(presenceState)[0]
+          userPresenceState.online_at = (Object.values(presenceState))[0][0].online_at
+          setIsOnline(true)
+          console.log( "sync key:", Object.keys(presenceState)[0],"userP:", userPresenceState)
+        }
+      })
+      .on('presence', { event: 'join' }, ({key, newPresences }) => {
+        //setJoin(true)
+        userPresenceState.online_at = newPresences[0].online_at
+        userPresenceState.key = key
+        console.log( "New users joined the channel:", userPresenceState)
+      })
+      .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
+        //setLeave(true)
+        userPresenceState.online_at = leftPresences[0].online_at
+        userPresenceState.key = key
+        untrackPresence(userPresenceState);
+        console.log( "Users left the channel:", userPresenceState)
+      })
+      .subscribe(async (status) => {
+        if (status === 'SUBSCRIBED') {
+          await roomOne.track(userPresenceState)
+        }
+      });
+      const untrackPresence = async (user) => {
+        const presenceUntrackStatus = await roomOne.untrack(user)
+        setIsOnline(false)
+        console.log("just unTracked:", presenceUntrackStatus)
+      } */
+
     return () => {
       supabase.removeChannel(ticketsChannel)
+      //supabase.removeChannel(roomOne)
     }
-  }, [supabase, rerender, setRerender, tickets, setTickets])
+  }, [supabase, rerender, setRerender, tickets, setTickets, isOnline])
 
   // Display time as ex: "31 years ago" 
   dayjs.extend(relativeTime)
@@ -66,17 +109,22 @@ export default function TicketList({initTickets, error, user_metadata}) {
         {tickets && tickets.map((ticket) => (
           <div key={ticket.id} className="m-0.5 shadow-md rounded-md p-0.5 lg:grid lg:grid-cols-8 lg:gap-2 
               bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
-              <div className="flex items-start overflow-hidden">
+              <div className="flex items-start overflow-hidden relative">
+                { isOnline && (<div className=" absolute left-0 top-0 w-3 h-3 bg-green-500 rounded-full z-10"></div> ) }
                 <Avatar>
-                    <Link href="/profil"><AvatarImage src="https://github.com/shadcn.png" /> </Link>
+                    <div className="">
+                      <Link href="/profil">
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                      </Link>
+                    </div>
                     <AvatarFallback>
-                      {user_metadata && (user_metadata.fname.charAt(0).toUpperCase())}
-                      {user_metadata && (user_metadata.lname.charAt(0).toUpperCase())}
+                      {ticket.user_fname?.charAt(0).toUpperCase()}
+                      {ticket.user_lname?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                 </Avatar>
                 <div className="pl-2">
-                    <Link href="/profil">{user_metadata && (user_metadata.fname.charAt(0).toUpperCase() + user_metadata.fname.slice(1) + ' ' )}
-                     {user_metadata && (user_metadata.lname.charAt(0).toUpperCase() + user_metadata.lname.slice(1) )}
+                    <Link href="/profil">{ticket.user_fname?.charAt(0).toUpperCase() + ticket.user_fname?.slice(1) + ' '}
+                     {ticket.user_lname?.charAt(0).toUpperCase() + ticket.user_lname?.slice(1)}
                     </Link>
                     <Link href="/profil" className=" block">{ticket.user_email}</Link>
                 </div>

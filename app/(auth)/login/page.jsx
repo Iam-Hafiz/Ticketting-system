@@ -22,9 +22,9 @@ export default function page() {
   <div className="centre-a-form">
     <div className="w-5/6 sm:w-4/5 lg:w-1/2">
       <h2 className="font-bold text-xl m-4">Sign in:</h2>
-      <a href="/api/auth/login" 
+{/*       <a href="/api/auth/login" 
       className="p-2 rounded-md m-4 font-bold inline-block bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 dark:from-slate-800 dark:via-indigo-800 dark:to-slate-700 dark:text-slate-300">
-        Continue with Google</a>
+        Continue with Google</a> */}
       <form action={dispatch} className="dark:bg-slate-800 p-4 rounded-md bg-gray-200">
         <label htmlFor="loginEmail">Email:</label>
         <Input
@@ -66,7 +66,7 @@ export default function page() {
         <Link href="/reset_password" className=" text-blue-600 p-1 block mt-2">I forgot my password!</Link>
         {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
 
-        <SubmitBtn initValue={"Sign in"} loadingValue={"Logging"}/>
+        <SubmitBtn initValue={"Sign in"} loadingValue={"Logging..."}/>
       </form>
     </div>
   </div>

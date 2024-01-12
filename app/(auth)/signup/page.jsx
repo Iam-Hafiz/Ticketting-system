@@ -132,7 +132,7 @@ export default function SignUp() {
       {!state.message?.includes("successfully") && state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       {state.message?.includes("successfully")  && (<p className=" flex justify-center items-center text-green-500"> <Smile /> {state.message}</p>)}
 
-      <SubmitBtn initValue={"Sign up"} loadingValue={"Loading"}/>
+      <SubmitBtn initValue={"Sign up"} loadingValue={"Wait..."}/>
     </form>
   </div>
   )

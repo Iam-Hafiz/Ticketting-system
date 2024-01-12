@@ -42,9 +42,9 @@ import LogOutComp from "./LogOut"
             {localUser && (<Link href="/profil" className='w-full'>
               Hello, {localUser?.user_metadata?.fname.charAt(0).toUpperCase() + localUser?.user_metadata?.fname.slice(1)}
             </Link>)}
-            {auth0User && (<Link href="/profil" className='w-full'>
+{/*             {auth0User && (<Link href="/profil" className='w-full'>
               Hello, {auth0User?.given_name.charAt(0).toUpperCase() + auth0User?.given_name.slice(1)}
-            </Link>)}
+            </Link>)} */}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
@@ -106,11 +106,11 @@ import LogOutComp from "./LogOut"
               <LogOutComp />
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
             </DropdownMenuItem>)}
-          { !localUser && auth0User && (<DropdownMenuItem>
+{/*           { !localUser && auth0User && (<DropdownMenuItem>
               <LogOut className="mr-2 h-4 w-4" />
               <a href="/api/auth/logout">Sign out</a>
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-            </DropdownMenuItem>)}
+            </DropdownMenuItem>)} */}
         </DropdownMenuContent>
       </DropdownMenu>
     )

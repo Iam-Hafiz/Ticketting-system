@@ -33,11 +33,15 @@ async function createTicket(prevState, formData) {
     if(sessionError){
         retrun ({message: "Please sign in first!"});
     }
-    const user_id = sessionData.session.user.id;
-    const user_email = sessionData.session.user.email;
+    const user_id = sessionData.session?.user.id;
+    const user_email = sessionData?.session?.user?.email;
+    const user_fname = sessionData?.session?.user?.user_metadata?.fname;
+    const user_lname = sessionData?.session?.user?.user_metadata?.lname;
     const { data, error } = await supabaseAuth
         .from("tickets")
-        .insert({ title, description, assign: "IT Technician", status: "Open", priority: "Low", user_id, user_email })
+        .insert({ title, description, assign: "IT Technician", 
+                  status: "Open", priority: "Low", user_id, 
+                  user_fname, user_lname, user_email })
     if(!error){
 
         // Revalidate the cache for the Tickets page and redirect the user.
