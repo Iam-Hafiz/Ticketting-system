@@ -249,8 +249,8 @@ export default function TicketList({initTickets, error}) {
          </div>
         )}
         <Button onClick={fetchMoreTickets} className="font-bold flex justify-center mx-auto my-2 bg-gradient-to-r
-        from-purple-600 to-blue-600 hover:from-blue-600 hover:via-purple-600
-        hover:to-red-500 hover:scale-110 transition-all duration-500">
+        from-purple-700 to-blue-700 hover:from-blue-700 hover:via-purple-700
+        hover:to-red-600 hover:scale-105 transition-all duration-500">
           {loading? 'Loading...': 'Show more tickets' } 
           {!loading && (<ChevronDown />)}
         </Button>
