@@ -21,7 +21,7 @@ export default function TicketList({initTickets, error}) {
 
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
-  const [isOnline, setIsOnline] = useState(false)
+  const [isOnline, setIsOnline] = useState(true)
 
   useEffect(() => {
     const ticketsChannel = supabase

@@ -19,21 +19,30 @@ export default async function Tickets() {
     //redirect('/login');
   }
   const userid = sessionData?.session?.user.id;
-  
+  const ac = new AbortController()
+
   // imitate delay to see the loading page
   //await new Promise(resolve => setTimeout(resolve, 3000));
   const { data: initTickets, error }  = await supabase
   .from('tickets')
-  .select();
+  .select()
+  .order('created_at', { ascending: false })
+  .abortSignal(ac.signal);
 
   let data = { status: {}, priority: {}}
-  const  { data: open, error: openErr } = await supabase.from('tickets').select().eq('status', 'Open')
-  const  { data: close, error: closeErr } = await  supabase.from('tickets').select().eq('status', 'Closed')
-  const  { data: solved, error: solvedErr } = await supabase.from('tickets').select().eq('status', 'Solved')
+  const  { data: open, error: openErr } = await supabase.from('tickets')
+    .select('status').eq('status', 'Open').abortSignal(ac.signal)
+  const  { data: close, error: closeErr } = await  supabase.from('tickets')
+    .select('status').eq('status', 'Closed').abortSignal(ac.signal)
+  const  { data: solved, error: solvedErr } = await supabase.from('tickets')
+    .select('status').eq('status', 'Solved').abortSignal(ac.signal)
 
-  const  { data: high, error: highErr } = await supabase.from('tickets').select().eq('priority', 'High')
-  const  { data: medium, error: mediumErr } = await supabase.from('tickets').select().eq('priority', 'Medium')
-  const  { data: low, error: lowErr } = await supabase.from('tickets').select().eq('priority', 'Low')
+  const  { data: high, error: highErr } = await supabase.from('tickets')
+    .select('priority').eq('priority', 'High').abortSignal(ac.signal)
+  const  { data: medium, error: mediumErr } = await supabase.from('tickets')
+    .select('priority').eq('priority', 'Medium').abortSignal(ac.signal)
+  const  { data: low, error: lowErr } = await supabase.from('tickets')
+    .select('priority').eq('priority', 'Low') .abortSignal(ac.signal)
 
    data.status.count = initTickets.length
 
@@ -45,10 +54,6 @@ export default async function Tickets() {
    data.priority.medium = medium.length
    data.priority.low = low.length
 
-
-  console.log("staussss:", data)
-
-  
   return (
     <div className='grid grid-cols-12'>
         <SideBar data={data}/>

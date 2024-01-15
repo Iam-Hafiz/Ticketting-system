@@ -7,11 +7,13 @@ import { notFound } from "next/navigation";
 
 // dynamic meta data
 export async function generateMetadata({params}){
+  const ac = new AbortController()
     const { data: ticket, error } = await supabase
     .from('tickets')
     .select()
     .eq('id', params.id)
     .single()
+    .abortSignal(ac.signal)
     if(error){
         return notFound()
     }

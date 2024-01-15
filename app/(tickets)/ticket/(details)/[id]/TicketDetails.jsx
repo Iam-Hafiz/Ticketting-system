@@ -19,11 +19,13 @@ import ConfirmDialog from "@/app/_components/ConfirmDialog";
 export const dynamic = 'force-dynamic'
 
 async function getTicket(id){
+  const ac = new AbortController()
     const { data: ticket, error } = await supabase
         .from('tickets')
         .select()
         .eq('id', id)
         .single()
+        .abortSignal(ac.signal)
     if(error){
         return notFound()
     }
