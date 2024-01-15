@@ -27,8 +27,9 @@ export default async function Tickets() {
   .from('tickets')
   .select()
   .order('created_at', { ascending: false })
+  .range(0, 1)
   .abortSignal(ac.signal);
-
+  
   let data = { status: {}, priority: {}}
   const  { data: open, error: openErr } = await supabase.from('tickets')
     .select('status').eq('status', 'Open').abortSignal(ac.signal)

@@ -12,7 +12,8 @@ import TicketHeader from "../_components/TicketHeader";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../_components/ui/hover-card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../_components/ui/select";
 import { updateSelectValues } from "../(tickets)/ticket/actions";
-
+import { Button } from "../_components/ui/button";
+import { ChevronDown } from "lucide-react";
 
 // configs
 export const dynamic = 'force-dynamic'
@@ -22,6 +23,33 @@ export default function TicketList({initTickets, error}) {
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
   const [isOnline, setIsOnline] = useState(true)
+  const [err, setErr] = useState(error)
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
+
+  function getFromAndTo() {
+    const tickets_per_page = 2
+    let from = page * tickets_per_page
+    let to = from + tickets_per_page - 1
+    return {from, to}
+  }
+
+  async function fetchMoreTickets() {
+    setLoading(true)
+    const ac = new AbortController()
+    const {from, to} = getFromAndTo()
+    const { data, error }  = await supabase
+    .from('tickets')
+    .select()
+    .range(from, to)
+    .order('created_at', { ascending: false })
+    .abortSignal(ac.signal);
+
+    setPage(page + 1)
+    setTickets((currentTickets)=>[...currentTickets, ...data])
+    if(error){setErr(error)}
+    setLoading(false)
+  }
 
   useEffect(() => {
     const ticketsChannel = supabase
@@ -98,7 +126,7 @@ export default function TicketList({initTickets, error}) {
       supabase.removeChannel(ticketsChannel)
       //supabase.removeChannel(roomOne)
     }
-  }, [supabase, rerender, setRerender, tickets, setTickets, isOnline])
+  }, [supabase, rerender, setRerender, tickets, setTickets, page, isOnline])
 
   // Display time as ex: "31 years ago" 
   dayjs.extend(relativeTime)
@@ -209,18 +237,23 @@ export default function TicketList({initTickets, error}) {
               <div >{ dayjs().to(dayjs(ticket.updated_at)) }</div>
           </div>
         ))}
-        {error && (
+        {err && (
          <div>
             <p className="text-center">Please Check your Internet connection!</p>
             <p className="text-center">Or maybe there are currently no available tickets, yay!</p>
          </div>
         )}
-        {!tickets.length && (
+        {!tickets?.length && (
          <div>
             <p className="text-center font-bold text-green-500 text-[1.5em] mt-8">There are currently no available tickets, yay!</p>
          </div>
         )}
-
+        <Button onClick={fetchMoreTickets} className="font-bold flex justify-center mx-auto my-2 bg-gradient-to-r
+        from-purple-600 to-blue-600 hover:from-blue-600 hover:via-purple-600
+        hover:to-red-500 hover:scale-110 transition-all duration-500">
+          {loading? 'Loading...': 'Show more tickets' } 
+          {!loading && (<ChevronDown />)}
+        </Button>
       </div>
   )
 }

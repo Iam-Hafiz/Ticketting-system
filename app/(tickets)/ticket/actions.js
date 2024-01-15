@@ -13,7 +13,7 @@ const FormSchema = z.object({
         .max(100, {message: "Title must contain at most 100 character(s)" }),
     description: z.string().trim().toLowerCase()
         .min(20, {message: "Description must contain at most 20 character(s)" })
-        .max(200, { message: "Description must contain at most 200 character(s)" }),
+        .max(1000, { message: "Description must contain at most 1000 character(s)" }),
 })
 
 async function createTicket(prevState, formData) {
