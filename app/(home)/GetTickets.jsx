@@ -5,6 +5,7 @@ import supabase from "../_lib/subapase";
 import clsx from "clsx";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useSearchParams,  usePathname, useRouter } from 'next/navigation';
 
 // components
 import { Avatar, AvatarFallback, AvatarImage } from "../_components/ui/avatar";
@@ -13,19 +14,49 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../_components/ui
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../_components/ui/select";
 import { updateSelectValues } from "../(tickets)/ticket/actions";
 import { Button } from "../_components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
+import { Input } from '../_components/ui/input';
 
 // configs
 export const dynamic = 'force-dynamic'
 
-export default function TicketList({initTickets, error}) {
-
+export default function TicketList({initTickets, error, query, currentPage}) {
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
   const [isOnline, setIsOnline] = useState(true)
   const [err, setErr] = useState(error)
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  async function handleSearch(term) {
+    const params = new URLSearchParams(searchParams);
+    term?  params.set('query', term): params.delete('query');
+    replace(`${pathname}?${params.toString()}`);
+    const ac = new AbortController()
+    if(term && (term?.length > 2)){
+      const terms = '%' + term + '%'
+      const { data, error: errors }  = await supabase
+      .from('tickets')
+      .select()
+      .ilike('title', terms)
+      .abortSignal(ac.signal);
+      error = errors
+      setTickets(data)
+    } else {
+      const { data, error: errors }  = await supabase
+      .from('tickets')
+      .select()
+      .range(0, 1)
+      .order('created_at', { ascending: false })
+      .abortSignal(ac.signal);
+      error = errors
+      setTickets(data)
+    }
+  }
 
   function getFromAndTo() {
     const tickets_per_page = 2
@@ -124,7 +155,6 @@ export default function TicketList({initTickets, error}) {
 
     return () => {
       supabase.removeChannel(ticketsChannel)
-      //supabase.removeChannel(roomOne)
     }
   }, [supabase, rerender, setRerender, tickets, setTickets, page, isOnline])
 
@@ -133,6 +163,20 @@ export default function TicketList({initTickets, error}) {
 
   return (
       <div>
+        <div className=' flex items-center mx-auto my-2 relative w-1/3'>
+          <label htmlFor="searchBtn" className="absolute top-1/5 right-1">
+            <Search strokeWidth={1}/>
+          </label>
+          <Input
+            id="searchBtn"
+            className=" h-7"
+            placeholder='Search by title...'
+            onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
+            defaultValue={searchParams.get('query')?.toString()}
+          />
+        </div>
         <TicketHeader />
         {tickets && tickets.map((ticket) => (
           <div key={ticket.id} className="m-0.5 shadow-md rounded-md p-0.5 lg:grid lg:grid-cols-8 lg:gap-2 
@@ -248,7 +292,7 @@ export default function TicketList({initTickets, error}) {
             <p className="text-center font-bold text-green-500 text-[1.5em] mt-8">There are currently no available tickets, yay!</p>
          </div>
         )}
-        <Button onClick={fetchMoreTickets} className="font-bold flex justify-center mx-auto my-2 bg-gradient-to-r
+        <Button onClick={fetchMoreTickets} aria-disabled={loading}  className="font-bold flex justify-center mx-auto my-2 bg-gradient-to-r
         from-purple-700 to-blue-700 hover:from-blue-700 hover:via-purple-700
         hover:to-red-600 hover:scale-105 transition-all duration-500">
           {loading? 'Loading...': 'Show more tickets' } 
