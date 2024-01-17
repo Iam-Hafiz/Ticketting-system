@@ -14,67 +14,58 @@ const GetTickets = dynamic(() => import('./GetTickets'), { ssr: false })
 export default async function Tickets({searchParams}) {
   const query = searchParams?.query || '';
   //const currentPage = Number(searchParams?.page) || 1;
-
+  const filterBy = searchParams?.filterBy || 'title';
   const supabaseAuth = createServerComponentClient({cookies})
   const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
   if(!sessionData?.session?.user){
     //redirect('/login'); const userid = sessionData?.session?.user.id;
-
   }
   const ac = new AbortController()
+  let data = { 
+    status: {open: 0, close: 0, solved: 0},
+    priority: {high: 0, medium: 0, low: 0},
+    assign : {engineer: 0, technician: 0, network: 0}
+  }
 
   // imitate delay to see the loading page
   //await new Promise(resolve => setTimeout(resolve, 3000));
-  let initTickets
+  let initTickets = []
   let error
-  if(!(query && (query?.length > 2))){
-    const { data, error: err }  = await supabase
-    .from('tickets')
-    .select()
-    .order('created_at', { ascending: false })
-    .range(0, 1)
-    .abortSignal(ac.signal);
-    error = err
-    initTickets = data
-  }
+  const { data: tickets, error: err }  = await supabase
+  .from('tickets')
+  .select()
+  .order('created_at', { ascending: false })
+  .abortSignal(ac.signal);
+  tickets?.forEach((ticket) =>{
+    ticket.status === 'Open' ? data.status.open += 1
+    : ticket.status === 'Closed' ? data.status.close += 1
+    : ticket.status === 'Solved' ? data.status.solved += 1
+    : console.log('There are no status tickets')
+
+    ticket.priority === 'High' ? data.priority.high += 1
+    : ticket.priority === 'Medium' ? data.priority.medium += 1
+    : ticket.priority === 'Low' ? data.priority.low += 1
+    : console.log('There are no priority tickets');
+
+    ticket.assign === 'AI Engineer' ? data.assign.engineer += 1
+    : ticket.assign === 'IT Technician' ? data.assign.technician += 1
+    : ticket.assign === 'Network administrator' ? data.assign.network += 1
+    : console.log('There are no assign tickets');
+  })
+  error = err
+  initTickets.push(tickets[0], tickets[1])
 
   if(query && (query?.length > 2)){
     const terms = '%' + query + '%'
-    const ac = new AbortController()
     const { data, error: errors }  = await supabase
     .from('tickets')
     .select()
-    .ilike('title', terms)
+    .ilike(filterBy, terms)
     .abortSignal(ac.signal);
     error = errors
     initTickets = data
   }
 
-  let data = { status: {}, priority: {}}
-  const  { data: open, error: openErr } = await supabase.from('tickets')
-    .select('status').eq('status', 'Open').abortSignal(ac.signal)
-  const  { data: close, error: closeErr } = await  supabase.from('tickets')
-    .select('status').eq('status', 'Closed').abortSignal(ac.signal)
-  const  { data: solved, error: solvedErr } = await supabase.from('tickets')
-    .select('status').eq('status', 'Solved').abortSignal(ac.signal)
-
-  const  { data: high, error: highErr } = await supabase.from('tickets')
-    .select('priority').eq('priority', 'High').abortSignal(ac.signal)
-  const  { data: medium, error: mediumErr } = await supabase.from('tickets')
-    .select('priority').eq('priority', 'Medium').abortSignal(ac.signal)
-  const  { data: low, error: lowErr } = await supabase.from('tickets')
-    .select('priority').eq('priority', 'Low') .abortSignal(ac.signal)
-    if(!(openErr || closeErr || solvedErr || highErr || mediumErr || lowErr)){
-    data.status.count = initTickets?.length
-
-    data.status.open = open?.length
-    data.status.close = close?.length
-    data.status.solved = solved?.length
- 
-    data.priority.high = high?.length
-    data.priority.medium = medium?.length
-    data.priority.low = low?.length
-  }
   return (
     <div className='grid grid-cols-12'>
       <SideBar data={data}/>
