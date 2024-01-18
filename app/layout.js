@@ -22,6 +22,8 @@ export const metadata = {
 export default async function RootLayout({ children }) {
 const supabase = createServerComponentClient({ cookies })
 const { data: { user: localUser } } = await supabase.auth.getUser()
+const fname = localUser?.user_metadata?.fname
+const email = localUser?.email
   return (
     <html lang="en">
       <UserProvider>
@@ -37,7 +39,7 @@ const { data: { user: localUser } } = await supabase.auth.getUser()
                 bg-gradient-to-r from-gray-200 to-slate-100  dark:from-slate-900 dark:from-10% dark:via-indigo-950 dark:via-80% dark:to-slate-800 dark:to-100% dark:text-slate-300'>
                 {children}
               </main>
-              <MainFooter />
+              <MainFooter fname={fname} email={email}/>
           </ThemeProvider>
         </body>
       </UserProvider>

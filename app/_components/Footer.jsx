@@ -1,30 +1,16 @@
 import React from 'react'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react'
 import Link from 'next/link'
+import Newsletter from './Newsletter'
 
-export default function MainFooter() {
+export default function MainFooter({fname, email}) {
   return (
     <footer className='grid grid-cols-1 sm:grid-cols-3 sm:gap-3 p-2 max-w-[2000px] mx-auto 
         bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 dark:from-slate-900 dark:via-indigo-950 dark:to-slate-800 dark:text-slate-300'>
         <div className='max-w-sm px-2'> 
             <div className='flex flex-col justify-center items-center sm:justify-start sm:items-start'>
                 <p className='font-bold'>Abonnez-vous à notre newsletter:</p>
-                <form action="/newsletter">
-                    <div>
-                        <label htmlFor="newsletter-firstname" className="pt-2 pb-1"> Prénom:</label>
-                        <Input type="text" id="newsletter-firstname" name="firstname" />
-                    </div>
-                    <div>
-                        <label htmlFor="newsletter-email" className="pt-2 pb-1"> E-mail:</label>
-                        <Input type="email" id="newsletter-email" name="email" />
-                    </div>
-                    <Button className="my-2 hover:bg-gradient-to-r
-                    hover:from-blue-600 hover:via-purple-600 hover:to-red-500 hover:scale-110 transition-all duration-500">
-                        Submit
-                    </Button>
-                </form>
+                <Newsletter fname={fname} email={email}/>
             </div>
         </div>
         <div className='flex justify-center items-center flex-col'>

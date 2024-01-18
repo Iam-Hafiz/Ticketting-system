@@ -7,7 +7,7 @@ export default function SideBar({data: { status , priority, assign }}) {
         <Link href="/ticket/create" className='py-1 hover:text-blue-600 w-full'>New ticket</Link>
       </div>
       <div className=" grid grid-cols-2">
-        <a href="/">Total Tickets</a>
+        <a className=' w-full hover:text-blue-600' href="/">Total Tickets</a>
         <p>{status.count}</p>
       </div>
 

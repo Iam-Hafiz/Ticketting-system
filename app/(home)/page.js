@@ -22,7 +22,7 @@ export default async function Tickets({searchParams}) {
   }
   const ac = new AbortController()
   let data = { 
-    status: {open: 0, close: 0, solved: 0},
+    status: {open: 0, close: 0, solved: 0, count: 0},
     priority: {high: 0, medium: 0, low: 0},
     assign : {engineer: 0, technician: 0, network: 0}
   }
@@ -54,6 +54,7 @@ export default async function Tickets({searchParams}) {
   })
   error = err
   initTickets.push(tickets[0], tickets[1])
+  data.status.count = tickets?.length
 
   if(query && (query?.length > 2)){
     const terms = '%' + query + '%'

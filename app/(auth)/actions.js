@@ -208,6 +208,38 @@ async function logOut() {
     }   
 }
 
+async function newsletterAction(prevState, formData) {
+    const supabase = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if(!sessionData?.session?.user){
+        redirect('/login');
+    }
+    const rawFormData = Object.fromEntries(formData.entries())
+    const newsletterSchema = SignUpSchema.pick({ fname: true, email: true});
+    const validatedFields = newsletterSchema.safeParse(rawFormData);
+    if (!validatedFields.success) {
+        return {
+          errors: validatedFields.error.flatten().fieldErrors,
+          message: 'Failed to register!',
+        };
+    }
+    const {fname, email} = validatedFields.data;
+    if(email !== sessionData?.session?.user.email){
+        console.log(sessionData?.session?.user.email)
+        return { message: 'This email address is not registered!' }; 
+    }
+    const updated_at = new Date();
+    const { error } = await supabase
+    .from("newsletters")
+    .insert({fname, user_email: email, updated_at})
+    if(!error){
+        return {message: 'Done successfully!'}
+    } else {
+        console.log('Supabase sign up error:', error)
+        return ({message: error.message} ?? {message: 'Could not subscribe please try again!'});
+    }   
+}
+
 export {
     loginAction,
     SignUpAction,
@@ -216,4 +248,5 @@ export {
     updateEmailAction,
     restPasswordAction,
     sendPasswordResetLinkAction,
+    newsletterAction,
 }
