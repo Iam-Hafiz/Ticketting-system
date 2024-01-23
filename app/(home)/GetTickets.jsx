@@ -186,7 +186,8 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                 <Avatar>
                     <div className="">
                       <Link href="/profil">
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage src={"https://fxjyfigvmmricrqlyywl.supabase.co/storage/v1/object/public/profile-photos/avatars/"
+                        + ticket.user_id + ".jpg"}/>
                       </Link>
                     </div>
                     <AvatarFallback>

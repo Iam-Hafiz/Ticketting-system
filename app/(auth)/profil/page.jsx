@@ -13,6 +13,7 @@ import {
 } from "@/app/_components/ui/dialog"
 import { Button } from "@/app/_components/ui/button"
 import UpdateEmail from './UpdateEmail';
+import { Upload } from './Upload';
 
 //import ProfileForm from "./ProfileForm"
 //disable prerendering on GetTickets client component
@@ -23,11 +24,13 @@ export default async function Profil() {
   const { data: { user } } = await supabase.auth.getUser()
   const user_metadata = user?.user_metadata
   const user_email = user?.email
-
+  const user_id = user?.id
   return (
     <div className=' flex justify-center'>
       <div className='bg-gray-200 dark:bg-slate-800 p-2 lg:w-1/2'>
         <h2 className=' font-bold text-xl mb-2'>My profil</h2>
+        <h3 className=' font-bold text-lg mb-2'>Avater</h3>
+        <Upload />
         <h3 className=' font-bold text-lg'>Personal Info</h3>
         <ul className='ml-2'>
           <li>First name: {user_metadata?.fname}</li>

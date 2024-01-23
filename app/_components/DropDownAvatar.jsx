@@ -4,10 +4,11 @@ import {
     AvatarImage,
   } from "./ui/avatar"
   
-  export function DropDownAvatar() {
+  export function DropDownAvatar({user_id}) {
     return (
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src={"https://fxjyfigvmmricrqlyywl.supabase.co/storage/v1/object/public/profile-photos/avatars/"
+                        + user_id + ".jpg"} alt="@shadcn" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     )

@@ -35,7 +35,7 @@ import LogOutComp from "./LogOut"
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button aria-label="User profile photo" className="p-1"><DropDownAvatar/></button>
+          <button aria-label="User profile photo" className="p-1"><DropDownAvatar user_id={localUser.id}/></button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>

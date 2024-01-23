@@ -3,17 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation"
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { cookies } from 'next/headers'
 
 // components
-//import DeleteTicket from "../../../../_components/DeleteTicket";
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/_components/ui/avatar";
 import { FolderEdit } from "lucide-react";
 import supabase from "@/app/_lib/subapase";
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import clsx from "clsx";
 import ConfirmDialog from "@/app/_components/ConfirmDialog";
-
 
 // configs
 export const dynamic = 'force-dynamic'
@@ -39,10 +35,6 @@ export default async function TicketDetails({params}) {
     const ticket = await getTicket(params.id)
     const ticketId = ticket.id
 
-    const sessionSupabase = createServerComponentClient({ cookies })
-    const { data, error: sessionError  } = await sessionSupabase.auth.getSession()
-    const user_metadata = data?.session?.user?.user_metadata;
-
     // Display time as ex: "31 years ago" 
     dayjs.extend(relativeTime)
   return (
@@ -62,15 +54,19 @@ export default async function TicketDetails({params}) {
             bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
             <div className="flex items-start overflow-hidden col-span-2 col-start-1">
               <Avatar>
-                  <Link href="/profil"><AvatarImage src="https://github.com/shadcn.png" /> </Link>
+                  <Link href="/profil">
+                    <AvatarImage src={"https://fxjyfigvmmricrqlyywl.supabase.co/storage/v1/object/public/profile-photos/avatars/"
+                        + ticket.user_id + ".jpg"} /> 
+                  </Link>
                   <AvatarFallback>
-                    {user_metadata && (user_metadata.fname.charAt(0).toUpperCase())}
-                    {user_metadata && (user_metadata.lname.charAt(0).toUpperCase())}
+                    {ticket.user_fname.charAt(0).toUpperCase()}
+                    {ticket.user_lname.charAt(0).toUpperCase()}
                   </AvatarFallback>
               </Avatar>
               <div className="pl-2">
-                  <Link href="/profil">{user_metadata && (user_metadata.fname.charAt(0).toUpperCase() + user_metadata.fname.slice(1) + ' ' )}
-                   {user_metadata && (user_metadata.lname.charAt(0).toUpperCase() + user_metadata.lname.slice(1) )}
+                  <Link href="/profil">
+                    {ticket.user_fname.charAt(0).toUpperCase() + ticket.user_fname.slice(1) + ' '}
+                    {ticket.user_lname.charAt(0).toUpperCase() + ticket.user_lname.slice(1)}
                   </Link>
                   <Link href="/profil" className=" block">{ticket.user_email}</Link>
               </div>
