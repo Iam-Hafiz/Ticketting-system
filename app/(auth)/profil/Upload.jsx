@@ -28,7 +28,7 @@ export function Upload() {
   return (
     <div className="1">
       <div className="grid items-center gap-1 w-full max-w-xs">
-        <Label htmlFor="avatar">Upload photo</Label>
+        <Label htmlFor="avatar">Upload photo:</Label>
         <Input id="avatar" type="file" name="avatar" onChange={handleFileUpload}/>
       </div>
       {err && (<p className="formErrors">{err}</p>)}

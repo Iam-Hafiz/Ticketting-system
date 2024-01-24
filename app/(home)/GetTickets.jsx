@@ -23,7 +23,6 @@ export const dynamic = 'force-dynamic'
 export default function TicketList({initTickets, error, query, currentPage}) {
   const [tickets, setTickets] = useState(initTickets)
   const [rerender, setRerender] = useState(false)
-  const [isOnline, setIsOnline] = useState(true)
   const [err, setErr] = useState(error)
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
@@ -156,10 +155,14 @@ export default function TicketList({initTickets, error, query, currentPage}) {
     return () => {
       supabase.removeChannel(ticketsChannel)
     }
-  }, [supabase, rerender, setRerender, tickets, setTickets, page, isOnline])
+  }, [supabase, rerender, setRerender, tickets, setTickets, page])
 
   // Display time as ex: "31 years ago" 
   dayjs.extend(relativeTime)
+  let count = 0
+  function incr() {
+    count += 1
+  }
 
   return (
       <div>
@@ -169,7 +172,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
           </label>
           <Input
             id="searchBtn"
-            className=" h-7"
+            className=" h-8"
             placeholder='Search by title...'
             onChange={(e) => {
               handleSearch(e.target.value);
@@ -182,18 +185,22 @@ export default function TicketList({initTickets, error, query, currentPage}) {
           <div key={ticket.id} className="m-0.5 shadow-md rounded-md p-0.5 lg:grid lg:grid-cols-8 lg:gap-2 
               bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
               <div className="flex items-start overflow-hidden relative">
-                { isOnline && (<div className=" absolute left-0 top-0 w-3 h-3 bg-green-500 rounded-full z-10"></div> ) }
+                { (count > 1 || count < 1) && (<div className=" absolute left-0 top-0 w-3 h-3 bg-gray-400 rounded-full z-10"></div> ) }
+                { count === 1 && (<div className=" absolute left-0 top-0 w-3 h-3 bg-green-500 rounded-full z-10"></div> ) }
+                { incr()}
                 <Avatar>
                     <div className="">
                       <Link href="/profil">
-                        <AvatarImage src={"https://fxjyfigvmmricrqlyywl.supabase.co/storage/v1/object/public/profile-photos/avatars/"
-                        + ticket.user_id + ".jpg"}/>
+                        <AvatarImage src={process.env.NEXT_PUBLIC_IMAGE_BASE_URL + ticket.user_id + 
+                          process.env.NEXT_PUBLIC_IMAGE_EXTENSION } alt="User profil photo"/>
                       </Link>
                     </div>
-                    <AvatarFallback>
-                      {ticket.user_fname?.charAt(0).toUpperCase()}
-                      {ticket.user_lname?.charAt(0).toUpperCase()}
-                    </AvatarFallback>
+                    <Link href="/profil">
+                      <AvatarFallback>
+                        {ticket.user_fname?.charAt(0).toUpperCase()}
+                        {ticket.user_lname?.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Link>
                 </Avatar>
                 <div className="pl-2">
                     <Link href="/profil">{ticket.user_fname?.charAt(0).toUpperCase() + ticket.user_fname?.slice(1) + ' '}
@@ -206,17 +213,17 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                 <HoverCard>
                   <HoverCardTrigger>
                       <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
-                        {`${ticket.title.slice(0, 50)}...`}</Link>
+                        {`${ticket.description?.charAt(0).toUpperCase() + ticket.title.slice(1, 50)}...`}</Link>
                       <Link href={`/ticket/${ticket.id}`} className="block overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
-                        {ticket.description?.slice(0, 30)}...
+                        {ticket.description?.charAt(0).toUpperCase() + ticket.description?.slice(1, 30)}...
                       </Link>
                   </HoverCardTrigger>
                   <HoverCardContent>
                       <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
-                        {ticket.title}:
+                        {ticket.title?.charAt(0).toUpperCase() + ticket.title.slice(1) + " "}:
                       </Link>
                       <Link href={`/ticket/${ticket.id}`} className="overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
-                        {ticket.description}
+                        {" " + ticket.description?.charAt(0).toUpperCase() + ticket.description.slice(1)}
                       </Link>
                   </HoverCardContent>
                 </HoverCard>

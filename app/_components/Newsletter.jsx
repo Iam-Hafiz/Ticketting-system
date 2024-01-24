@@ -10,7 +10,7 @@ import { Frown, Smile } from "lucide-react";
 
 export default function Newsletter({fname, email}) {
     const [emails, setEmail] = useState(email)
-    const [fnames, setFname] = useState((fname?.charAt(0).toUpperCase() + fname?.slice(1)) ?? '')
+    const [fnames, setFname] = useState(fname)
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(newsletterAction, initialState);
   return (

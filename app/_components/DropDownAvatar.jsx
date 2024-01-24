@@ -1,3 +1,4 @@
+import { UserRound } from "lucide-react"
 import {
     Avatar,
     AvatarFallback,
@@ -7,9 +8,9 @@ import {
   export function DropDownAvatar({user_id}) {
     return (
       <Avatar>
-        <AvatarImage src={"https://fxjyfigvmmricrqlyywl.supabase.co/storage/v1/object/public/profile-photos/avatars/"
-                        + user_id + ".jpg"} alt="@shadcn" />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarImage src={process.env.NEXT_PUBLIC_IMAGE_BASE_URL + user_id + 
+            process.env.NEXT_PUBLIC_IMAGE_EXTENSION } alt="User photo" />
+        <AvatarFallback><UserRound /></AvatarFallback>
       </Avatar>
     )
   }

@@ -35,7 +35,7 @@ export default function SignUp() {
       <h2 className="font-bold text-lg">Sign up:</h2>
       <p><small>Fields marked with <span className=" text-red-500">*</span> are required</small></p>
 
-      <label htmlFor="signUpFname">First name:</label>
+      <label htmlFor="signUpFname">First name *:</label>
       <Input
         type="text"
         id="signUpFname"
@@ -54,7 +54,7 @@ export default function SignUp() {
           ))}
       </div>
 
-      <label htmlFor="signUpLname">Last name:</label>
+      <label htmlFor="signUpLname">Last name *:</label>
       <Input
         type="text"
         id="signUpLname"
@@ -92,7 +92,7 @@ export default function SignUp() {
           ))}
       </div>
 
-      <label htmlFor="signUpEmail">Email:</label>
+      <label htmlFor="signUpEmail">Email *:</label>
       <Input
         type="text"
         id="signUpEmail"
@@ -110,7 +110,7 @@ export default function SignUp() {
           ))}
       </div>
 
-      <label htmlFor="signUpPassword">Password:</label>
+      <label htmlFor="signUpPassword">Password *:</label>
       <Input
         type="password"
         id="signUpPassword"

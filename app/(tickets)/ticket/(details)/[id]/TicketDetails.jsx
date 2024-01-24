@@ -55,13 +55,15 @@ export default async function TicketDetails({params}) {
             <div className="flex items-start overflow-hidden col-span-2 col-start-1">
               <Avatar>
                   <Link href="/profil">
-                    <AvatarImage src={"https://fxjyfigvmmricrqlyywl.supabase.co/storage/v1/object/public/profile-photos/avatars/"
-                        + ticket.user_id + ".jpg"} /> 
+                    <AvatarImage src={ process.env.NEXT_PUBLIC_IMAGE_BASE_URL + ticket.user_id + 
+                      process.env.NEXT_PUBLIC_IMAGE_EXTENSION } alt="User profil photo"/> 
                   </Link>
-                  <AvatarFallback>
-                    {ticket.user_fname.charAt(0).toUpperCase()}
-                    {ticket.user_lname.charAt(0).toUpperCase()}
-                  </AvatarFallback>
+                  <Link href="/profil">
+                      <AvatarFallback>
+                        {ticket.user_fname?.charAt(0).toUpperCase()}
+                        {ticket.user_lname?.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                  </Link>
               </Avatar>
               <div className="pl-2">
                   <Link href="/profil">

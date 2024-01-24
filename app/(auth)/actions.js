@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 
 import { z } from 'zod';
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@supabase/supabase-js';
 
 // password regex /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$^&*()_-]).{8,18}$/
 // Forms validation with Zod
@@ -240,6 +241,31 @@ async function newsletterAction(prevState, formData) {
     }   
 }
 
+async function deleteAcount() {
+    const supabaseAuth = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
+    if(!sessionData?.session?.user){
+        redirect('/login');
+    }
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.SERVICE_ROLE_SECRET
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    
+    const user_id = sessionData?.session?.user.id
+    const { data, error } = await supabase.auth.admin.deleteUser(user_id)
+    if(!error){
+        const { data, error: err } = await supabaseAuth
+        .storage
+        .from('avatars')
+        .remove([`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL + user_id + process.env.NEXT_PUBLIC_IMAGE_EXTENSION}`])
+        if(err){ return {message: "Account deleted successfully", error: "Photo not found or could not be deleted!"}}
+        return {message: "Account deleted successfully"}
+    } else {
+        console.log('Supabase update error:', error)
+       return {message: 'Could not delete account!', error: error.message}
+    } 
+}
+
 export {
     loginAction,
     SignUpAction,
@@ -249,4 +275,5 @@ export {
     restPasswordAction,
     sendPasswordResetLinkAction,
     newsletterAction,
+    deleteAcount,
 }

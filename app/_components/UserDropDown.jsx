@@ -35,7 +35,11 @@ import LogOutComp from "./LogOut"
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button aria-label="User profile photo" className="p-1"><DropDownAvatar user_id={localUser.id}/></button>
+          <button aria-label="User profile photo" className="p-1 relative">
+            {localUser && (<div className=" absolute left-1 top-1 w-3 h-3 bg-green-500 rounded-full z-10"></div>)}
+            {!localUser && (<div className=" absolute left-1 top-1 w-3 h-3 bg-gray-400 rounded-full z-10"></div>)}            
+            <DropDownAvatar user_id={localUser?.id}/>
+          </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>
@@ -59,8 +63,8 @@ import LogOutComp from "./LogOut"
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
+{/*           <DropdownMenuSeparator />
+ */}{/*           <DropdownMenuGroup>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
                 <UserPlus className="mr-2 h-4 w-4" />
@@ -84,13 +88,13 @@ import LogOutComp from "./LogOut"
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          </DropdownMenuGroup> */}
+         {/*  <DropdownMenuSeparator /> */}
+{/*           <DropdownMenuItem>
             <LifeBuoy className="mr-2 h-4 w-4" />
             <Link href="/contact" className="w-full">Support</Link>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
+          </DropdownMenuItem> */}
+        {/*   <DropdownMenuSeparator /> */}
           {!localUser && !auth0User && (          
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />

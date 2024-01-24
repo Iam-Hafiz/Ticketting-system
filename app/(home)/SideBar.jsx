@@ -41,7 +41,7 @@ export default function SideBar({data: { status , priority, assign }}) {
         </ul>
       </div>
 
-      <h3 className=" font-bold mt-3">Assigned to</h3>
+      <h3 className=" font-bold mt-3">Assignment</h3>
 
       <div className=" grid grid-cols-2">
         <nav className="flex flex-col items-start">
