@@ -10,6 +10,7 @@ import { Input } from "@/app/_components/ui/input";
 import { SignUpAction } from "../actions";
 import { useRouter } from "next/navigation";
 import SubmitBtn from "@/app/_components/SubmitBtn";
+import Link from "next/link";
 
 export default function SignUp() {
     const router = useRouter()
@@ -32,7 +33,7 @@ export default function SignUp() {
   return (
   <div className="centre-a-form">
     <form action={dispatch} className="form">
-      <h2 className="font-bold text-lg">Sign up:</h2>
+      <h2 className="font-bold text-lg">Sign up</h2>
       <p><small>Fields marked with <span className=" text-red-500">*</span> are required</small></p>
 
       <label htmlFor="signUpFname">First name *:</label>
@@ -131,6 +132,7 @@ export default function SignUp() {
 
       {!state.message?.includes("successfully") && state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       {state.message?.includes("successfully")  && (<p className=" flex justify-center items-center text-green-500"> <Smile /> {state.message}</p>)}
+      <Link href="/login" className=" text-blue-600 p-1 block mt-2 font-bold">Already have account? Sign in</Link>
 
       <SubmitBtn initValue={"Sign up"} loadingValue={"Wait..."}/>
     </form>

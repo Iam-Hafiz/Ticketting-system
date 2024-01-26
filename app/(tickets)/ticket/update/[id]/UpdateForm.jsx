@@ -24,7 +24,7 @@ export default function UpdateForm({ticket}) {
   return (
     <div className="centre-a-form">
     <form action={dispatch} className="form">
-      <h2 className="font-bold text-lg">Add a new Ticket:</h2>
+      <h2 className="font-bold text-lg">Add a new Ticket</h2>
       <label htmlFor="uTicketTitle">Title:</label>
       <Input
         type="text"

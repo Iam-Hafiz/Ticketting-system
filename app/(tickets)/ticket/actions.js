@@ -9,10 +9,10 @@ import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 
 const FormSchema = z.object({
     title: z.string().trim().toLowerCase()
-        .min(10, {message: "Title must contain at most 10 character(s)" })
+        .min(10, {message: "Title must contain at least 10 character(s)" })
         .max(100, {message: "Title must contain at most 100 character(s)" }),
     description: z.string().trim().toLowerCase()
-        .min(20, {message: "Description must contain at most 20 character(s)" })
+        .min(20, {message: "Description must contain at least 20 character(s)" })
         .max(1000, { message: "Description must contain at most 1000 character(s)" }),
 })
 
@@ -67,8 +67,8 @@ async function updateTicket(id, prevState, formData) {
     const { title, description } = validatedFields.data;
     const supabaseAuth = createServerActionClient({ cookies })
     const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
-    if(sessionError){
-        retrun ({errors: "Please sign in first!"});
+    if(sessionError || !sessionData?.session){
+        return {message: "Please sign in first!"};
     }
     const updated_at = new Date();
     const {data, error } = await supabaseAuth
@@ -79,7 +79,7 @@ async function updateTicket(id, prevState, formData) {
         redirect('/ticket/' + id)
     } else {
         console.log('Supabase update error:', error)
-        return {errors: 'Could not update Ticket please try again!'}
+        return {message: 'Could not update Ticket please try again!'}
     }   
 }
 
@@ -92,16 +92,16 @@ async function updateSelectValues(data) {
     } else if(data.status){
         dataSchema = z.object({ status: z.enum(['Open', 'Solved', 'Closed']) })
     } else {
-        return {message: 'Invalid field!'};
+        return {message: 'Invalid field!', id: data?.id};
     }
     const validatedData = dataSchema.safeParse(data);
     if (!validatedData.success) {
-        return {message: 'Invalid value!'};
+        return {message: 'Invalid value!', id: data?.id};
     }
     const supabaseAuth = createServerActionClient({ cookies })
     const { data: sessionData, error: sessionError } = await supabaseAuth.auth.getSession();
-    if(sessionError){
-        retrun ({message: "Please sign in first!"});
+    if(!sessionData?.session){
+        return {message: "Please sign in first!", id: data?.id};
     }
     const updated_at = new Date();
     const {data: updateData, error } = await supabaseAuth
@@ -114,7 +114,7 @@ async function updateSelectValues(data) {
         revalidatePath('/')
     } else {
         console.log('Supabase update error:', error)
-        return {message: 'Failed! please try again!'}
+        return {message: 'Failed! please try again!', id: data?.id}
     }   
 }
 

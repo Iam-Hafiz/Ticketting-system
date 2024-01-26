@@ -21,7 +21,7 @@ export default function Form() {
   return (
     <div className="centre-a-form">
       <form action={dispatch} className="form">
-        <h2 className="font-bold text-lg">Add a new Ticket:</h2>
+        <h2 className="font-bold text-lg">Add a new Ticket</h2>
         <label htmlFor="cTicketTitle">Title:</label>
         <Input
           type="text"

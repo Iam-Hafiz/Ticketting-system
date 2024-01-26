@@ -53,7 +53,9 @@ export default async function Tickets({searchParams}) {
     : console.log('There are no assign tickets');
   })
   error = err
-  initTickets.push(tickets[0], tickets[1])
+  for (let i = 0; i < 10; i++) {
+    initTickets.push(tickets[i])
+  }
   data.status.count = tickets?.length
 
   if(query && (query?.length > 2)){
@@ -70,7 +72,7 @@ export default async function Tickets({searchParams}) {
   return (
     <div className='grid grid-cols-12'>
       <SideBar data={data}/>
-      <div className="cardShrink cardStretch" id="ticketWrapper"> 
+      <div className="cardShrink cardStretch mx-2" id="ticketWrapper"> 
         <Suspense fallback={<Loading />}>
           <GetTickets initTickets={initTickets} error={error} />
         </Suspense>

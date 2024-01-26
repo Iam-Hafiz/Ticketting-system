@@ -26,6 +26,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
   const [err, setErr] = useState(error)
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [selectErr, setSelectErr] = useState(false)
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -49,7 +50,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
       const { data, error: errors }  = await supabase
       .from('tickets')
       .select()
-      .range(0, 1)
+      .range(0, 7)
       .order('created_at', { ascending: false })
       .abortSignal(ac.signal);
       error = errors
@@ -58,7 +59,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
   }
 
   function getFromAndTo() {
-    const tickets_per_page = 2
+    const tickets_per_page = 4
     let from = page * tickets_per_page
     let to = from + tickets_per_page - 1
     return {from, to}
@@ -74,7 +75,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
     .range(from, to)
     .order('created_at', { ascending: false })
     .abortSignal(ac.signal);
-
+    if(data?.length === 0){setErr('There are no more Tickets!')}
     setPage(page + 1)
     setTickets((currentTickets)=>[...currentTickets, ...data])
     if(error){setErr(error)}
@@ -172,7 +173,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
           </label>
           <Input
             id="searchBtn"
-            className=" h-8"
+            className=" h-10"
             placeholder='Search by title...'
             onChange={(e) => {
               handleSearch(e.target.value);
@@ -213,7 +214,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                 <HoverCard>
                   <HoverCardTrigger>
                       <Link href={`/ticket/${ticket.id}`} className="font-bold overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
-                        {`${ticket.description?.charAt(0).toUpperCase() + ticket.title.slice(1, 50)}...`}</Link>
+                        {`${ticket.title?.charAt(0).toUpperCase() + ticket.title.slice(1, 50)}...`}</Link>
                       <Link href={`/ticket/${ticket.id}`} className="block overflow-hidden hover:text-blue-800 dark:hover:text-green-500">
                         {ticket.description?.charAt(0).toUpperCase() + ticket.description?.slice(1, 30)}...
                       </Link>
@@ -229,8 +230,10 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                 </HoverCard>
               </div>
               <div className="overflow-hidden">
-                <Select onValueChange={ async (value) => {
-                    await updateSelectValues({priority: value, id: ticket.id})}}
+                <Select onValueChange={async (value) => {
+                  const states = await updateSelectValues({priority: value, id: ticket.id})
+                  setSelectErr(states)
+                }}
                 >
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="priority">
                      <SelectValue placeholder="Select..." />
@@ -241,6 +244,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                      <SelectItem value="High">High</SelectItem>
                    </SelectContent>
                 </Select>
+                {selectErr?.message && ticket.id == selectErr?.id && (<p className="formErrors py-1"> {selectErr?.message}</p>)}
                 <p className={clsx('rounded-md px-1 inline-block bg-gray-200 dark:bg-transparent',
                     { ' text-blue-600  ': ticket.priority === 'Low',
                       ' text-orange-500 ': ticket.priority === "Medium",
@@ -250,7 +254,9 @@ export default function TicketList({initTickets, error, query, currentPage}) {
               </div>
               <div className="overflow-hidden">
                 <Select onValueChange={ async (value) => {
-                  await updateSelectValues({assign: value, id: ticket.id})}}
+                  const states = await updateSelectValues({assign: value, id: ticket.id})
+                  setSelectErr(states)
+                }}
                 >
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="assign">
                      <SelectValue placeholder="Select..." />
@@ -261,11 +267,14 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                      <SelectItem value="Network administrator">Network administrator</SelectItem>
                    </SelectContent>
                 </Select>
+                {selectErr?.message && ticket.id == selectErr?.id && (<p className="formErrors py-1"> {selectErr?.message}</p>)}
                 <p>{ticket.assign}</p>
               </div>
               <div className="overflow-hidden">
                 <Select onValueChange={ async (value) => {
-                  await updateSelectValues({status: value, id: ticket.id})}}
+                  const states = await updateSelectValues({status: value, id: ticket.id})
+                  setSelectErr(states)
+                }}
                 >
                    <SelectTrigger className="w-[50%] md:w-[40%] lg:w-[100%]" name="status">
                      <SelectValue placeholder="Select..." />
@@ -276,6 +285,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                      <SelectItem value="Closed">Closed</SelectItem>
                    </SelectContent>
                 </Select>
+                {selectErr?.message && ticket.id == selectErr?.id && (<p className="formErrors py-1"> {selectErr?.message}</p>)}
                 <p className={clsx('rounded-md px-1 inline-block bg-gray-200 dark:bg-transparent',
                     { ' text-blue-600  ': ticket.status === 'Open',
                       ' text-green-600 ': ticket.status === "Solved",
@@ -291,8 +301,8 @@ export default function TicketList({initTickets, error, query, currentPage}) {
         ))}
         {err && (
          <div>
-            <p className="text-center">Please Check your Internet connection!</p>
-            <p className="text-center">Or maybe there are currently no available tickets, yay!</p>
+            <p className="text-center text-green-500">Please Check your Internet connection!</p>
+            <p className="text-center text-green-500">Or maybe there are currently no more available tickets</p>
          </div>
         )}
         {!tickets?.length && (

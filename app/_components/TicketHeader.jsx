@@ -7,8 +7,8 @@ export default function TicketHeader() {
         <div className="font-bold text-sm">Priority</div>
         <div className="font-bold text-sm">Assign to</div>
         <div className="font-bold text-sm">Status</div>
-        <div className="font-bold text-sm">Created at</div>
-        <div className="font-bold text-sm">Updated at</div>
+        <div className="font-bold text-sm">Created</div>
+        <div className="font-bold text-sm">Updated</div>
     </div>
   )
 }

@@ -11,21 +11,22 @@ import { createClient } from '@supabase/supabase-js';
 const SignUpSchema = z.object({
     fname: z.string().trim().toLowerCase()
         .regex(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/, {message: "Please enter a valid name!" })
-        .min(1, {message: "Title must contain at least 1 character(s)" })
-        .max(50, {message: "Title must contain at most 50 character(s)" }),
+        .min(1, {message: "Name must contain at least 1 character(s)" })
+        .max(50, {message: "Name must contain at most 50 character(s)" }),
     lname: z.string().trim().toLowerCase()
         .regex(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/, {message: "Please enter a valid name" })
-        .min(1, {message: "Title must contain at least 1 character(s)" })
-        .max(50, {message: "Title must contain at most 50 character(s)" }),
+        .min(1, {message: "Name must contain at least 1 character(s)" })
+        .max(50, {message: "Name must contain at most 50 character(s)" }),
     age: z.number({ required_error: "Age is required", invalid_type_error: "Age must be a number" })
         .lt(150, { message: "Age must be 150 at most" })
+        .gt(150, { message: "Minimum required age is 18" })
         .int().nonnegative().optional().nullable(),
     email: z.string().trim().toLowerCase().email({ message: "Invalid email address" })
-        .min(5, {message: "Title must contain at least 5 character(s)" })
-        .max(100, {message: "Title must contain at most 100 character(s)" }),
+        .min(5, {message: "Email must contain at least 5 character(s)" })
+        .max(100, {message: "Email must contain at most 100 character(s)" }),
     password: z.string().trim().toLowerCase()
-        .min(6, {message: "Description must contain at least 6 character(s)" })
-        .max(100, { message: "Description must contain at most 100 character(s)" }),
+        .min(6, {message: "Password must contain at least 6 character(s)" })
+        .max(100, { message: "Password must contain at most 100 character(s)" }),
 })
 
 async function SignUpAction(prevState, formData) {

@@ -21,11 +21,11 @@ export default function page() {
   return (
   <div className="centre-a-form">
     <div className="w-5/6 sm:w-4/5 lg:w-1/2">
-      <h2 className="font-bold text-xl m-4">Sign in:</h2>
 {/*       <a href="/api/auth/login" 
       className="p-2 rounded-md m-4 font-bold inline-block bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 dark:from-slate-800 dark:via-indigo-800 dark:to-slate-700 dark:text-slate-300">
         Continue with Google</a> */}
       <form action={dispatch} className="dark:bg-slate-800 p-4 rounded-md bg-gray-200">
+        <h2 className="font-bold text-xl my-4">Sign in</h2>
         <label htmlFor="loginEmail">Email:</label>
         <Input
           type="text"
@@ -63,7 +63,8 @@ export default function page() {
               </p>
             ))}
         </div>
-        <Link href="/reset_password" className=" text-blue-600 p-1 block mt-2">I forgot my password!</Link>
+        <Link href="/reset_password" className=" text-blue-600 p-1 block mt-2 font-bold">I forgot my password!</Link>
+        <Link href="/signup" className=" text-blue-600 p-1 block mt-2 font-bold">Sign up</Link>
         {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
 
         <SubmitBtn initValue={"Sign in"} loadingValue={"Logging..."}/>

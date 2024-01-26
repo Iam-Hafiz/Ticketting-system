@@ -26,8 +26,8 @@ export default function Newsletter({fname, email}) {
               aria-describedby="newsletter-firstnameErr"
             />
             <div id="newsletter-firstnameErr" aria-live="polite" aria-atomic="true">
-              {state.errors?.fname &&
-                state.errors.fname.map(error => (
+              {state?.errors?.fname &&
+                state?.errors?.fname.map(error => (
                   <p className="formErrors" key={error}>
                     {error}
                   </p>
@@ -45,16 +45,16 @@ export default function Newsletter({fname, email}) {
               aria-describedby="newsletter-emailErr"
             />
             <div id="newsletter-emailErr" aria-live="polite" aria-atomic="true">
-              {state.errors?.email &&
-                state.errors.email.map(error => (
+              {state?.errors?.email &&
+                state.errors?.email.map(error => (
                   <p className="formErrors" key={error}>
                     {error}
                   </p>
                 ))}
             </div>
         </div>
-        {state.message && !state.message?.includes('successfully') && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
-        {state.message?.includes('successfully') && (<p className="flex justify-center items-center text-green-600"><Smile /> {state.message}</p>)}
+        {state?.message && !state.message?.includes('successfully') && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
+        {state?.message?.includes('successfully') && (<p className="flex justify-center items-center text-green-600"><Smile /> {state.message}</p>)}
         <SubmitBtn initValue="Submit" loadingValue="Saving..."/>
     </form>
   )
