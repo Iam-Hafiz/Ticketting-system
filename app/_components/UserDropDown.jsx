@@ -42,14 +42,16 @@ import LogOutComp from "./LogOut"
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>
-            {localUser && (<Link href="/profil" className='w-full'>
-              Hello, {localUser?.user_metadata?.fname.charAt(0).toUpperCase() + localUser?.user_metadata?.fname.slice(1)}
-            </Link>)}
+          {localUser && (
+            <DropdownMenuLabel>
+              <Link href="/profil" className='w-full'>
+                Hello, {localUser?.user_metadata?.fname.charAt(0).toUpperCase() + localUser?.user_metadata?.fname.slice(1)}
+              </Link>
+            </DropdownMenuLabel>
+          )}
 {/*             {auth0User && (<Link href="/profil" className='w-full'>
               Hello, {auth0User?.given_name.charAt(0).toUpperCase() + auth0User?.given_name.slice(1)}
             </Link>)} */}
-          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>

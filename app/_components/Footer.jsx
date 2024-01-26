@@ -18,21 +18,21 @@ export default function MainFooter({fname, email}) {
             <div>
                 <p>Suivez-nous sur les réseaux sociaux</p>
                 <nav className='flex flex-wrap justify-around mt-2'>
-                    <Link href="https://fr.linkedin.com/" aria-label="icon of linkedin" target="_blank" rel="noopener noreferrer" className='p-1 bg-blue-800 rounded-md m-1 hover:scale-110 transition-all duration-500'>
+                    <a href="https://fr.linkedin.com/" aria-label="icon of linkedin" target="_blank" rel="noopener noreferrer" className='p-1 bg-blue-800 rounded-md m-1 hover:scale-110 transition-all duration-500'>
                         <Linkedin color='white'/>
-                    </Link>
-                    <Link href="https://fr-fr.facebook.com/" aria-label="icon of facebook" target="_blank" rel="noopener noreferrer" className=' p-1 bg-blue-800 rounded-md m-1 hover:scale-110 transition-all duration-500'>
+                    </a>
+                    <a href="https://fr-fr.facebook.com/" aria-label="icon of facebook" target="_blank" rel="noopener noreferrer" className=' p-1 bg-blue-800 rounded-md m-1 hover:scale-110 transition-all duration-500'>
                         <Facebook color='white'/>
-                    </Link>
-                    <Link href="https://www.instagram.com/" aria-label="icon of instagram" target="_blank" rel="noopener noreferrer" className=' p-1 bg-fuchsia-600 rounded-md m-1 hover:scale-110 transition-all duration-500'>
+                    </a>
+                    <a href="https://www.instagram.com/" aria-label="icon of instagram" target="_blank" rel="noopener noreferrer" className=' p-1 bg-fuchsia-600 rounded-md m-1 hover:scale-110 transition-all duration-500'>
                         <Instagram color='white'/>
-                    </Link>
-                    <Link href="https://twitter.com/?lang=fr" aria-label="icon of twitter" target="_blank" rel="noopener noreferrer" className='p-1 bg-blue-800 rounded-md m-1 hover:scale-110 transition-all duration-500'>
+                    </a>
+                    <a href="https://twitter.com/?lang=fr" aria-label="icon of twitter" target="_blank" rel="noopener noreferrer" className='p-1 bg-blue-800 rounded-md m-1 hover:scale-110 transition-all duration-500'>
                         <Twitter color='white'/>
-                    </Link>
-                    <Link href="https://www.youtube.com/" aria-label="icon of youtube" target="_blank" rel="noopener noreferrer" className='p-1 bg-red-600 rounded-md m-1 hover:scale-110 transition-all duration-500'>
+                    </a>
+                    <a href="https://www.youtube.com/" aria-label="icon of youtube" target="_blank" rel="noopener noreferrer" className='p-1 bg-red-600 rounded-md m-1 hover:scale-110 transition-all duration-500'>
                         <Youtube color='white'/>
-                    </Link>
+                    </a>
                 </nav>
             </div>
         </div>

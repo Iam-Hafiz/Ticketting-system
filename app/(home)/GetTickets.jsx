@@ -189,7 +189,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                 { count === 1 && (<div className=" absolute left-0 top-0 w-3 h-3 bg-green-500 rounded-full z-10"></div> ) }
                 { incr()}
                 <Avatar>
-                    <div className="">
+                    <div>
                       <Link href="/profil">
                         <AvatarImage src={process.env.NEXT_PUBLIC_IMAGE_BASE_URL + ticket.user_id + 
                           process.env.NEXT_PUBLIC_IMAGE_EXTENSION } alt="User profil photo"/>
