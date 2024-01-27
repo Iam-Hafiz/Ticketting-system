@@ -160,7 +160,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
 
   // Display time as ex: "31 years ago" 
   dayjs.extend(relativeTime)
-  let count = 0
+  let count = 2
   function incr() {
     count += 1
   }
@@ -186,8 +186,8 @@ export default function TicketList({initTickets, error, query, currentPage}) {
           <div key={ticket.id} className="m-0.5 shadow-md rounded-md p-0.5 lg:grid lg:grid-cols-8 lg:gap-2 
               bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
               <div className="flex items-start overflow-hidden relative">
-                { (count > 1 || count < 1) && (<div className=" absolute left-0 top-0 w-3 h-3 bg-gray-400 rounded-full z-10"></div> ) }
-                { count === 1 && (<div className=" absolute left-0 top-0 w-3 h-3 bg-green-500 rounded-full z-10"></div> ) }
+                { (count > 1 /* || count < 1 */) && (<div className=" absolute left-0 top-0 w-3 h-3 bg-gray-400 rounded-full z-10"></div> ) }
+                {/*  count === 1 && (<div className=" absolute left-0 top-0 w-3 h-3 bg-green-500 rounded-full z-10"></div> ) */ }
                 { incr()}
                 <Avatar>
                     <div>
