@@ -11,7 +11,7 @@ import { loginAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
 import Link from "next/link";
 
-export default function page() {
+export default function Page() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 

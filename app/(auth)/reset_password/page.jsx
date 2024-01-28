@@ -10,7 +10,7 @@ import { Input } from "@/app/_components/ui/input";
 import { sendPasswordResetLinkAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
 
-export default function page() {
+export default function Page() {
     const [email, setEmail] = useState('')
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(sendPasswordResetLinkAction, initialState);

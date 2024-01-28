@@ -59,7 +59,7 @@ export default async function Profil() {
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
-                  Make changes to your profile here. Click save when you're done.
+                  Make changes to your profile here. Click save when you&apos;re done.
                 </DialogDescription>
               </DialogHeader>
                   <ProfileForm user_metadata={user_metadata}/>
@@ -77,7 +77,7 @@ export default async function Profil() {
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
-                  Make changes to your profile here. Click save when you're done.
+                  Make changes to your profile here. Click save when you&apos;re done.
                 </DialogDescription>
               </DialogHeader>
                   <UpdateEmail user_email={user_email}/>

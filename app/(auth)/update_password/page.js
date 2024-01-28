@@ -11,7 +11,7 @@ import { restPasswordAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
     const router = useRouter()
     const [password, setPassword] = useState('')
     const initialState = { message: null, errors: {} };

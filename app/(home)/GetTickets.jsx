@@ -156,7 +156,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
     return () => {
       supabase.removeChannel(ticketsChannel)
     }
-  }, [supabase, rerender, setRerender, tickets, setTickets, page])
+  }, [rerender, setRerender, tickets, setTickets, page])
 
   // Display time as ex: "31 years ago" 
   dayjs.extend(relativeTime)
