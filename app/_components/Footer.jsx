@@ -1,4 +1,3 @@
-import React from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react'
 import Link from 'next/link'
 import Newsletter from './Newsletter'

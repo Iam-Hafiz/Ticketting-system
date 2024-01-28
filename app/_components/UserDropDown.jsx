@@ -1,12 +1,7 @@
 import Link from "next/link"
-import { getSession } from '@auth0/nextjs-auth0';
 
 import {
-    LifeBuoy,
     LogOut,
-    Mail,
-    MessageSquare,
-    PlusCircle,
     Settings,
     User,
     UserPlus,
@@ -18,20 +13,15 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
     DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
   } from "./ui/dropdown-menu"
 import { DropDownAvatar } from "./DropDownAvatar"
 import LogOutComp from "./LogOut"
   
   export async function UserDropDown({localUser}) {
-   const data  = await getSession();
-   const auth0User = data?.user
+    const auth0User = null;
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -49,9 +39,6 @@ import LogOutComp from "./LogOut"
               </Link>
             </DropdownMenuLabel>
           )}
-{/*             {auth0User && (<Link href="/profil" className='w-full'>
-              Hello, {auth0User?.given_name.charAt(0).toUpperCase() + auth0User?.given_name.slice(1)}
-            </Link>)} */}
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
@@ -65,38 +52,6 @@ import LogOutComp from "./LogOut"
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-{/*           <DropdownMenuSeparator />
- */}{/*           <DropdownMenuGroup>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <UserPlus className="mr-2 h-4 w-4" />
-                <span>Invite users</span>
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>
-                    <Mail className="mr-2 h-4 w-4" />
-                    <span>Email</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    <span>Message</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    <span>More...</span>
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-          </DropdownMenuGroup> */}
-         {/*  <DropdownMenuSeparator /> */}
-{/*           <DropdownMenuItem>
-            <LifeBuoy className="mr-2 h-4 w-4" />
-            <Link href="/contact" className="w-full">Support</Link>
-          </DropdownMenuItem> */}
-        {/*   <DropdownMenuSeparator /> */}
           {!localUser && !auth0User && (          
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />
@@ -112,11 +67,6 @@ import LogOutComp from "./LogOut"
               <LogOutComp />
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
             </DropdownMenuItem>)}
-{/*           { !localUser && auth0User && (<DropdownMenuItem>
-              <LogOut className="mr-2 h-4 w-4" />
-              <a href="/api/auth/logout">Sign out</a>
-              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-            </DropdownMenuItem>)} */}
         </DropdownMenuContent>
       </DropdownMenu>
     )
