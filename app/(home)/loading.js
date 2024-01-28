@@ -1,5 +1,4 @@
 import { Skeleton } from "@/app/_components/ui/skeleton";
-import { number } from "zod";
 
 export default function Loading() {
   const numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
