@@ -19,7 +19,7 @@ const SignUpSchema = z.object({
         .max(50, {message: "Name must contain at most 50 character(s)" }),
     age: z.number({ required_error: "Age is required", invalid_type_error: "Age must be a number" })
         .lt(150, { message: "Age must be 150 at most" })
-        .gt(150, { message: "Minimum required age is 18" })
+        .gt(18, { message: "Minimum required age is 18" })
         .int().nonnegative().optional().nullable(),
     email: z.string().trim().toLowerCase().email({ message: "Invalid email address" })
         .min(5, {message: "Email must contain at least 5 character(s)" })
