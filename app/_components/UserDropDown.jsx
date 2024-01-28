@@ -18,7 +18,7 @@ import {
     DropdownMenuTrigger,
   } from "./ui/dropdown-menu"
 import { DropDownAvatar } from "./DropDownAvatar"
-import LogOut from "./LogOut"
+import LogOutComp from "./LogOut"
   
   export async function UserDropDown({localUser}) {
     const auth0User = null;
@@ -63,8 +63,8 @@ import LogOut from "./LogOut"
             <Link href="/signup" className='px-1'>Sign up</Link>
           </DropdownMenuItem>)}
           { localUser && !auth0User && (<DropdownMenuItem>
-{/*               <LogOut className="mr-2 h-4 w-4" />
- */}            <LogOut />
+                <LogOut className="mr-2 h-4 w-4" />
+                <LogOutComp />
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
             </DropdownMenuItem>)}
         </DropdownMenuContent>
