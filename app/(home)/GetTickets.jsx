@@ -196,7 +196,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                           process.env.NEXT_PUBLIC_IMAGE_EXTENSION } alt="User profil photo"/>
                       </Link>
                     </div>
-                    <Link href="/profil">
+                    <Link href="/profil" className=' hover:text-blue-500 dark:hover:text-purple-600'>
                       <AvatarFallback>
                         {ticket.user_fname?.charAt(0).toUpperCase()}
                         {ticket.user_lname?.charAt(0).toUpperCase()}
@@ -204,10 +204,12 @@ export default function TicketList({initTickets, error, query, currentPage}) {
                     </Link>
                 </Avatar>
                 <div className="pl-2">
-                    <Link href="/profil">{ticket.user_fname?.charAt(0).toUpperCase() + ticket.user_fname?.slice(1) + ' '}
-                     {ticket.user_lname?.charAt(0).toUpperCase() + ticket.user_lname?.slice(1)}
+                    <Link href="/profil" className=' hover:text-blue-500 dark:hover:text-purple-600'>
+                      {ticket.user_fname?.charAt(0).toUpperCase() + ticket.user_fname?.slice(1) + ' '}
+                      {ticket.user_lname?.charAt(0).toUpperCase() + ticket.user_lname?.slice(1)}
                     </Link>
-                    <Link href="/profil" className=" block">{ticket.user_email}</Link>
+                    <Link href="/profil" className=" block  hover:text-blue-500 dark:hover:text-purple-600">
+                      {ticket.user_email}</Link>
                 </div>
               </div>
               <div className="col-span-2 col-start-2 overflow-hidden ">

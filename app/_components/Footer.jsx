@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react'
 import Link from 'next/link'
 import Newsletter from './Newsletter'
+import Unsubscribe from './Unsubscribe'
 
 export default function MainFooter({fname, email}) {
   return (
@@ -8,14 +9,14 @@ export default function MainFooter({fname, email}) {
         bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 dark:from-slate-900 dark:via-indigo-950 dark:to-slate-800 dark:text-slate-300'>
         <div className='max-w-sm px-2'> 
             <div className='flex flex-col justify-center items-center sm:justify-start sm:items-start'>
-                <p className='font-bold'>Abonnez-vous à notre newsletter:</p>
+                <p className='font-bold'>Subscribe to our newsletter:</p>
                 <Newsletter fname={fname} email={email}/>
             </div>
         </div>
         <div className='flex justify-center items-center flex-col'>
             <p className='mb-4'>Copywrite&copy;HelpDesk 12/2023</p>
             <div>
-                <p>Suivez-nous sur les réseaux sociaux</p>
+                <p>Follow us on social media</p>
                 <nav className='flex flex-wrap justify-around mt-2'>
                     <a href="https://fr.linkedin.com/" aria-label="icon of linkedin" target="_blank" rel="noopener noreferrer" className='p-1 bg-blue-800 rounded-md m-1 hover:scale-110 transition-all duration-500'>
                         <Linkedin color='white'/>
@@ -36,7 +37,15 @@ export default function MainFooter({fname, email}) {
             </div>
         </div>
         <div className='flex justify-center items-center flex-col'>
-            <Link href="/">Terms of Use and Privacy</Link>
+            <Link href="/policy/conditions"
+                target="_blank" rel="noopener noreferrer" className=' hover:text-blue-800 dark:hover:text-purple-600'>
+                Terms of Use</Link>
+            <Link href="https://www.termsfeed.com/live/24044e3b-2ce5-4188-b9c5-25729873b6a5" 
+                target="_blank" rel="noopener noreferrer" className=' hover:text-blue-800 dark:hover:text-purple-600'>
+                Privacy policy </Link>
+            <Link href="https://www.termsfeed.com/live/2aa3b701-cc2e-4492-a8f7-96952f2ad3db"
+                target="_blank" rel="noopener noreferrer" className=' hover:text-blue-800 dark:hover:text-purple-600'>
+                Disclaimers</Link>
             <p>Payment options</p>
             <div>
                 <svg className="w-6 h-6 m-2 text-purple-800 bg-purple-500 inline-block hover:scale-110 p-1 rounded-md" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
@@ -47,6 +56,7 @@ export default function MainFooter({fname, email}) {
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 9h2m3 0h5M1 5h18M2 1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Z"/>
                 </svg>
             </div>
+            <Unsubscribe />
         </div>
     </footer>
   )

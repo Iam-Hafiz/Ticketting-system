@@ -55,7 +55,7 @@ export default function Newsletter({fname, email}) {
         </div>
         {state?.message && !state.message?.includes('successfully') && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
         {state?.message?.includes('successfully') && (<p className="flex justify-center items-center text-green-600"><Smile /> {state.message}</p>)}
-        <SubmitBtn initValue="Submit" loadingValue="Saving..."/>
+        <SubmitBtn initValue="Subscribe" loadingValue="Saving..."/>
     </form>
   )
 }

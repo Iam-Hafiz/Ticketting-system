@@ -230,15 +230,41 @@ async function newsletterAction(prevState, formData) {
         console.log(sessionData?.session?.user.email)
         return { message: 'This email address is not registered!' }; 
     }
+    const user_id = sessionData?.session?.user.id
+    const { data: record, error: err } = await supabase
+    .from("newsletters")
+    .select()
+    .eq('user_id', user_id)
+    if(record?.length){ return {message: 'Already registered!'}}
+
     const updated_at = new Date();
     const { error } = await supabase
     .from("newsletters")
-    .insert({fname, user_email: email, updated_at})
+    .insert({fname, user_email: email, user_id, updated_at})
     if(!error){
         return {message: 'Done successfully!'}
     } else {
         console.log('Supabase sign up error:', error)
         return ({message: error.message} ?? {message: 'Could not subscribe please try again!'});
+    }   
+}
+
+async function unsubscribeAction(prevState, formData) {
+    const supabase = createServerActionClient({ cookies })
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if(!sessionData?.session?.user){
+        redirect('/login');
+    }
+    const user_id = sessionData?.session?.user.id
+    const { error } = await supabase
+    .from("newsletters")
+    .delete()
+    .eq('user_id', user_id)
+    if(!error){
+        return {message: 'Done successfully!'}
+    } else {
+        console.log('Supabase sign up error:', error)
+        return ({message: error.message} ?? {message: 'Could not unsubscribe please try again!'});
     }   
 }
 
@@ -276,5 +302,6 @@ export {
     restPasswordAction,
     sendPasswordResetLinkAction,
     newsletterAction,
+    unsubscribeAction,
     deleteAcount,
 }

@@ -53,7 +53,7 @@ export default function Page() {
           value={password}
           onChange={(e) => { setPassword(e.target.value)}}
           aria-describedby="loginPasswordErr"
-          autocomplete="current-password" 
+          autoComplete="current-password" 
         />
         <div id="loginPasswordErr" aria-live="polite" aria-atomic="true">
           {state.errors?.password &&
