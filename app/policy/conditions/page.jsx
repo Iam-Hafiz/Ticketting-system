@@ -166,9 +166,9 @@ export default function Conditions() {
               <bdt className="block-component" />
               <bdt className="block-component" />, as well as any other related
               products and services that refer or link to these legal terms (the{" "}
-              <bdt className="block-component" />&quot<strong>Legal Terms</strong>&quot
+              <bdt className="block-component" />&apos;<strong>Legal Terms</strong>&apos;
               <bdt className="statement-end-if-in-editor" />) (collectively, the{" "}
-              <bdt className="block-component" />&quot<strong>Services</strong>&quot
+              <bdt className="block-component" />&apos;<strong>Services</strong>&apos;
               <bdt className="statement-end-if-in-editor" />
               ).
               <bdt className="block-component" />
@@ -230,7 +230,7 @@ export default function Conditions() {
             >
               These Legal Terms constitute a legally binding agreement made between
               you, whether personally or on behalf of an entity (
-              <bdt className="block-component" />&quot<strong>you</strong>&quot
+              <bdt className="block-component" />&apos;<strong>you</strong>&apos;
               <bdt className="statement-end-if-in-editor" />
               ), and <bdt className="question">HelpDesk</bdt>, concerning your
               access to and use of the Services. You agree that by accessing the
@@ -267,7 +267,7 @@ export default function Conditions() {
               from time to time
               <bdt className="else-block" />. We will alert you about any changes by
               updating the <bdt className="block-component" />
-              &quotLast updated&quot
+              &quotLast updated&apos;
               <bdt className="statement-end-if-in-editor" /> date of these Legal
               Terms, and you waive any right to receive specific notice of each such
               change. It is your responsibility to periodically review these Legal
@@ -856,11 +856,11 @@ export default function Conditions() {
               software, website designs, audio, video, text, photographs, and
               graphics in the Services (collectively, the{" "}
               <bdt className="block-component" />
-              &quotContent&quot
+              &quotContent&apos;
               <bdt className="statement-end-if-in-editor" />
               ), as well as the trademarks, service marks, and logos contained
               therein (the <bdt className="block-component" />
-              &quotMarks&quot
+              &quotMarks&apos;
               <bdt className="statement-end-if-in-editor" />
               ).
             </span>
@@ -908,7 +908,7 @@ export default function Conditions() {
             >
               The Content and Marks are provided in or through the Services{" "}
               <bdt className="block-component" />
-              &quotAS IS&quot
+              &quotAS IS&apos;
               <bdt className="statement-end-if-in-editor" /> for your{" "}
               <bdt className="block-component" />
               personal, non-commercial use or internal business purpose
@@ -935,7 +935,7 @@ export default function Conditions() {
           >
             <span style={{ fontSize: 15 }}>
               Subject to your compliance with these Legal Terms, including the{" "}
-              <bdt className="block-component" />&quot
+              <bdt className="block-component" />&apos;
               <bdt className="statement-end-if-in-editor" />
             </span>
             <a data-custom-class="link" href="#prohibited">
@@ -944,7 +944,7 @@ export default function Conditions() {
               </span>
             </a>
             <span style={{ fontSize: 15 }}>
-              <bdt className="block-component" />&quot
+              <bdt className="block-component" />&apos;
               <bdt className="statement-end-if-in-editor" /> section below, we grant
               you a non-exclusive, non-transferable, revocable{" "}
               <bdt className="block-component" />
@@ -1130,13 +1130,13 @@ export default function Conditions() {
           >
             <span style={{ fontSize: 15 }}>
               Please review this section and the <bdt className="block-component" />
-              &quot<bdt className="statement-end-if-in-editor" />
+              &apos;<bdt className="statement-end-if-in-editor" />
               <a data-custom-class="link" href="#prohibited">
                 <span style={{ color: "rgb(0, 58, 250)" }}>
                   PROHIBITED ACTIVITIES
                 </span>
               </a>
-              <bdt className="block-component" />&quot
+              <bdt className="block-component" />&apos;
               <bdt className="statement-end-if-in-editor" /> section carefully prior
               to using our Services to understand the (a) rights you give us and (b)
               obligations you have when you post or upload any content through the
@@ -1155,7 +1155,7 @@ export default function Conditions() {
               <strong>Submissions:</strong> By directly sending us any question,
               comment, suggestion, idea, feedback, or other information about the
               Services (<bdt className="block-component" />
-              &quotSubmissions&quot
+              &quotSubmissions&apos;
               <bdt className="statement-end-if-in-editor" />
               ), you agree to assign to us all intellectual property rights in such
               Submission. You agree that we shall own this Submission and be
@@ -1182,7 +1182,7 @@ export default function Conditions() {
               text, writings, video, audio, photographs, music, graphics, comments,
               reviews, rating suggestions, personal information, or other material (
               <bdt className="block-component" />
-              &quotContributions&quot
+              &quotContributions&apos;
               <bdt className="statement-end-if-in-editor" />
               ). Any Submission that is publicly posted shall also be treated as a
               Contribution.
@@ -1284,7 +1284,7 @@ export default function Conditions() {
             >
               <span style={{ fontSize: 15 }}>
                 confirm that you have read and agree with our{" "}
-                <bdt className="block-component" />&quot
+                <bdt className="block-component" />&apos;
                 <bdt className="statement-end-if-in-editor" />
               </span>
               <a data-custom-class="link" href="#prohibited">
@@ -1293,7 +1293,7 @@ export default function Conditions() {
                 </span>
               </a>
               <span style={{ fontSize: 15 }}>
-                <bdt className="block-component" />&quot
+                <bdt className="block-component" />&apos;
                 <bdt className="statement-end-if-in-editor" /> and will not post,
                 send, publish, upload, or transmit through the Services any
                 Submission
@@ -3232,12 +3232,12 @@ export default function Conditions() {
                               mechanism, including without limitation, clear
                               graphics interchange formats (
                               <bdt className="block-component" />
-                              &quotgifs&quot
+                              &quotgifs&apos;
                               <bdt className="statement-end-if-in-editor" />
                               ), 1×1 pixels, web bugs, cookies, or other similar
                               devices (sometimes referred to as{" "}
                               <bdt className="block-component" />
-                              &quotspyware&quot or &quotpassive collection mechanisms&quot or &quotpcms&quot
+                              &quotspyware&apos; or &quotpassive collection mechanisms&apos; or &quotpcms&apos;
                               <bdt className="statement-end-if-in-editor" />
                               ).
                             </span>
@@ -3521,7 +3521,7 @@ export default function Conditions() {
                                 color: "rgb(89, 89, 89)"
                               }}
                             >
-                              Copy or adapt the Services&quot software, including but
+                              Copy or adapt the Services&apos; software, including but
                               not limited to Flash, PHP, HTML, JavaScript, or other
                               code.
                             </span>
@@ -4077,7 +4077,7 @@ export default function Conditions() {
                           graphics, comments, suggestions, or personal information
                           or other material (collectively,{" "}
                           <bdt className="block-component" />
-                          &quotContributions&quot
+                          &quotContributions&apos;
                           <bdt className="statement-end-if-in-editor" />
                           ). Contributions may be viewable by other users of the
                           Services and through third-party websites. As such, any
@@ -4832,7 +4832,7 @@ export default function Conditions() {
                       your account with online accounts you have with third-party
                       service providers (each such account, a{" "}
                       <bdt className="block-component" />
-                      &quotThird-Party Account&quot
+                      &quotThird-Party Account&apos;
                       <bdt className="statement-end-if-in-editor" />) by either: (1)
                       providing your Third-Party Account login information through
                       the Services; or (2) allowing us to access your{" "}
@@ -4859,7 +4859,7 @@ export default function Conditions() {
                       provided to and stored in your{" "}
                       <span style={{ fontSize: "14.6667px" }}>Third-Party</span>{" "}
                       Account (the <bdt className="block-component" />
-                      &quotSocial Network Content&quot
+                      &quotSocial Network Content&apos;
                       <bdt className="statement-end-if-in-editor" />) so that it is
                       available on and through the Services via your account,
                       including without limitation any friend lists and (2) we may
@@ -5009,13 +5009,13 @@ export default function Conditions() {
               Site
               <bdt className="block-component" />) links to other websites (
               <bdt className="block-component" />
-              &quotThird-Party Websites&quot
+              &quotThird-Party Websites&apos;
               <bdt className="statement-end-if-in-editor" />) as well as articles,
               photographs, text, graphics, pictures, designs, music, sound, video,
               information, applications, software, and other content or items
               belonging to or originating from third parties (
               <bdt className="block-component" />
-              &quotThird-Party Content&quot
+              &quotThird-Party Content&apos;
               <bdt className="statement-end-if-in-editor" />
               ). Such <span style={{ fontSize: "14.6667px" }}>
                 Third-Party
@@ -5929,7 +5929,7 @@ export default function Conditions() {
               INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
               MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
               NON-INFRINGEMENT. WE MAKE NO WARRANTIES OR REPRESENTATIONS ABOUT THE
-              ACCURACY OR COMPLETENESS OF THE SERVICES&quot CONTENT OR THE CONTENT OF
+              ACCURACY OR COMPLETENESS OF THE SERVICES&apos; CONTENT OR THE CONTENT OF
               ANY WEBSITES OR MOBILE APPLICATIONS LINKED TO THE SERVICES AND WE WILL
               ASSUME NO LIABILITY OR RESPONSIBILITY FOR ANY (1) ERRORS, MISTAKES, OR
               INACCURACIES OF CONTENT AND MATERIALS, (2) PERSONAL INJURY OR PROPERTY
