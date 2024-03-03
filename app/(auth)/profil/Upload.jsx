@@ -3,6 +3,8 @@ import { useState } from "react"
 import { Input } from "@/app/_components/ui/input"
 import { Label } from "@/app/_components/ui/label"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { motion } from "framer-motion"
+import { animationsProps } from "@/app/_lib/animations";
 
 export function Upload() {
     const [message, setMessage] = useState('')
@@ -26,13 +28,17 @@ export function Upload() {
           error? setErr(error.message): setMessage('Uploaded successfully!');
     }
   return (
-    <div className="1">
+    <motion.div className="1"
+    initial={animationsProps.initial}
+    animate={animationsProps.animate}
+    transition={animationsProps.transition}
+    >
       <div className="grid items-center gap-1 w-full max-w-xs">
         <Label htmlFor="avatar">Upload photo:</Label>
         <Input id="avatar" type="file" name="avatar" onChange={handleFileUpload}/>
       </div>
       {err && (<p className="formErrors">{err}</p>)}
       {message && (<p className=" text-green-600">{message}</p>)}
-    </div>
+    </motion.div>
   ) 
 }

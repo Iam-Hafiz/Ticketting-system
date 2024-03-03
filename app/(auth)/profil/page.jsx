@@ -30,7 +30,7 @@ export default async function Profil() {
   const user_id = user?.id
   return (
     <div className=' flex justify-center'>
-      <div className='bg-gray-300 dark:bg-slate-900 py-2 lg:w-1/2'>
+      <div className='bg-gray-300 dark:bg-slate-900 py-2 lg:w-1/2 shadow-lg'>
         <div className='bg-gray-200 dark:bg-slate-800 px-2'>
           <Avatar>
               <div className="">

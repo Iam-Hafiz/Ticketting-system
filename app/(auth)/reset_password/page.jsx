@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react"
 import { useFormState } from 'react-dom';
+import { motion } from "framer-motion"
 
 // icons
 import { Frown, Smile } from "lucide-react";
@@ -9,6 +10,7 @@ import { Frown, Smile } from "lucide-react";
 import { Input } from "@/app/_components/ui/input";
 import { sendPasswordResetLinkAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
+import { animationsProps } from "@/app/_lib/animations";
 
 export default function Page() {
     const [email, setEmail] = useState('')
@@ -16,7 +18,11 @@ export default function Page() {
     const [state, dispatch] = useFormState(sendPasswordResetLinkAction, initialState);
 
   return (
-  <div className="centre-a-form">
+  <motion.div className="centre-a-form"
+  initial={animationsProps.initial}
+  animate={animationsProps.animate}
+  transition={animationsProps.transition}
+  >
     <form action={dispatch} className="form">
       <h2 className="font-bold text-lg">Password reset:</h2>
       <label htmlFor="restPasswordEmail">Email:</label>
@@ -41,6 +47,6 @@ export default function Page() {
       {state.message && !state.message?.includes("A link has been send to") && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       <SubmitBtn initValue={"Submit"} loadingValue={"Submiting..."}/>
     </form>
-  </div>
+  </motion.div>
   )
 }

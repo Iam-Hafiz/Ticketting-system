@@ -1,7 +1,6 @@
-import React from 'react'
 
 export default function Contact() {
   return (
-    <div>contact us</div>
+    <div>contact us page in developpement</div>
   )
 }

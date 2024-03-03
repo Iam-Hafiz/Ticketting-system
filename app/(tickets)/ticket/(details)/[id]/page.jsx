@@ -26,7 +26,7 @@ export async function generateMetadata({params}){
 export default async function page({params}) {
 
   return (
-    <div>
+    <div className=" shadow-lg">
         <nav>
             <h2>Ticket details</h2>
         </nav>

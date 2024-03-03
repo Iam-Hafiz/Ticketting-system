@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useFormState } from 'react-dom';
+import { motion } from "framer-motion"
 
 // components
 import { Input } from "@/app/_components/ui/input";
@@ -10,6 +11,8 @@ import SubmitBtn from "../../../_components/SubmitBtn";
 
 // icons
 import { Frown } from "lucide-react";
+import { animationsProps } from "@/app/_lib/animations";
+import { TermsCheckBox } from "@/app/_components/TermsCheckBox";
 
 export default function Form() {
     const [title, setTitle] = useState('')
@@ -19,7 +22,11 @@ export default function Form() {
     const [state, dispatch] = useFormState(createTicket, initialState);
 
   return (
-    <div className="centre-a-form">
+    <motion.div className="centre-a-form"
+    initial={animationsProps.initial}
+    animate={animationsProps.animate}
+    transition={animationsProps.transition}
+    >
       <form action={dispatch} className="form">
         <h2 className="font-bold text-lg">Add a new Ticket</h2>
         <label htmlFor="cTicketTitle">Title:</label>
@@ -61,10 +68,10 @@ export default function Form() {
         </div>
 
         {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
-
+        <TermsCheckBox />
         <SubmitBtn initValue={"Create Ticket"} loadingValue={"Creating..."}/>
       </form>
-    </div>
+    </motion.div>
   )
 }
 

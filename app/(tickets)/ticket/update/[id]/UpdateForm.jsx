@@ -1,6 +1,7 @@
 "use client"
 import { useFormState } from 'react-dom';
 import { useState } from 'react';
+import { motion } from "framer-motion"
 
 // components
 import { Textarea } from "@/app/_components/ui/textarea";
@@ -12,6 +13,7 @@ import { updateTicket } from "../../actions";
 //icons
 import { Frown } from 'lucide-react';
 import SubmitBtn from '@/app/_components/SubmitBtn';
+import { animationsProps } from '@/app/_lib/animations';
 
 export default function UpdateForm({ticket}) {
     const initialState = { message: null, errors: {} };
@@ -22,7 +24,11 @@ export default function UpdateForm({ticket}) {
     const [description, setDescription] = useState(ticket.description)
 
   return (
-    <div className="centre-a-form">
+    <motion.div className="centre-a-form"
+    initial={animationsProps.initial}
+    animate={animationsProps.animate}
+    transition={animationsProps.transition}
+    >
     <form action={dispatch} className="form">
       <h2 className="font-bold text-lg">Add a new Ticket</h2>
       <label htmlFor="uTicketTitle">Title:</label>
@@ -67,6 +73,6 @@ export default function UpdateForm({ticket}) {
       
       <SubmitBtn initValue={"Update"} loadingValue={"Updating..."}/>
     </form>
-  </div>
+  </motion.div>
   )
 }

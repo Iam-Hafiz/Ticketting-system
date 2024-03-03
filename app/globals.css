@@ -78,7 +78,8 @@
     w-5/6  
     sm:w-4/5
     lg:w-1/2
-    bg-gray-200;
+    bg-gray-200
+    shadow-lg;
 }
 
 .form label {

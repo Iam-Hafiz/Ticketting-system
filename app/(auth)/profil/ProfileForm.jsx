@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useFormState } from 'react-dom';
+import { motion } from "framer-motion"
 
 // icons
 import { Frown, Smile, X } from "lucide-react";
@@ -10,6 +11,7 @@ import { Input } from "@/app/_components/ui/input";
 import { updateProfileAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
 import { DialogClose, DialogFooter } from "@/app/_components/ui/dialog";
+import { animationsProps } from "@/app/_lib/animations";
 
 export default function ProfileForm({user_metadata}) {
     const [fname, setFname] = useState(user_metadata?.fname)
@@ -20,7 +22,11 @@ export default function ProfileForm({user_metadata}) {
     const [state, dispatch] = useFormState(updateProfileAction, initialState);
 
   return (
-    <form action={dispatch} className="dark:bg-slate-800 px-2 rounded-md bg-gray-200">
+    <motion.form action={dispatch} className="dark:bg-slate-800 px-2 rounded-md bg-gray-200"
+    initial={animationsProps.initial}
+    animate={animationsProps.animate}
+    transition={animationsProps.transition}
+    >
       <label htmlFor="profileFname">First name:</label>
       <Input
         type="text"
@@ -87,7 +93,7 @@ export default function ProfileForm({user_metadata}) {
         </DialogClose>
         <SubmitBtn initValue={"Save changes"} loadingValue={"Saving..."}/>
       </DialogFooter>
-    </form>
+    </motion.form>
   )
 }
 

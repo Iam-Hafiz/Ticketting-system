@@ -7,6 +7,7 @@ import { cookies } from 'next/headers'
 // components
 import Loading from './loading'
 import SideBar from './SideBar'
+import Note from './Note'
 
 //disable prerendering on GetTickets client component
 const GetTickets = dynamic(() => import('./GetTickets'), { ssr: false })
@@ -76,7 +77,8 @@ export default async function Tickets({searchParams}) {
         <Suspense fallback={<Loading />}>
           <GetTickets initTickets={initTickets} error={error} />
         </Suspense>
-      </div>
+      </div> 
+      <Note />
     </div>
   )
 }

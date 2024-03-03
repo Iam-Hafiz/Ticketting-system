@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react"
 import { useFormState } from 'react-dom';
+import { motion } from "framer-motion"
 
 // icons
 import { Frown } from "lucide-react";
@@ -10,6 +11,8 @@ import { Input } from "@/app/_components/ui/input";
 import { loginAction } from "../actions";
 import SubmitBtn from "@/app/_components/SubmitBtn";
 import Link from "next/link";
+import { animationsProps } from "@/app/_lib/animations";
+import { TermsCheckBox } from "@/app/_components/TermsCheckBox";
 
 export default function Page() {
     const [email, setEmail] = useState('')
@@ -19,8 +22,12 @@ export default function Page() {
     const [state, dispatch] = useFormState(loginAction, initialState);
 
   return (
-  <div className="centre-a-form">
-    <div className="w-5/6 sm:w-4/5 lg:w-1/2">
+  <motion.div className="centre-a-form"
+  initial={animationsProps.initial}
+  animate={animationsProps.animate}
+  transition={animationsProps.transition}
+  >
+    <div className="w-5/6 sm:w-4/5 lg:w-1/2 shadow-lg">
 {/*       <a href="/api/auth/login" 
       className="p-2 rounded-md m-4 font-bold inline-block bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 dark:from-slate-800 dark:via-indigo-800 dark:to-slate-700 dark:text-slate-300">
         Continue with Google</a> */}
@@ -63,13 +70,13 @@ export default function Page() {
               </p>
             ))}
         </div>
+        <TermsCheckBox />
         <Link href="/reset_password" className=" text-blue-600 p-1 block mt-2 font-bold">I forgot my password!</Link>
         <Link href="/signup" className=" text-blue-600 p-1 block mt-2 font-bold">Sign up</Link>
         {state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
-
         <SubmitBtn initValue={"Sign in"} loadingValue={"Logging..."}/>
       </form>
     </div>
-  </div>
+  </motion.div>
   )
 }

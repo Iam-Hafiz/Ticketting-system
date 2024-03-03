@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useFormState } from 'react-dom';
+import { motion } from "framer-motion"
 
 // icons
 import { Frown, Smile } from "lucide-react";
@@ -11,6 +12,8 @@ import { SignUpAction } from "../actions";
 import { useRouter } from "next/navigation";
 import SubmitBtn from "@/app/_components/SubmitBtn";
 import Link from "next/link";
+import { animationsProps } from "@/app/_lib/animations";
+import { TermsCheckBox } from "@/app/_components/TermsCheckBox";
 
 export default function SignUp() {
     const router = useRouter()
@@ -31,7 +34,11 @@ export default function SignUp() {
     }
     
   return (
-  <div className="centre-a-form">
+  <motion.div className="centre-a-form"
+  initial={animationsProps.initial}
+  animate={animationsProps.animate}
+  transition={animationsProps.transition}
+  >
     <form action={dispatch} className="form">
       <h2 className="font-bold text-lg">Sign up</h2>
       <p><small>Fields marked with <span className=" text-red-500">*</span> are required</small></p>
@@ -132,10 +139,10 @@ export default function SignUp() {
 
       {!state.message?.includes("successfully") && state.message && (<p className="formErrors flex justify-center items-center"><Frown /> {state.message}</p>)}
       {state.message?.includes("successfully")  && (<p className=" flex justify-center items-center text-green-500"> <Smile /> {state.message}</p>)}
+      <TermsCheckBox />
       <Link href="/login" className=" text-blue-600 p-1 block mt-2 font-bold">Already have account? Sign in</Link>
-
       <SubmitBtn initValue={"Sign up"} loadingValue={"Wait..."}/>
     </form>
-  </div>
+  </motion.div>
   )
 }

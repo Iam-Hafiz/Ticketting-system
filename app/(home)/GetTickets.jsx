@@ -6,6 +6,7 @@ import clsx from "clsx";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSearchParams,  usePathname, useRouter } from 'next/navigation';
+import { motion } from "framer-motion"
 
 // components
 import { Avatar, AvatarFallback, AvatarImage } from "../_components/ui/avatar";
@@ -16,6 +17,7 @@ import { updateSelectValues } from "../(tickets)/ticket/actions";
 import { Button } from "../_components/ui/button";
 import { ChevronDown, Search } from "lucide-react";
 import { Input } from '../_components/ui/input';
+import {animationsProps, fadeInAnimationVariants} from "../_lib/animations";
 
 // configs
 export const dynamic = 'force-dynamic'
@@ -160,14 +162,15 @@ export default function TicketList({initTickets, error, query, currentPage}) {
 
   // Display time as ex: "31 years ago" 
   dayjs.extend(relativeTime)
-  let count = 2
-  function incr() {
-    count += 1
-  }
 
   return (
       <div>
-        <div className=' flex items-center mx-auto my-2 relative w-1/3'>
+        <motion.div className=' flex items-center mx-auto my-2 relative w-1/3 shadow-lg'
+        initial={animationsProps.initial}
+        animate={animationsProps.animate}
+        transition={animationsProps.transition}
+        
+        >
           <label htmlFor="searchBtn" className="absolute top-1/5 right-1">
             <Search strokeWidth={1}/>
           </label>
@@ -180,15 +183,22 @@ export default function TicketList({initTickets, error, query, currentPage}) {
             }}
             defaultValue={searchParams.get('query')?.toString()}
           />
-        </div>
+        </motion.div>
         <TicketHeader />
-        {tickets && tickets.map((ticket) => (
-          <div key={ticket.id} className="m-0.5 shadow-md rounded-md p-0.5 lg:grid lg:grid-cols-8 lg:gap-2 
-              bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
-              <div className="flex items-start overflow-hidden relative">
-                { (count > 1 /* || count < 1 */) && (<div className=" absolute left-0 top-0 w-3 h-3 bg-gray-400 rounded-full z-10"></div> ) }
+        {tickets && tickets.map((ticket, index) => (
+          <motion.div key={ticket.id} className="m-0.5 rounded-md p-0.5 lg:grid lg:grid-cols-8 lg:gap-2 
+              bg-slate-100 dark:bg-slate-900 dark:border-b-2 hover:bg-slate-200 dark:hover:bg-slate-800 shadow-xl"
+              variants={fadeInAnimationVariants}
+              initial="initial"
+              whileInView="animate"
+              viewport={{
+                once: true,
+              }}
+              custom={index}
+              >
+              <div className="flex items-start overflow-hidden relative first-letter:">
+                { (<div className=" absolute left-0 top-0 w-3 h-3 bg-gray-400 rounded-full z-10"></div> ) }
                 {/*  count === 1 && (<div className=" absolute left-0 top-0 w-3 h-3 bg-green-500 rounded-full z-10"></div> ) */ }
-                { incr()}
                 <Avatar>
                     <div>
                       <Link href="/profil">
@@ -299,7 +309,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
               </div>
               <div >{ dayjs().to(dayjs(ticket.created_at)) }</div>
               <div >{ dayjs().to(dayjs(ticket.updated_at)) }</div>
-          </div>
+          </motion.div>
         ))}
         {err && (
          <div>
