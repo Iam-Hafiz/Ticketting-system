@@ -10,7 +10,7 @@ export default function Note() {
     transition={{ delay: 2, duration: 1.5}}
     >
         <h2 className=" font-bold text-red-600">NOTE</h2>
-        <p className=" pl-1">Hey there, you can still login as a guest if you don't want to create your own account, here are the credentials email: <small>judy.ferguson@example.com</small>, Password: <small> aaaaaaaa</small>, Please do <strong>NOT</strong>  post any inappropriate content, thank you </p>
+        <p className=" pl-1">Hey there, you can still login as a guest for testing purposes , here are the credentials email: <small>judy.ferguson@example.com</small>, Password: <small> aaaaaaaa</small>, Please do <strong>NOT</strong>  post any inappropriate content, thank you </p>
     </motion.div>
   )
 }

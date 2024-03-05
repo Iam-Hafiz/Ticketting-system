@@ -313,8 +313,7 @@ export default function TicketList({initTickets, error, query, currentPage}) {
         ))}
         {err && (
          <div>
-            <p className="text-center text-green-500">Please Check your Internet connection!</p>
-            <p className="text-center text-green-500">Or maybe there are currently no more available tickets</p>
+            <p className="text-center text-green-500">No more available tickets</p>
          </div>
         )}
         {!tickets?.length && (
