@@ -1,8 +1,9 @@
+import PageTransitionEffect from "../_pageTransitionEffect";
 
 export default function HomeLayout({children}) {
   return (
     <div>
-        {children}
+      <PageTransitionEffect>{children}</PageTransitionEffect>
     </div>
-  )
+  );
 }
